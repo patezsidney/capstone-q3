@@ -41,9 +41,12 @@ class EmployeeModel(db.Model):
     def validate_email(self, key, value):
         if not re.match(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$", value):
             raise EmailError()
+        
+        if type(value) != str:
+            raise EmployeeAtributeTypeError()
         return value
 
-    @validates('employee_id',  'name', 'email', 'wage', 'access_level')
+    @validates('employee_id',  'name', 'wage', 'access_level')
     def validate_type(self, key, value):
         if key == 'wage':
             if type(value) != float:
