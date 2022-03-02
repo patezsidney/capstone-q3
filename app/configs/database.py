@@ -13,4 +13,4 @@ def init_app(app: Flask):
 
     app.db = db
 
-    from app import models
+    from app.models.classroom_model import ClassroomModel
