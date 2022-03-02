@@ -1,0 +1,1 @@
+from app.models.school_subjects_model import SchoolSubjectsModel
