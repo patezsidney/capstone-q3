@@ -1,8 +1,12 @@
 import re
 
+from uuid import uuid4
+from werkzeug.security import generate_password_hash, check_password_hash
 from dataclasses import dataclass
 from sqlalchemy import Column, VARCHAR, Float
 from sqlalchemy.orm import validates
+from sqlalchemy.dialects.postgresql import UUID
+
 
 from app.configs.database import db
 from app.models.exc import EmailError, EmployeeAtributeTypeError
@@ -18,7 +22,7 @@ class EmployeeModel(db.Model):
 
     __tablename__ = 'employees'
 
-    employee_id = Column(VARCHAR, primary_key=True)
+    employee_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
     name = Column(VARCHAR(255), nullable=False)
     email = Column(VARCHAR(255), nullable=False, unique=True)
     wage = Column(Float)
@@ -32,10 +36,10 @@ class EmployeeModel(db.Model):
     
     @password.setter
     def password(self, password_to_hash):
-        ...
+        self.password_hash = generate_password_hash(password_to_hash)
     
     def check_password(self, passsword_to_compare):
-        ...
+        return check_password_hash(self.password_hash, passsword_to_compare)
 
     @validates('email')
     def validate_email(self, key, value):
