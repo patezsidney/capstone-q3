@@ -1,7 +1,7 @@
 from uuid import uuid4
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from sqlalchemy import Column, String, Date
+from sqlalchemy import Column, String, Date, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
 
 from app.configs.database import db
@@ -20,6 +20,7 @@ class StudentsModel(db.Model):
     gender = Column(String(50))
     photo = Column(String)
     password_hash = Column(String)
+    classroom_id = Column(String,ForeignKey("classrooms.classroom_id"),nullable=False)
     api_key = Column(String)
 
     @property
