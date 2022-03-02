@@ -5,10 +5,10 @@ from sqlalchemy import Column, VARCHAR, Float
 from sqlalchemy.orm import validates
 
 from app.configs.database import db
-from app.models.exc import EmailError
+from app.models.exc import EmailError, EmployeeAtributeTypeError
 
 @dataclass
-class EmployeesModel(db.Model):
+class EmployeeModel(db.Model):
     
     employee_id: str
     name: str
@@ -41,3 +41,15 @@ class EmployeesModel(db.Model):
     def validate_email(self, key, value):
         if not re.match(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$", value):
             raise EmailError()
+        return value
+
+    @validates('employee_id',  'name', 'email', 'wage', 'access_level')
+    def validate_type(self, key, value):
+        if key == 'wage':
+            if type(value) != float:
+                raise EmployeeAtributeTypeError()
+        else:
+            if type(value) != str:
+                raise EmployeeAtributeTypeError()
+        return value
+

@@ -1,1 +1,1 @@
-from app.models.employees_model import EmployeesModel
+from app.models.employee_model import EmployeeModel
