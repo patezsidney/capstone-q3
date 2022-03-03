@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from sqlalchemy import Column, Date, Boolean, Integer, ForeignKey
+from sqlalchemy import Column, Date, Boolean, ForeignKey
 from uuid import uuid4
 from sqlalchemy.dialects.postgresql import UUID
 from app.configs.database import db
