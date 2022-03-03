@@ -21,11 +21,12 @@ class StudentsModel(db.Model):
     gender = Column(String(50))
     photo = Column(String)
     password_hash = Column(String)
-    classroom_id = Column(String,ForeignKey("classrooms.classroom_id"),nullable=False)
+    classroom_id = Column(UUID,ForeignKey("classrooms.classroom_id"),nullable=False)
     api_key = Column(String)
-    # books = relationship("BooksModel",secondary="LibraryModel",backref=backref("studant",uselist=False))
-    # grades = relationship("GradesModel",backref=backref("stundent",uselist=False))
-    # classroom = relationship("ClassroomModel",backref="students",uselist=False)
+    books = relationship("BooksModel",secondary="LibraryModel",backref=backref("student",uselist=False))
+    grades = relationship("GradesModel",backref=backref("stundent",uselist=False))
+    absences = relationship("AbsenceModel",backref=backref("student",uselist=False))
+    classroom = relationship("ClassroomModel",backref="students",uselist=False)
     @property
     def password(self):
         raise AttributeError("Password is not accessible")
