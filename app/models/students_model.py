@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from sqlalchemy import Column, String, Date, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import relationship,backref
 
 from app.configs.database import db
 
@@ -22,7 +23,9 @@ class StudentsModel(db.Model):
     password_hash = Column(String)
     classroom_id = Column(String,ForeignKey("classrooms.classroom_id"),nullable=False)
     api_key = Column(String)
-
+    # books = relationship("BooksModel",secondary="LibraryModel",backref=backref("studant",uselist=False))
+    # grades = relationship("GradesModel",backref=backref("stundent",uselist=False))
+    # classroom = relationship("ClassroomModel",backref="students",uselist=False)
     @property
     def password(self):
         raise AttributeError("Password is not accessible")
