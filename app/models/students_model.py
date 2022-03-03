@@ -1,8 +1,9 @@
 from uuid import uuid4
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from sqlalchemy import Column, String, Date
+from sqlalchemy import Column, String, Date, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import relationship,backref
 
 from app.configs.database import db
 
@@ -20,8 +21,12 @@ class StudentsModel(db.Model):
     gender = Column(String(50))
     photo = Column(String)
     password_hash = Column(String)
+    classroom_id = Column(UUID,ForeignKey("classrooms.classroom_id"),nullable=False)
     api_key = Column(String)
-
+    books = relationship("BooksModel",secondary="LibraryModel",backref=backref("student",uselist=False))
+    grades = relationship("GradesModel",backref=backref("stundent",uselist=False))
+    absences = relationship("AbsenceModel",backref=backref("student",uselist=False))
+    classroom = relationship("ClassroomModel",backref="students",uselist=False)
     @property
     def password(self):
         raise AttributeError("Password is not accessible")
