@@ -1,3 +1,4 @@
+from dbm.ndbm import library
 import re
 
 from uuid import uuid4
@@ -6,6 +7,7 @@ from dataclasses import dataclass
 from sqlalchemy import Column, VARCHAR, Float
 from sqlalchemy.orm import validates
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import relationship, backref
 
 
 from app.configs.database import db
@@ -29,6 +31,7 @@ class EmployeeModel(db.Model):
     password_hash = Column(VARCHAR)
     api_key = Column(VARCHAR)
     access_level = Column(VARCHAR, nullable=False)
+    library = relationship("LibraryModel",backref=backref("librarian",uselist=False))
 
     @property
     def password(self):

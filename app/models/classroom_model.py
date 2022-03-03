@@ -1,5 +1,5 @@
 from app.configs.database import db
-from sqlalchemy import Column,Integer,String
+from sqlalchemy import Column,String
 from dataclasses import dataclass
 from uuid import uuid4
 from sqlalchemy.dialects.postgresql import UUID
@@ -12,3 +12,5 @@ class ClassroomModel(db.Model):
     name:str = Column(String(255),nullable=False)
     school_subjects = relationship("SchoolSubjectsModel",backref="classroom",uselist=False)
     employee = relationship("EmployeeModel",secondary="SchoolSubjectsModel",backref="classroom")
+    absences = relationship("AbsenceModel",backref="classroom")
+    grades = relationship("GradesModel",backref="classroom")
