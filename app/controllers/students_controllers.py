@@ -1,25 +1,14 @@
 from http import HTTPStatus
 from flask import current_app, jsonify, request
 from app.models.students_model import StudentsModel
-from flask_httpauth import HTTPTokenAuth
+# from flask_httpauth import HTTPTokenAuth
 
 
-auth = HTTPTokenAuth(scheme="Bearer")
+# auth = HTTPTokenAuth(scheme="Bearer")
 
 
 def signin():
-    user_data = request.get_json()
-    found_user: StudentsModel = StudentsModel.query.filter_by(cpf=user_data["cpf"]).first()
-
-    if not found_user:
-        return {"message": "User not found"}, HTTPStatus.NOT_FOUND
-
-    if found_user.verify_password(user_data["password"]):
-        return {"api_key": found_user.api_key}, HTTPStatus.OK
-
-    else:
-        return {"message": "Unauthorized"}, HTTPStatus.UNAUTHORIZED
-
+    pass
 
 def create_student():
     pass
@@ -31,7 +20,7 @@ def delete_student():
     pass
 
 
-@auth.login_required
+# @auth.login_required
 def get_all_students():
     data = current_app.db.session.query(StudentsModel).all()
 
