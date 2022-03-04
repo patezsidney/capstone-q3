@@ -10,7 +10,6 @@ class ClassroomModel(db.Model):
     __tablename__="classrooms"
     classroom_id:str = Column(UUID(as_uuid=True),primary_key=True, default=uuid4)
     name:str = Column(String(255),nullable=False)
-    school_subjects = relationship("SchoolSubjectsModel",backref="classroom",uselist=False)
-    employee = relationship("EmployeeModel",secondary="SchoolSubjectsModel",backref="classroom")
+    school_subjects = relationship("SchoolSubjectsModel",backref="classroom")
     absences = relationship("AbsenceModel",backref="classroom")
     grades = relationship("GradesModel",backref="classroom")
