@@ -11,8 +11,6 @@ def populate_database(app:Flask):
                 BooksModel (book_id='cc733168-68ae-45b8-b4c2-434901ccea0f',title='Harry Potter e a Criança Amaldiçoada - Parte 1',author='J.K. Rowling', quantity= 5),
                 BooksModel (book_id='9c638ca2-901c-4028-91d4-c34209eff719',title='Harry Potter e a Criança Amaldiçoada - Parte 2',author='J.K. Rowling', quantity= 5),
 
-
-
                 #Populate classrooms
                 ClassroomModel (classroom_id='51df51e0-00a7-49e3-9f2e-0405574f5c20',name='1A'),
                 ClassroomModel (classroom_id='1446d11e-6985-4979-8e7f-15d5ddf0a81f',name='1B'),
@@ -56,16 +54,16 @@ def populate_database(app:Flask):
                 ),
 
                 # Populate absence
-                AbsenceModel (absence_id='b20dfcbb-f121-41ef-bf96-cb988d68a35a',date='2020-02-15',justtify=False,
+                AbsenceModel (absence_id='b20dfcbb-f121-41ef-bf96-cb988d68a35a',date='2020-02-15',justify=False,
                         classroom_id='51df51e0-00a7-49e3-9f2e-0405574f5c20',student_id='1d5225ef-5638-4397-9989-e604a2cceca0'
                 ),
-                AbsenceModel (absence_id='9cf30ce0-6925-4ff1-9bbf-f27bd7916782',date='2020-02-15',justtify=True, 
+                AbsenceModel (absence_id='9cf30ce0-6925-4ff1-9bbf-f27bd7916782',date='2020-02-15',justify=True, 
                         classroom_id='51df51e0-00a7-49e3-9f2e-0405574f5c20',student_id='1d5225ef-5638-4397-9989-e604a2cceca0'
                 ),
-                AbsenceModel (absence_id='494925c7-7399-44e2-a00e-653581145979',date='2020-02-15',justtify=False,
+                AbsenceModel (absence_id='494925c7-7399-44e2-a00e-653581145979',date='2020-02-15',justify=False,
                         classroom_id='51df51e0-00a7-49e3-9f2e-0405574f5c20',student_id='51df51e0-00a7-49e3-9f2e-0405574f5c20'
                 ),
-                AbsenceModel (absence_id='d98c6e17-d6ce-4432-bc31-b10418a7cf44',date='2020-02-15',justtify=False,
+                AbsenceModel (absence_id='d98c6e17-d6ce-4432-bc31-b10418a7cf44',date='2020-02-15',justify=False,
                         classroom_id='cf43d8ca-37a8-4140-bc97-32192e151a27',student_id='2a465bd0-22cd-45e7-9fd1-142dee2cca78'
                 ),
 
