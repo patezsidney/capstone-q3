@@ -1,5 +1,5 @@
 from flask import Blueprint, Flask
-
+from app.routes.student_routes import bp as bp_example
 from app.routes.example_routes import bp as bp_example
 from app.routes.employees_routes import bp as bp_employees
 
