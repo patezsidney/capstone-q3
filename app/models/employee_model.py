@@ -5,6 +5,7 @@ from sqlalchemy import Column, VARCHAR, Float
 from sqlalchemy.orm import validates
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship, backref
+import re
 
 
 from app.configs.database import db
