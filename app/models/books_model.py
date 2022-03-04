@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from sqlalchemy import Column, String, Integer
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship,backref
 from app.configs.database import db
 
 from sqlalchemy.dialects.postgresql import UUID
@@ -14,4 +14,3 @@ class BooksModel(db.Model):
     title: str = Column(String(255), nullable=False)
     author: str = Column(String(255), nullable=False)
     quantity: int = Column(Integer)
-    rents = relationship("LibraryModel",backref="books")

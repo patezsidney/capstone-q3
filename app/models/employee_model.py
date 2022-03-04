@@ -5,6 +5,7 @@ from sqlalchemy import Column, VARCHAR, Float
 from sqlalchemy.orm import validates
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship, backref
+import re
 
 
 from app.configs.database import db
@@ -29,8 +30,8 @@ class EmployeeModel(db.Model):
     password_hash = Column(VARCHAR)
     api_key = Column(VARCHAR)
     access_level = Column(VARCHAR, nullable=False)
-    library = relationship("LibraryModel",backref=backref("librarian",uselist=False))
-    school_subjects = relationship("SchoolSubjectsModel",backref="employees")
+    # library = relationship("LibraryModel",backref=backref("librarian",uselist=False))
+    school_subjects = relationship("SchoolSubjectsModel",backref="teacher")
 
     @property
     def password(self):
