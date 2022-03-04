@@ -23,7 +23,7 @@ class StudentsModel(db.Model):
     password_hash = Column(String)
     classroom_id = Column(UUID,ForeignKey("classrooms.classroom_id"),nullable=False)
     api_key = Column(String)
-    locations = relationship("LibraryModel",backref="student")
+    rents = relationship("LibraryModel",backref="student")
     grades = relationship("GradesModel",backref=backref("stundent",uselist=False))
     absences = relationship("AbsenceModel",backref=backref("student",uselist=False))
     classroom = relationship("ClassroomModel",backref="students",uselist=False)
