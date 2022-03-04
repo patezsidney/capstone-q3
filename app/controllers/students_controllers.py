@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from flask import request
+from flask import current_app, jsonify, request
 from app.models.students_model import StudentsModel
 
 
@@ -27,7 +27,10 @@ def delete_student():
     pass
 
 def get_all_students():
-    pass
+    data = current_app.db.session.query(StudentsModel).all()
+
+    return jsonify(data), HTTPStatus.OK
+
 
 def get_student_by_id():
     pass
