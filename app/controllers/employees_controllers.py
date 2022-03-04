@@ -30,7 +30,10 @@ def delete_employee():
     pass
 
 def get_all_employees():
-    pass
+    session: Session = db.session
+    data = session.query(EmployeeModel).all()
+
+    return jsonify(data), HTTPStatus.OK
 
 def get_employee_by_id():
     pass

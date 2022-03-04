@@ -20,3 +20,9 @@ def test_create_employee(client: FlaskClient):
     assert (response_keys == expected_keys), "verifique as keys retornadas"
     assert (type(response_json) is dict), "Verificar se está retornando um dict"
     assert (request_response.status_code == 201), "Verificar se o status code é created"
+
+
+def test_get_all_employees(client):
+    request_response = client.get("/api/employees")
+
+    assert (request_response.status_code == 200), "Verificar se o status code é ok"

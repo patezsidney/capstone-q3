@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime, timedelta
-from sqlalchemy import Column, String, Date, ForeignKey
+from sqlalchemy import Column, Date, ForeignKey
 from app.configs.database import db
 
 from sqlalchemy.dialects.postgresql import UUID
