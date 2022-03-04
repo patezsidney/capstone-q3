@@ -1,11 +1,11 @@
+import re
+
 from uuid import uuid4
 from werkzeug.security import generate_password_hash, check_password_hash
 from dataclasses import dataclass
 from sqlalchemy import Column, VARCHAR, Float
 from sqlalchemy.orm import validates
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import relationship, backref
-import re
 
 
 from app.configs.database import db
@@ -29,7 +29,6 @@ class EmployeeModel(db.Model):
     password_hash = Column(VARCHAR)
     api_key = Column(VARCHAR)
     access_level = Column(VARCHAR, nullable=False)
-    library = relationship("LibraryModel",backref=backref("librarian",uselist=False))
 
     @property
     def password(self):
