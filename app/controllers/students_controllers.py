@@ -29,4 +29,7 @@ def get_student_by_api_key():
 
     student: StudentsModel = StudentsModel.query.filter_by(api_key=bearer_token).first()
 
+    if not student:
+        return {"msg": "unauthorized token!"}, HTTPStatus.BAD_REQUEST
+
     return jsonify(student), HTTPStatus.OK
