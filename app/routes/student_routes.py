@@ -1,7 +1,7 @@
 from flask import Blueprint
 
-from app.controllers import example_controllers
+from app.controllers import students_controllers
 
-bp = Blueprint('example', __name__, url_prefix='/api')
+bp = Blueprint('students', __name__, url_prefix='/students')
 
-bp.post("/sign/student")(example_controllers.get_example_controller)
+bp.get('/<student_id>')(students_controllers.get_student_by_id)
