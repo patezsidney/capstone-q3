@@ -38,3 +38,23 @@ def test_delete_error(client):
     request_delete = client.delete(f"/api/classrooms/b3298cfc-7fb8-47af-91ed-f2d8c4545cdd")
 
     assert (request_delete.status_code == 404), "Verificar se o status code é Not Found"
+
+
+def test_patch_classroom_success(client: FlaskClient):
+    request_data = {
+        "name": "3T",
+    }
+
+    patch_data = {
+        "name": "3A",
+    }
+
+    request_response = client.post("/api/classrooms", json=request_data, follow_redirects=True )
+    response_json: dict = request_response.get_json()
+
+    patch_response = client.patch(f"/api/classrooms/{response_json['classroom_id']}", json=patch_data, follow_redirects=True )
+    patch_json: dict = patch_response.get_json()
+    
+
+    assert (patch_json['name'] == patch_data['name']), "verifique se o nome foi retornado correto"
+    assert (patch_response.status_code == 200), "Verificar se o status code é OK"
