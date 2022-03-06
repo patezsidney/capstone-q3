@@ -1,12 +1,21 @@
 from http import HTTPStatus
-from flask import jsonify
+from flask import jsonify, request
 from sqlalchemy.orm.session import Session
 
 from app.configs.database import db
 from app.models.classroom_model import ClassroomModel
 
 def create_classroom():
-    pass
+    session: Session = db.session
+
+    data = request.get_json()
+
+    classroom = ClassroomModel(**data)
+
+    session.add(classroom)
+    session.commit()
+
+    return jsonify(classroom), HTTPStatus.CREATED
 
 def update_classroom(id: str):
     pass
