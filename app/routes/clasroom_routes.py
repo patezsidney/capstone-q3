@@ -2,7 +2,7 @@ from flask import Blueprint
 
 from app.controllers import classroom_controllers
 
-bp = Blueprint("classroom", __name__, url_prefix="/classroom")
+bp = Blueprint("classrooms", __name__, url_prefix="/classrooms")
 
 bp.post("")(classroom_controllers.create_classroom)
 bp.get("")(classroom_controllers.get_all_classroom)
