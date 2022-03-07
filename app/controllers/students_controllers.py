@@ -1,5 +1,6 @@
 from http import HTTPStatus
 from flask import current_app, jsonify, request
+from app.configs.auth import auth_employee
 
 from sqlalchemy.exc import DataError
 
@@ -11,8 +12,19 @@ def sigin():
 def create_student():
     pass
 
-def update_student():
-    pass
+# @auth_employee.login_required(role='admin')
+def update_student(student_id:str):
+    data = request.get_json()
+
+    student:StudentsModel = StudentsModel.query.filter_by(registration_student_id=student_id).first()
+
+    for key, value in data.items():
+        setattr(student,key,value)
+
+    current_app.db.session.add(student)
+    current_app.db.session.commit()
+
+    return jsonify(student),HTTPStatus.OK
 
 def delete_student():
     pass
