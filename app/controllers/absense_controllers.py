@@ -12,7 +12,6 @@ def create_absense():
     session: Session = db.session
 
     data = request.get_json()
-    data["api_key"] = token_urlsafe(16)
 
     absence = AbsenceModel(**data)
 
