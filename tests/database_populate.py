@@ -87,7 +87,12 @@ def populate_database(app:Flask):
                 SchoolSubjectsModel (school_subject_id='c3280110-1a25-40cb-8573-b20f9f14b200',school_subject='node', employee_id='3f5e5df3-651b-46ec-9c42-be4a863f974a', classroom_id='cf43d8ca-37a8-4140-bc97-32192e151a27'),
                 SchoolSubjectsModel (school_subject_id='73e8e3e6-db7a-4cae-9ae6-74f4d0e87d66',school_subject='python', employee_id='6d4b0f4d-a418-432e-a112-b44527ea33d4', classroom_id='3df783ee-d140-47cd-9c65-213b830a7ca6'),
 
-                # Populate library
+            
+           ])
+        app.db.session.commit()
+
+        app.db.session.add_all([
+                    # Populate library
                 LibraryModel (library_id='3554e9f0-8208-4e99-81c1-d79f3caf891c', date_withdrawal='2020-02-01', date_return='2020-02-15', date_accurancy='2020-02-15', 
                         employee_id='b3298cfc-7fb8-47af-91ed-f2d8c4545cdd', book_id='2fc09626-8a2c-4ef7-b59d-4a56e77e5714', student_id='51df51e0-00a7-49e3-9f2e-0405574f5c20'
                 ),
@@ -100,5 +105,5 @@ def populate_database(app:Flask):
                 LibraryModel (library_id='023b926d-8f03-460d-be7b-840d80f91f6e', date_withdrawal='2020-02-01', date_return='2020-02-15', date_accurancy='2020-02-15', 
                         employee_id='b3298cfc-7fb8-47af-91ed-f2d8c4545cdd', book_id='cc733168-68ae-45b8-b4c2-434901ccea0f', student_id='2a465bd0-22cd-45e7-9fd1-142dee2cca78'
                 )
-           ])
+        ])
         app.db.session.commit()
