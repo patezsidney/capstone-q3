@@ -18,3 +18,4 @@ class LibraryModel(db.Model):
     employee_id:str = Column(UUID,ForeignKey("employees.employee_id"),nullable=False)
     book_id:str = Column(UUID,ForeignKey("books.book_id"),nullable=False)
     student_id:str = Column(UUID,ForeignKey("students.registration_student_id"),nullable=False)
+

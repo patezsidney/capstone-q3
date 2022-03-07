@@ -4,6 +4,7 @@ from flask import Flask
 
 from app import create_app
 from app.configs import database
+from tests.database_populate import populate_database
 
 #necessario instalar a lib pytest-dotenv
 
@@ -23,4 +24,5 @@ def app():
 
 @pytest.fixture()
 def client(app: Flask):
+    populate_database(app)
     return app.test_client()
