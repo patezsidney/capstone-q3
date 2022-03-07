@@ -1,7 +1,8 @@
 from http import HTTPStatus
+from secrets import token_urlsafe
 from flask import current_app, jsonify, request
 from app.configs.auth import auth_employee
-from app.models.exc import IncorrectKeyError
+from app.models.exc import IncorrectKeyError,MissingKeyError
 
 from sqlalchemy.exc import DataError
 from app.models.students_model import StudentsModel
@@ -10,9 +11,34 @@ from app.models.students_model import StudentsModel
 
 # auth = HTTPTokenAuth(scheme="Bearer")
 
+# @auth_employee.login_required(role='adm')
+def register():
+    try:
+        data = request.get_json()
 
-def signin():
-  pass
+        # StudentsModel.check_incorrect_keys(data)
+        StudentsModel.check_keys(data)
+
+        data["api_key"] = token_urlsafe(16)
+
+        # password_to_hash = data.pop("password")
+
+        student = StudentsModel(**data)
+
+        # student.password = password_to_hash
+
+        current_app.db.session.add(student)
+        current_app.db.session.commit()
+
+        return {"id":student.registration_student_id,
+                "name":student.name,
+                "contact_name":student.contact_name,
+                "contact_email":student.contact_email
+                },HTTPStatus.CREATED
+    except MissingKeyError:
+        return {"msg":"Missing key(s)"},HTTPStatus.BAD_REQUEST
+    except IncorrectKeyError:
+        return {"msg":"incorrect key(s)"},HTTPStatus.BAD_REQUEST
 
 def sigin():
     pass
@@ -25,7 +51,7 @@ def update_student(student_id:str):
     try:
         data = request.get_json()
 
-        StudentsModel.check_keys(data)
+        StudentsModel.check_incorrect_keys(data)
 
         student:StudentsModel = StudentsModel.query.filter_by(registration_student_id=student_id).first()
 
@@ -37,7 +63,7 @@ def update_student(student_id:str):
 
         return jsonify(student),HTTPStatus.OK
     except IncorrectKeyError:
-        return {"msg": "Use of invalid key"},HTTPStatus.CONFLICT
+        return {"msg":"incorrect key(s)"},HTTPStatus.BAD_REQUEST
 
 def delete_student():
     pass
