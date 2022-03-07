@@ -1,7 +1,15 @@
-def test_delete_absence_success(client):
+from flask.testing import FlaskClient
+
+def test_delete_absence_success(client: FlaskClient):
     request_data = {
-        "date": "07/03/2022",
-        "justify": True
+        "name": "felipe",
+        "absences": [
+                        {
+                            "date": "Sat, 15 Feb 2020 00:00:00 GMT",
+                            "justify": False,
+                            "classroom_id": "cf43d8ca-37a8-4140-bc97-32192e151a27"
+                        }
+                    ]
     }
 
     request_response = client.post("/api/absence", json=request_data, follow_redirects=True )
@@ -11,7 +19,7 @@ def test_delete_absence_success(client):
 
     assert (request_delete.status_code == 204), "Verificar se o status code é No Content"
 
-def test_delete_absence_error(client):
+def test_delete_absence_error(client: FlaskClient):
 
     request_delete = client.delete(f"/api/absence/b3298cfc-7fb8-47af-91ed-f2d8c4545cdd")
 
