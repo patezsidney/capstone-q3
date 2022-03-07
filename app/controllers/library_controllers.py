@@ -17,8 +17,7 @@ def get_book_list():
 
 def get_book(book_id: str):
     try:
-        book: LibraryModel = LibraryModel.query.filter_by(
-        registration_book_id = book_id).first()
+        book: LibraryModel = LibraryModel.query.get(book_id)
     
         return jsonify(book), HTTPStatus.OK
     
