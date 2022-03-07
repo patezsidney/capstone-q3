@@ -4,4 +4,4 @@ from app.controllers import library_controllers
 
 bp = Blueprint('library', __name__, url_prefix='/library')
 
-bp.post("")(library_controllers.get_book)
+bp.get("")(library_controllers.get_book_list)
