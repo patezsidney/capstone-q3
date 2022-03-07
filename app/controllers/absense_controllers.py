@@ -1,8 +1,8 @@
 from flask import jsonify, current_app
 from http import HTTPStatus
-
+from app.configs.database import db
+from app.models.absence_model import AbsenceModel
 from sqlalchemy.exc import DataError
-
 from app.models.students_model import StudentsModel
 from app.models.absence_model import AbsenceModel
 
@@ -33,8 +33,15 @@ def update_absense(absence_id: str):
     except DataError:
         return {"msg": "absence id not found"}, HTTPStatus.NOT_FOUND
 
-def delete_absense(id: str):
-    pass
+def delete_absense(absence_id: str):
+    absence: AbsenceModel = AbsenceModel.query.get(absence_id)
+    if absence is None:
+        return {'msg': 'Absence not found'}, HTTPStatus.NOT_FOUND
+        
+    db.session.delete(absence)
+    db.session.commit()
+
+    return {}, HTTPStatus.NO_CONTENT
 
 def get_all_absense():
     pass
