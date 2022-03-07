@@ -49,7 +49,7 @@ def test_delete_success(client):
 
 def test_delete_error(client):
 
-    request_delete = client.delete(f"/api/employees/b3298cfc-7fb8-47af-91ed-f2d8c4545cdd")
+    request_delete = client.delete(f"/api/employees/b3298cfc-7fb8-47af-91ed-f2d8c4545c3d")
 
     assert (request_delete.status_code == 404), "Verificar se o status code é Not Found"
 
