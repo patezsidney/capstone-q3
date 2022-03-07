@@ -13,7 +13,7 @@ def update_grade(id: str):
 
 def delete_grade(grade_id: str):
     grade: GradesModel = GradesModel.query.filter_by(grade_id=grade_id).one()
-    return jsonify(grade), HTTPStatus.OK
+    return jsonify(grade), HTTPStatus.NO_CONTENT
 
 def get_all_grades():
     grades: GradesModel = db.session.query(GradesModel).all()
