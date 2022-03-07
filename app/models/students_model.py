@@ -5,10 +5,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import Column, String, Date, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship,backref
-from app.models.exc import IncorrectKeyError
 
+from app.models.exc import IncorrectKeyError
 from app.configs.database import db
 from app.models.absence_model import AbsenceModel
+
 
 @dataclass
 class StudentsModel(db.Model):
@@ -33,7 +34,7 @@ class StudentsModel(db.Model):
     password_hash = Column(String)
     classroom_id = Column(UUID,ForeignKey("classrooms.classroom_id"),nullable=False)
     api_key = Column(String)
-    grades = relationship("GradesModel",backref=backref("stundent",uselist=False))
+    grades = relationship("GradesModel",backref=backref("student",uselist=False))
     absences = relationship("AbsenceModel",backref=backref("student",uselist=False))
     classroom = relationship("ClassroomModel",backref="students",uselist=False)
     @property
