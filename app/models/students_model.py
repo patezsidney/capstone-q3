@@ -7,6 +7,7 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship,backref
 
 from app.configs.database import db
+from app.models.absence_model import AbsenceModel
 
 @dataclass
 class StudentsModel(db.Model):
@@ -16,14 +17,8 @@ class StudentsModel(db.Model):
     contact_email: str
     cpf: str
     birth_date: str
+    absences: AbsenceModel
 
-    registration_student_id: str
-    name: str
-    contact_name: str
-    contact_email: str
-    cpf: str
-    birth_date: str
-    
     __tablename__ = 'students'
 
     registration_student_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
