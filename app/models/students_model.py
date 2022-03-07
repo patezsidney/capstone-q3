@@ -17,6 +17,13 @@ class StudentsModel(db.Model):
     cpf: str
     birth_date: str
 
+    registration_student_id: str
+    name: str
+    contact_name: str
+    contact_email: str
+    cpf: str
+    birth_date: str
+    
     __tablename__ = 'students'
 
     registration_student_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)

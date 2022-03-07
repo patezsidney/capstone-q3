@@ -20,6 +20,18 @@ def delete_student():
 def get_all_students():
     pass
 
+
+# @auth.login_required
+def get_student_by_api_key():
+    bearer_token = request.headers.get('Authorization').split(' ')[1]
+
+    student: StudentsModel = StudentsModel.query.filter_by(api_key=bearer_token).first()
+
+    if not student:
+        return {"msg": "unauthorized token!"}, HTTPStatus.BAD_REQUEST
+
+    return jsonify(student), HTTPStatus.OK
+
 #auth.login_required
 def get_student_by_id(student_id: str):
 
@@ -31,3 +43,4 @@ def get_student_by_id(student_id: str):
     
     except DataError:
         return {"msg": "Student not found"}, HTTPStatus.NOT_FOUND
+
