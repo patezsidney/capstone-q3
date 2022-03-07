@@ -1,3 +1,8 @@
+from http import HTTPStatus
+from sqlalchemy.exc import DataError
+from flask import jsonify
+from app.models.library_model import LibraryModel
+
 def create_book():
     pass
 
@@ -10,5 +15,12 @@ def delete_book(id: str):
 def get_book_list():
     pass
 
-def get_book(id: str):
-    pass
+def get_book(book_id: str):
+    try:
+        book: LibraryModel = LibraryModel.query.filter_by(
+        registration_book_id = book_id).first()
+    
+        return jsonify(book), HTTPStatus.OK
+    
+    except DataError:
+        return {"msg": "Book not found"}, HTTPStatus.NOT_FOUND
