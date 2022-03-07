@@ -1,6 +1,6 @@
 from flask.testing import FlaskClient
 
-def test_get_student_by_id(client: FlaskClient):
+def test_patch_absense_by_id(client: FlaskClient):
     response = client.patch("/api/absences/494925c7-7399-44e2-a00e-653581145979")
     mock_reponse = {
                     "name": "felipe",
@@ -14,8 +14,6 @@ def test_get_student_by_id(client: FlaskClient):
                     }
     
     response_json: dict = response.get_json()
-    
-    print(response.get_json())
     
     assert(response_json == mock_reponse), "Verificar se o retorno está correto"
     assert (type(response_json) is dict), "Verificar se está retornando um dict"
