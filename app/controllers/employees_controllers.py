@@ -7,6 +7,7 @@ from sqlalchemy import exc
 from sqlalchemy.orm.session import Session
 
 from app.configs.database import db
+from app.configs.auth import auth_employee
 
 from app.models.employee_model import EmployeeModel
 
@@ -60,5 +61,7 @@ def get_all_employees():
 
     return jsonify(data), HTTPStatus.OK
 
-def get_employee_by_id():
-    pass
+@auth_employee.login_required(role='admin')
+def get_employee_by_id(employee_id:str):
+    employee: EmployeeModel = EmployeeModel.query.filter_by(employee_id=employee_id).one()
+    return jsonify(employee), HTTPStatus.OK
