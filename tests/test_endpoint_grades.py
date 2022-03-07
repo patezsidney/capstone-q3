@@ -29,3 +29,5 @@ def test_get_all_grades(client:FlaskClient):
     assert(response.status_code == 200), "Verificar se o status code é OK"
     assert(len(response_json) == 4), "O comprimento da resposta esta menor do que o esperado"
 
+
+
