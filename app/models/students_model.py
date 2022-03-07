@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from uuid import uuid4
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -6,9 +7,22 @@ from sqlalchemy.dialects.postgresql import UUID
 
 from app.configs.database import db
 
-
+@dataclass
 class StudentsModel(db.Model):
+    registration_student_id: str
+    name: str
+    contact_name: str
+    contact_email: str
+    cpf: str
+    birth_date: str
 
+    registration_student_id: str
+    name: str
+    contact_name: str
+    contact_email: str
+    cpf: str
+    birth_date: str
+    
     __tablename__ = 'students'
 
     registration_student_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
@@ -21,7 +35,9 @@ class StudentsModel(db.Model):
     photo = Column(String)
     password_hash = Column(String)
     api_key = Column(String)
-
+    grades = relationship("GradesModel",backref=backref("stundent",uselist=False))
+    absences = relationship("AbsenceModel",backref=backref("student",uselist=False))
+    classroom = relationship("ClassroomModel",backref="students",uselist=False)
     @property
     def password(self):
         raise AttributeError("Password is not accessible")

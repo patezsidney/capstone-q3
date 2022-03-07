@@ -10,6 +10,6 @@ class AbsenceModel(db.Model):
 
     absence_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
     date:str = Column(Date)
-    justtify:bool = Column(Boolean, default=False)
-    # classrom_id:str = Column(Integer, ForeignKey("classrom.id"), nullable=False)
-    # student_id = Column(Integer, ForeignKey("student.id"), nullable=False)
+    justify:bool = Column(Boolean, default=False)
+    classroom_id:str = Column(UUID, ForeignKey("classrooms.classroom_id"), nullable=False)
+    student_id = Column(UUID, ForeignKey("students.registration_student_id"), nullable=False)

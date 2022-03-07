@@ -9,6 +9,7 @@ from sqlalchemy.dialects.postgresql import UUID
 
 
 from app.configs.database import db
+from app.models import school_subjects_model
 from app.models.exc import EmailError, EmployeeAtributeTypeError
 
 @dataclass
@@ -29,6 +30,8 @@ class EmployeeModel(db.Model):
     password_hash = Column(VARCHAR)
     api_key = Column(VARCHAR)
     access_level = Column(VARCHAR, nullable=False)
+    # library = relationship("LibraryModel",backref=backref("librarian",uselist=False))
+    school_subjects = relationship("SchoolSubjectsModel",backref="teacher")
 
     @property
     def password(self):
