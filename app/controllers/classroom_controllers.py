@@ -20,8 +20,15 @@ def create_classroom():
 def update_classroom(id: str):
     pass
 
-def delete_classroom(id: str):
-    pass
+def delete_classroom(classroom_id: str):
+    classroom: ClassroomModel = ClassroomModel.query.get(classroom_id)
+    if classroom is None:
+        return {'msg': 'Classroom not found'}, HTTPStatus.NOT_FOUND
+        
+    db.session.delete(classroom)
+    db.session.commit()
+
+    return {}, HTTPStatus.NO_CONTENT
 
 def get_all_classroom():
     session: Session = db.session
