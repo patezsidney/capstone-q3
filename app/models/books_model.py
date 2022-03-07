@@ -5,8 +5,14 @@ from app.configs.database import db
 
 from sqlalchemy.dialects.postgresql import UUID
 from uuid import uuid4
+
 @dataclass
 class BooksModel(db.Model):
+
+    book_id: str
+    title: str
+    author: str
+    quantity: int
 
     __tablename__ = "books"
 

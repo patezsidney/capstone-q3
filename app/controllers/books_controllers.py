@@ -1,7 +1,7 @@
 from http import HTTPStatus
 from sqlalchemy.exc import DataError
 from flask import jsonify
-from app.models.library_model import LibraryModel
+from app.models.books_model import BooksModel
 
 def create_book():
     pass
@@ -17,7 +17,7 @@ def get_book_list():
 
 def get_book(book_id: str):
     try:
-        book: LibraryModel = LibraryModel.query.get(book_id)
+        book: BooksModel = BooksModel.query.get(book_id)
     
         return jsonify(book), HTTPStatus.OK
     
