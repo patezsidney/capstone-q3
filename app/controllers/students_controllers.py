@@ -4,8 +4,15 @@ from app.configs.auth import auth_employee
 from app.models.exc import IncorrectKeyError
 
 from sqlalchemy.exc import DataError
-
 from app.models.students_model import StudentsModel
+# from flask_httpauth import HTTPTokenAuth
+
+
+# auth = HTTPTokenAuth(scheme="Bearer")
+
+
+def signin():
+  pass
 
 def sigin():
     pass
@@ -35,8 +42,13 @@ def update_student(student_id:str):
 def delete_student():
     pass
 
+
+# @auth.login_required
 def get_all_students():
-    pass
+    data = current_app.db.session.query(StudentsModel).all()
+
+    return jsonify(data), HTTPStatus.OK
+
 
 
 # @auth.login_required

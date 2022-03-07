@@ -6,6 +6,13 @@ from app.configs.database import db
 
 @dataclass
 class AbsenceModel(db.Model):
+
+    absence_id: str
+    date: str
+    justify: bool
+    classroom_id: str
+    student_id: str
+
     __tablename__ = "absence"
 
     absence_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
