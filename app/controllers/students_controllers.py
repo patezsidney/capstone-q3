@@ -1,6 +1,7 @@
 from http import HTTPStatus
 from flask import current_app, jsonify, request
 from app.configs.auth import auth_employee
+from app.models.exc import IncorrectKeyError
 
 from sqlalchemy.exc import DataError
 
@@ -14,17 +15,22 @@ def create_student():
 
 # @auth_employee.login_required(role='admin')
 def update_student(student_id:str):
-    data = request.get_json()
+    try:
+        data = request.get_json()
 
-    student:StudentsModel = StudentsModel.query.filter_by(registration_student_id=student_id).first()
+        StudentsModel.check_keys(data)
 
-    for key, value in data.items():
-        setattr(student,key,value)
+        student:StudentsModel = StudentsModel.query.filter_by(registration_student_id=student_id).first()
 
-    current_app.db.session.add(student)
-    current_app.db.session.commit()
+        for key, value in data.items():
+            setattr(student,key,value)
 
-    return jsonify(student),HTTPStatus.OK
+        current_app.db.session.add(student)
+        current_app.db.session.commit()
+
+        return jsonify(student),HTTPStatus.OK
+    except IncorrectKeyError:
+        return {"msg": "Use of invalid key"},HTTPStatus.CONFLICT
 
 def delete_student():
     pass

@@ -5,6 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import Column, String, Date, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship,backref
+from app.models.exc import IncorrectKeyError
 
 from app.configs.database import db
 
@@ -50,3 +51,12 @@ class StudentsModel(db.Model):
 
     def check_password(self, password_to_compare):
         return check_password_hash(self.password_hash, password_to_compare)
+
+    @classmethod
+    def check_keys(cls,data):
+        key_erro = [key for key in data.keys() if key not in ["name","contact_name","contact_email","cpf","birth_date","gender","photo"]]
+
+        if len(key_erro) > 0:
+            raise IncorrectKeyError
+        
+        return True
