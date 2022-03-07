@@ -1,3 +1,10 @@
+from http import HTTPStatus
+from flask import current_app, jsonify, request
+
+from sqlalchemy.exc import DataError
+
+from app.models.students_model import StudentsModel
+
 def sigin():
     pass
 
@@ -13,5 +20,14 @@ def delete_student():
 def get_all_students():
     pass
 
-def get_student_by_id():
-    pass
+#auth.login_required
+def get_student_by_id(student_id: str):
+
+    try:
+        student: StudentsModel = StudentsModel.query.filter_by(
+        registration_student_id = student_id).first()
+    
+        return jsonify(student), HTTPStatus.OK
+    
+    except DataError:
+        return {"msg": "Student not found"}, HTTPStatus.NOT_FOUND
