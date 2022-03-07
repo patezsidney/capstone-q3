@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from uuid import uuid4
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -7,9 +8,22 @@ from sqlalchemy.orm import relationship,backref
 
 from app.configs.database import db
 
-
+@dataclass
 class StudentsModel(db.Model):
+    registration_student_id: str
+    name: str
+    contact_name: str
+    contact_email: str
+    cpf: str
+    birth_date: str
 
+    registration_student_id: str
+    name: str
+    contact_name: str
+    contact_email: str
+    cpf: str
+    birth_date: str
+    
     __tablename__ = 'students'
 
     registration_student_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
