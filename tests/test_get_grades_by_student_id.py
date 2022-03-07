@@ -19,3 +19,13 @@ def test_get_grades_by_student_id(client: FlaskClient):
     assert(response_json == mock_response), "Verificar se o retorno está correto"
     assert(type(response_json) is dict), "Verificar se está retornando um dict"
     assert(response.status_code == 200), "Verificar se o status code é OK"
+
+
+def test_get_all_grades(client:FlaskClient):
+    response = client.get("/api/grades")
+    response_json: dict = response.get_json()
+    assert(type(response_json) is list), "Verificar se está retornando um list"
+    assert(type(response_json[0]) is dict), "Verificar se está retornando um dict"
+    assert(response.status_code == 200), "Verificar se o status code é OK"
+    assert(len(response_json) == 4), "O comprimento da resposta esta menor do que o esperado"
+

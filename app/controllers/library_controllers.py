@@ -1,7 +1,10 @@
 from http import HTTPStatus
+from sqlalchemy.orm.session import Session
+from app.configs.database import db
 from sqlalchemy.exc import DataError
 from flask import jsonify
 from app.models.library_model import LibraryModel
+
 
 def create_book():
     pass
@@ -13,7 +16,10 @@ def delete_book(id: str):
     pass
 
 def get_book_list():
-    pass
+    session: Session = db.session
+    data = session.query(LibraryModel).all()
+
+    return jsonify(data), HTTPStatus.OK
 
 def get_book(book_id: str):
     try:
