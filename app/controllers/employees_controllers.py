@@ -1,5 +1,3 @@
-import json
-
 from flask import request, jsonify
 from http import HTTPStatus
 from secrets import token_urlsafe
@@ -52,8 +50,15 @@ def create_employee():
 def update_employee():
     pass
 
-def delete_employee():
-    pass
+def delete_employee(employee_id: str):
+    employee: EmployeeModel = EmployeeModel.query.get(employee_id)
+    if employee is None:
+        return {'msg': 'Employee not found'}, HTTPStatus.NOT_FOUND
+        
+    db.session.delete(employee)
+    db.session.commit()
+
+    return {}, HTTPStatus.NO_CONTENT
 
 def get_all_employees():
     session: Session = db.session
