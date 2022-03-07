@@ -1,9 +1,8 @@
 from flask import jsonify
 from http import HTTPStatus
-
 from sqlalchemy.exc import DataError
-
-from app.models.students_model import StudentsModel
+from app.models import StudentsModel, GradesModel
+from app.configs.database import db
 
 
 def create_grade():
@@ -16,7 +15,8 @@ def delete_grade(id: str):
     pass
 
 def get_all_grades():
-    pass
+    grades: GradesModel = db.session.query(GradesModel).all()
+    return jsonify(grades), HTTPStatus.OK
 
 # @auth.login_required
 def get_student_grades(student_id: str):
