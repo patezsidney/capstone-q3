@@ -13,8 +13,6 @@ def test_get_student_by_id(client: FlaskClient):
     
     response_json: dict = response.get_json()
     
-    print(response.get_json())
-    
     assert(response_json == mock_reponse), "Verificar se o retorno está correto"
     assert (type(response_json) is dict), "Verificar se está retornando um dict"
     assert (response.status_code == 200), "Verificar se o status code é OK"
