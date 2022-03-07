@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime, timedelta
-from sqlalchemy import Column, String, Date, ForeignKey
+from sqlalchemy import Column, Date, ForeignKey
 from app.configs.database import db
 
 from sqlalchemy.dialects.postgresql import UUID
@@ -18,3 +18,4 @@ class LibraryModel(db.Model):
     employee_id:str = Column(UUID,ForeignKey("employees.employee_id"),nullable=False)
     book_id:str = Column(UUID,ForeignKey("books.book_id"),nullable=False)
     student_id:str = Column(UUID,ForeignKey("students.registration_student_id"),nullable=False)
+
