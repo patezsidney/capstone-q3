@@ -1,7 +1,8 @@
 from flask import Blueprint, Flask
-from app.routes.student_routes import bp as bp_students
+from app.routes.students_routes import bp as bp_students
 from app.routes.employees_routes import bp as bp_employees
 from app.routes.grades_routes import bp as bp_grades
+
 
 bp = Blueprint('api', __name__, url_prefix='/api')
 
