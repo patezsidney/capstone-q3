@@ -1,3 +1,5 @@
+import json
+
 from flask import request, jsonify
 from http import HTTPStatus
 from secrets import token_urlsafe
@@ -10,7 +12,29 @@ from app.configs.auth import auth_employee
 from app.models.employee_model import EmployeeModel
 
 def sigin():
-    pass
+    data = request.get_json()
+
+    try:
+        employee: EmployeeModel = EmployeeModel.query.filter_by(employee_id=data['employee_id']).one()
+    
+        if employee.check_password(data['password']):
+            return {
+                "employee_id": employee.employee_id, 
+                "name": employee.name,
+                "email": employee.email,
+                "wage": employee.wage, 
+                "access_level":employee.access_level, 
+                "api_key": employee.api_key
+            }, HTTPStatus.OK
+    
+        else:
+            return {'msg': 'Wrong password'}, HTTPStatus.UNAUTHORIZED
+    
+    except exc.NoResultFound:
+        return {"msg": "Employee not found"}, HTTPStatus.UNAUTHORIZED
+
+    except exc.DatabaseError:
+        return {"msg": "Invalid employee id"}, HTTPStatus.UNAUTHORIZED
 
 def create_employee():
     session: Session = db.session
