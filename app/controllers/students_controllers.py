@@ -1,10 +1,12 @@
 from http import HTTPStatus
+from tkinter import N
 from flask import current_app, jsonify, request
 from app.configs.auth import auth_employee
 from app.models.exc import IncorrectKeyError
 
 from sqlalchemy.exc import DataError
 from app.models.students_model import StudentsModel
+from werkzeug.exceptions import NotFound
 # from flask_httpauth import HTTPTokenAuth
 
 
@@ -29,6 +31,9 @@ def update_student(student_id:str):
 
         student:StudentsModel = StudentsModel.query.filter_by(registration_student_id=student_id).first()
 
+        if student == None:
+            raise NotFound
+
         for key, value in data.items():
             setattr(student,key,value)
 
@@ -38,9 +43,23 @@ def update_student(student_id:str):
         return jsonify(student),HTTPStatus.OK
     except IncorrectKeyError:
         return {"msg": "Use of invalid key"},HTTPStatus.CONFLICT
+    except NotFound:
+        return {"msg":"Student not found"}
 
-def delete_student():
-    pass
+# @auth_employee.login_required(role='admin')
+def delete_student(student_id):
+    try:
+        student:StudentsModel = StudentsModel.query.filter_by(registration_student_id=student_id).first()
+
+        if student == None:
+            raise NotFound
+
+        current_app.db.session.delete(student)
+        current_app.db.session.commit()
+
+        return "",HTTPStatus.OK
+    except NotFound:
+        return {"msg":"Student not found"}
 
 
 # @auth.login_required

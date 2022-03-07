@@ -11,3 +11,5 @@ bp.get('/<student_id>')(students_controllers.get_student_by_id)
 
 bp.patch("/<student_id>")(students_controllers.update_student)
 
+bp.delete("/<student_id>")(students_controllers.delete_student)
+
