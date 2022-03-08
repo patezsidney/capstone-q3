@@ -8,7 +8,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from app.configs.database import db
 from app.models.absence_model import AbsenceModel
-from app.models.exc import IncorrectKeyError
+from app.models.exc import IncorrectKeyError, MissingKeyError
 
 
 @dataclass
@@ -49,10 +49,19 @@ class StudentsModel(db.Model):
         return check_password_hash(self.password_hash, password_to_compare)
 
     @classmethod
-    def check_keys(cls,data):
-        key_erro = [key for key in data.keys() if key not in ["name","contact_name","contact_email","cpf","birth_date","gender","photo"]]
+    def check_incorrect_keys(cls,data):
+        key_error = [key for key in data.keys() if key not in ["name","contact_name","contact_email","cpf","birth_date","gender","photo","password","classroom_id"]]
 
-        if len(key_erro) > 0:
+        if len(key_error) > 0:
             raise IncorrectKeyError
+        
+        return True
+
+    @classmethod
+    def check_keys(cls,data):
+        missing_key = [key for key in ["name","contact_name","contact_email","cpf","birth_date","gender","photo","password","classroom_id"] if key not in data.keys()]
+
+        if len(missing_key) > 0:
+            raise MissingKeyError
         
         return True
