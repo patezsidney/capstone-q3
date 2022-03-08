@@ -39,5 +39,4 @@ def test_post_new_grade(client:FlaskClient):
             "classrom_id": '51df51e0-00a7-49e3-9f2e-0405574f5c20'
             }
     request_response = client.post("/api/grades",json=data, follow_redirects=True)
-    print(request_response)
     assert (request_response.status_code == 201), "Verificar se o status code é OK"
