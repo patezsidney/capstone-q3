@@ -20,4 +20,4 @@ def test_patch_student_with_invalid_key(client: FlaskClient):
     
     request_response = client.patch("/api/students/51df51e0-00a7-49e3-9f2e-0405574f5c20",json=request_data)
     
-    assert (request_response.status_code == 400), "Verificar se o status code é OK"
+    assert (request_response.status_code == 409), "Verificar se o status code é OK"

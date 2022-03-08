@@ -95,7 +95,7 @@ def update_student(student_id:str):
     except IncorrectKeyError:
         return {"msg": "Use of invalid key"},HTTPStatus.CONFLICT
     except NotFound:
-        return {"msg":"Student not found"}
+        return {"msg":"Student not found"},HTTPStatus.NOT_FOUND
 
 # @auth_employee.login_required(role='admin')
 def delete_student(student_id):
