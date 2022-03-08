@@ -1,8 +1,11 @@
-from app.configs.database import db
-from sqlalchemy import Column,String,ForeignKey
 from dataclasses import dataclass
 from uuid import uuid4
+
+from sqlalchemy import Column, ForeignKey, String
 from sqlalchemy.dialects.postgresql import UUID
+
+from app.configs.database import db
+
 
 @dataclass
 class SchoolSubjectsModel(db.Model):

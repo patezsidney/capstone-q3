@@ -1,5 +1,6 @@
 from flask.testing import FlaskClient
 
+
 def test_patch_student_by_id(client: FlaskClient):
 
     request_data = {

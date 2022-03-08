@@ -1,11 +1,13 @@
-from secrets import token_urlsafe
-from flask import jsonify, current_app, request
 from http import HTTPStatus
+from secrets import token_urlsafe
+
+from flask import current_app, jsonify, request
+from sqlalchemy.exc import DataError
+from sqlalchemy.orm.session import Session
+
 from app.configs.database import db
 from app.models.absence_model import AbsenceModel
-from sqlalchemy.exc import DataError
 from app.models.students_model import StudentsModel
-from sqlalchemy.orm.session import Session
 
 
 def create_absense():

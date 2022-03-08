@@ -1,8 +1,11 @@
 from dataclasses import dataclass
-from sqlalchemy import Column, Date, Boolean, ForeignKey
 from uuid import uuid4
+
+from sqlalchemy import Boolean, Column, Date, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
+
 from app.configs.database import db
+
 
 @dataclass
 class AbsenceModel(db.Model):

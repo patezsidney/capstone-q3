@@ -1,10 +1,13 @@
 from dataclasses import dataclass
-from sqlalchemy import Column, String, Integer
-from app.configs.database import db
-
-from sqlalchemy.dialects.postgresql import UUID
 from uuid import uuid4
-from app.models.exc import IncorrectKeyError,MissingKeyError
+
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.dialects.postgresql import UUID
+
+from app.configs.database import db
+from app.models.exc import IncorrectKeyError, MissingKeyError
+
+
 @dataclass
 class BooksModel(db.Model):
 

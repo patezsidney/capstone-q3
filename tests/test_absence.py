@@ -1,5 +1,6 @@
 from flask.testing import FlaskClient
 
+
 def test_create_absence(client: FlaskClient):
     
     request_data = {
