@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from sqlalchemy import Column, String, Integer
-from sqlalchemy.orm import relationship,backref
 from app.configs.database import db
 
 from sqlalchemy.dialects.postgresql import UUID
