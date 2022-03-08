@@ -58,7 +58,7 @@ def test_patch_classroom_success(client: FlaskClient):
     
 
     assert (patch_json['name'] == patch_data['name']), "verifique se o nome foi retornado correto"
-    assert (patch_response.status_code == 200), "Verificar se o status code é OK"
+    assert (patch_response.status_code == 202), "Verificar se o status code é OK"
 
 def test_get_on_classroom_success(client: FlaskClient):
     request_data = {
