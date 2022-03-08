@@ -23,9 +23,9 @@ def get_library_list():
 
     return jsonify(data), HTTPStatus.OK
 
-def get_library(library_id: str):
+def get_library(book_id: str):
     try:
-        book: LibraryModel = LibraryModel.query.get(library_id)
+        book: LibraryModel = LibraryModel.query.get(book_id)
     
         return jsonify(book), HTTPStatus.OK
     
