@@ -13,6 +13,11 @@ def patch_book_by_id(book_id):
     try:
         data = request.get_json()
 
+        book = BooksModel.query.filter_by(book_id=book_id).first()
+
+        if book == None:
+            raise NotFound
+
         for key, value in data.items():
             setattr(book,key,value)
             
