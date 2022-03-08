@@ -7,7 +7,7 @@ from sqlalchemy.exc import DataError
 from werkzeug.exceptions import NotFound
 
 from app.configs.auth import auth_employee
-from app.models.exc import IncorrectKeyError, MissingKeyError
+from app.models.exc import IncorrectKeyError, MissingKeyError, TypeValueError
 from app.models.students_model import StudentsModel
 
 # from flask_httpauth import HTTPTokenAuth
@@ -20,16 +20,13 @@ def register():
     try:
         data = request.get_json()
 
-        # StudentsModel.check_incorrect_keys(data)
+        StudentsModel.check_incorrect_keys(data)
         StudentsModel.check_keys(data)
+        StudentsModel.check_type_value(data)
 
         data["api_key"] = token_urlsafe(16)
 
-        # password_to_hash = data.pop("password")
-
         student = StudentsModel(**data)
-
-        # student.password = password_to_hash
 
         current_app.db.session.add(student)
         current_app.db.session.commit()
@@ -42,7 +39,9 @@ def register():
     except MissingKeyError:
         return {"msg":"Missing key(s)"},HTTPStatus.BAD_REQUEST
     except IncorrectKeyError:
-        return {"msg":"incorrect key(s)"},HTTPStatus.BAD_REQUEST
+        return {"msg": "Use of invalid key"},HTTPStatus.BAD_REQUEST
+    except TypeValueError:
+        return {"msg":"request with incorrect value type!"},HTTPStatus.BAD_REQUEST
         
 def signin():
     data = request.get_json()
@@ -71,15 +70,13 @@ def signin():
         return {"msg": "Invalid employee id"}, HTTPStatus.UNAUTHORIZED
 
 
-def create_student():
-    pass
-
 # @auth_employee.login_required(role='admin')
 def update_student(student_id:str):
     try:
         data = request.get_json()
 
         StudentsModel.check_incorrect_keys(data)
+        StudentsModel.check_type_value(data)
 
         student:StudentsModel = StudentsModel.query.filter_by(registration_student_id=student_id).first()
 
@@ -92,11 +89,13 @@ def update_student(student_id:str):
         current_app.db.session.add(student)
         current_app.db.session.commit()
 
-        return jsonify(student),HTTPStatus.OK
+        return jsonify(student),HTTPStatus.ACCEPTED
     except IncorrectKeyError:
-        return {"msg": "Use of invalid key"},HTTPStatus.CONFLICT
+        return {"msg": "Use of invalid key"},HTTPStatus.BAD_REQUEST
     except NotFound:
         return {"msg":"Student not found"},HTTPStatus.NOT_FOUND
+    except TypeValueError:
+        return {"msg":"request with incorrect value type!"},HTTPStatus.BAD_REQUEST
 
 # @auth_employee.login_required(role='admin')
 def delete_student(student_id):
@@ -109,12 +108,12 @@ def delete_student(student_id):
         current_app.db.session.delete(student)
         current_app.db.session.commit()
 
-        return "",HTTPStatus.OK
+        return "",HTTPStatus.NO_CONTENT
     except NotFound:
-        return {"msg":"Student not found"}
+        return {"msg":"Student not found"},HTTPStatus.NOT_FOUND
 
 
-# @auth.login_required
+# @auth.login_required(role="admin")
 def get_all_students():
     data = current_app.db.session.query(StudentsModel).all()
 
@@ -122,7 +121,7 @@ def get_all_students():
 
 
 
-# @auth.login_required
+# @auth.login_required(role="admin")
 def get_student_by_api_key():
     bearer_token = request.headers.get('Authorization').split(' ')[1]
 
@@ -133,7 +132,7 @@ def get_student_by_api_key():
 
     return jsonify(student), HTTPStatus.OK
 
-#auth.login_required
+#auth.login_required(role="admin")
 def get_student_by_id(student_id: str):
 
     try:
