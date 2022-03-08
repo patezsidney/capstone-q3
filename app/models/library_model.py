@@ -4,6 +4,7 @@ from uuid import uuid4
 
 from sqlalchemy import Column, Date, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import relationship, backref
 
 from app.configs.database import db
 from app.models.exc import IncorrectKeyError, MissingKeyError
@@ -11,6 +12,13 @@ from app.models.exc import IncorrectKeyError, MissingKeyError
 
 @dataclass
 class LibraryModel(db.Model):
+
+    library_id: str
+    date_withdrawal: str
+    date_accurancy: str
+    book_id: str
+    student_id: str
+    employee_id: str
 
     __tablename__ = "library"
 
@@ -21,6 +29,10 @@ class LibraryModel(db.Model):
     employee_id:str = Column(UUID,ForeignKey("employees.employee_id"),nullable=False)
     book_id:str = Column(UUID,ForeignKey("books.book_id"),nullable=False)
     student_id:str = Column(UUID,ForeignKey("students.registration_student_id"),nullable=False)
+
+    employee = relationship("EmployeeModel", backref=backref("employee"))
+    student = relationship("StudentsModel", backref=backref("student"))
+    book = relationship("BooksModel", backref=backref("book"))
 
     @classmethod
     def check_incorrect_keys(cls,data):

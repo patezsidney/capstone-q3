@@ -41,11 +41,21 @@ def get_library_list():
 
     return jsonify(data), HTTPStatus.OK
 
-def get_library(book_id: str):
+def get_library(library_id: str):
+
     try:
-        book: LibraryModel = LibraryModel.query.get(book_id)
-    
-        return jsonify(book), HTTPStatus.OK
+        library: LibraryModel = LibraryModel.query.filter_by(
+        library_id=library_id
+    ).first()
+
+        response = {
+            "library": library,
+            "student": library.student.name,
+            "book": library.book.title,
+            "employee": library.employee.name
+        }
+
+        return jsonify(response), HTTPStatus.OK
     
     except DataError:
-        return {"msg": "Book not found"}, HTTPStatus.NOT_FOUND
+        return {"msg": "rental_id not found"}, HTTPStatus.NOT_FOUND
