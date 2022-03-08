@@ -32,8 +32,18 @@ def library_register():
 def update_library(id: str):
     pass
 
-def delete_library(id: str):
-    pass
+def delete_library(library_id: str):
+    
+    try:
+        library: LibraryModel = LibraryModel.query.get(library_id)
+    
+        db.session.delete(library)
+        db.session.commit()
+
+        return {}, HTTPStatus.NO_CONTENT
+    
+    except DataError:
+        return {"mgs": "library_id not found"}, HTTPStatus.NOT_FOUND
 
 def get_library_list():
     session: Session = db.session
