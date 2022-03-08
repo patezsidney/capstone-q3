@@ -1,5 +1,6 @@
 from flask.testing import FlaskClient
 
+
 def test_get_all_classrooms(client):
     request_response = client.get("/api/classrooms")
 
@@ -58,3 +59,23 @@ def test_patch_classroom_success(client: FlaskClient):
 
     assert (patch_json['name'] == patch_data['name']), "verifique se o nome foi retornado correto"
     assert (patch_response.status_code == 200), "Verificar se o status code é OK"
+
+def test_get_on_classroom_success(client: FlaskClient):
+    request_data = {
+        "name": "3T",
+    }
+
+    request_response = client.post("/api/classrooms", json=request_data, follow_redirects=True )
+    response_json: dict = request_response.get_json() 
+
+    expected_keys = ["name", "classroom_id", "absences", "school_subjects", "grades", "students"]
+    expected_keys.sort()
+    
+    request_response_get = client.get(f"/api/classrooms/{response_json['classroom_id']}", json=request_data, follow_redirects=True )
+    response_json_get: dict = request_response_get.get_json()
+    response_keys = list(response_json_get.keys())
+    response_keys.sort()
+
+    assert (response_keys == expected_keys), "verifique as keys retornadas"
+    assert (request_response_get.status_code == 200), "Verificar se o status code é OK"
+

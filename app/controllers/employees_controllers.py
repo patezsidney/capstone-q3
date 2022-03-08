@@ -1,20 +1,21 @@
-from flask import request, jsonify
 from http import HTTPStatus
 from secrets import token_urlsafe
+
+from flask import jsonify, request
 from sqlalchemy import exc
 from sqlalchemy.orm.session import Session
 
-from app.configs.database import db
 from app.configs.auth import auth_employee
-
+from app.configs.database import db
 from app.models.employee_model import EmployeeModel
 from app.services.decorators import verify_some_keys
+
 
 def sigin():
     data = request.get_json()
 
     try:
-        employee: EmployeeModel = EmployeeModel.query.filter_by(employee_id=data['employee_id']).one()
+        employee: EmployeeModel = EmployeeModel.query.filter_by(email=data['email']).one()
     
         if employee.check_password(data['password']):
             return {
@@ -33,7 +34,7 @@ def sigin():
         return {"msg": "Employee not found"}, HTTPStatus.UNAUTHORIZED
 
     except exc.DatabaseError:
-        return {"msg": "Invalid employee id"}, HTTPStatus.UNAUTHORIZED
+        return {"msg": "Invalid employee email"}, HTTPStatus.UNAUTHORIZED
 
 def create_employee():
     session: Session = db.session

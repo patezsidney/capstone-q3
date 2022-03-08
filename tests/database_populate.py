@@ -1,5 +1,8 @@
 from flask import Flask
-from app.models import BooksModel, ClassroomModel, StudentsModel, GradesModel, AbsenceModel, EmployeeModel, SchoolSubjectsModel, LibraryModel
+
+from app.models import (AbsenceModel, BooksModel, ClassroomModel,
+                        EmployeeModel, GradesModel, LibraryModel,
+                        SchoolSubjectsModel, StudentsModel)
 
 
 def populate_database(app:Flask):

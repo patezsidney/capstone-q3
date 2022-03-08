@@ -1,5 +1,6 @@
-import pytest
 import os
+
+import pytest
 from flask import Flask
 
 from app import create_app
@@ -8,7 +9,7 @@ from tests.database_populate import populate_database
 
 #necessario instalar a lib pytest-dotenv
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def app():
 
     app: Flask = create_app()
@@ -22,7 +23,7 @@ def app():
     yield app
     database.db.drop_all(app=app)
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def client(app: Flask):
     populate_database(app)
     return app.test_client()

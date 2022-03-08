@@ -1,5 +1,6 @@
 from flask.testing import FlaskClient
 
+
 def test_get_library_by_id(client: FlaskClient):
     response = client.get("/api/library/3554e9f0-8208-4e99-81c1-d79f3caf891c")
 
