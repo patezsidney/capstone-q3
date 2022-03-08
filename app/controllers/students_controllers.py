@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from tkinter import N
+from secrets import token_urlsafe
 
 from flask import current_app, jsonify, request
 from sqlalchemy import exc
@@ -7,7 +7,7 @@ from sqlalchemy.exc import DataError
 from werkzeug.exceptions import NotFound
 
 from app.configs.auth import auth_employee
-from app.models.exc import IncorrectKeyError
+from app.models.exc import IncorrectKeyError, MissingKeyError
 from app.models.students_model import StudentsModel
 
 # from flask_httpauth import HTTPTokenAuth
@@ -15,7 +15,35 @@ from app.models.students_model import StudentsModel
 
 # auth = HTTPTokenAuth(scheme="Bearer")
 
+# @auth_employee.login_required(role='adm')
+def register():
+    try:
+        data = request.get_json()
 
+        # StudentsModel.check_incorrect_keys(data)
+        StudentsModel.check_keys(data)
+
+        data["api_key"] = token_urlsafe(16)
+
+        # password_to_hash = data.pop("password")
+
+        student = StudentsModel(**data)
+
+        # student.password = password_to_hash
+
+        current_app.db.session.add(student)
+        current_app.db.session.commit()
+
+        return {"id":student.registration_student_id,
+                "name":student.name,
+                "contact_name":student.contact_name,
+                "contact_email":student.contact_email
+                },HTTPStatus.CREATED
+    except MissingKeyError:
+        return {"msg":"Missing key(s)"},HTTPStatus.BAD_REQUEST
+    except IncorrectKeyError:
+        return {"msg":"incorrect key(s)"},HTTPStatus.BAD_REQUEST
+        
 def signin():
     data = request.get_json()
     
@@ -51,7 +79,7 @@ def update_student(student_id:str):
     try:
         data = request.get_json()
 
-        StudentsModel.check_keys(data)
+        StudentsModel.check_incorrect_keys(data)
 
         student:StudentsModel = StudentsModel.query.filter_by(registration_student_id=student_id).first()
 
@@ -68,7 +96,7 @@ def update_student(student_id:str):
     except IncorrectKeyError:
         return {"msg": "Use of invalid key"},HTTPStatus.CONFLICT
     except NotFound:
-        return {"msg":"Student not found"}
+        return {"msg":"Student not found"},HTTPStatus.NOT_FOUND
 
 # @auth_employee.login_required(role='admin')
 def delete_student(student_id):

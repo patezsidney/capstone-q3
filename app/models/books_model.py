@@ -3,6 +3,7 @@ from uuid import uuid4
 
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import backref, relationship
 
 from app.configs.database import db
 from app.models.exc import IncorrectKeyError, MissingKeyError

@@ -29,19 +29,19 @@ def library_register():
     except MissingKeyError:
         return {"msg":"Missing key"},HTTPStatus.BAD_REQUEST
 
-def update_book(id: str):
+def update_library(id: str):
     pass
 
-def delete_book(id: str):
+def delete_library(id: str):
     pass
 
-def get_book_list():
+def get_library_list():
     session: Session = db.session
     data = session.query(LibraryModel).all()
 
     return jsonify(data), HTTPStatus.OK
 
-def get_book(book_id: str):
+def get_library(book_id: str):
     try:
         book: LibraryModel = LibraryModel.query.get(book_id)
     
