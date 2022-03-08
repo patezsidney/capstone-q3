@@ -6,8 +6,6 @@ from app.configs.database import db
 
 from app.models.classroom_model import ClassroomModel
 
-from app.services.decorators import verify_some_keys
-
 
 def create_classroom():
     try:
