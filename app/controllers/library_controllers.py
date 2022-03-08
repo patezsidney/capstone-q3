@@ -4,10 +4,11 @@ from flask import current_app, jsonify, request
 from sqlalchemy.exc import DataError
 from sqlalchemy.orm.session import Session
 
-from app.configs.database import db
-from app.models.library_model import LibraryModel
-from app.models.exc import IncorrectKeyError,MissingKeyError
 from app.configs.auth import auth_employee
+from app.configs.database import db
+from app.models.exc import IncorrectKeyError, MissingKeyError
+from app.models.library_model import LibraryModel
+
 
 # @auth_employee.login_required(role=['admin','librarian'])
 def library_register():
