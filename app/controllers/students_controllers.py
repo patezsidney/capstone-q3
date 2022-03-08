@@ -1,10 +1,12 @@
 from http import HTTPStatus
+
 from flask import current_app, jsonify, request
+from sqlalchemy.exc import DataError
+
 from app.configs.auth import auth_employee
 from app.models.exc import IncorrectKeyError
-
-from sqlalchemy.exc import DataError
 from app.models.students_model import StudentsModel
+
 # from flask_httpauth import HTTPTokenAuth
 
 

@@ -1,4 +1,5 @@
 from http import HTTPStatus
+
 from flask import Blueprint
 
 from app.controllers import employees_controllers

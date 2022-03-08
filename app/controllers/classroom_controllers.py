@@ -1,10 +1,12 @@
 from http import HTTPStatus
+
 from flask import jsonify, request
-from sqlalchemy.orm.session import Session
 from sqlalchemy import exc
+from sqlalchemy.orm.session import Session
 
 from app.configs.database import db
 from app.models.classroom_model import ClassroomModel
+
 
 def create_classroom():
     session: Session = db.session

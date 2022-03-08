@@ -1,10 +1,11 @@
-from flask import jsonify, current_app
 from http import HTTPStatus
+
+from flask import current_app, jsonify
+from sqlalchemy.exc import DataError
+
 from app.configs.database import db
 from app.models.absence_model import AbsenceModel
-from sqlalchemy.exc import DataError
 from app.models.students_model import StudentsModel
-from app.models.absence_model import AbsenceModel
 
 
 def create_absense():

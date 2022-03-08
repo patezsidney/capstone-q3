@@ -1,5 +1,6 @@
 from flask.testing import FlaskClient
 
+
 def test_get_grades_by_student_id(client: FlaskClient):
     response = client.get("/api/grades/1d5225ef-5638-4397-9989-e604a2cceca0")
     mock_response = {

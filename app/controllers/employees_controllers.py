@@ -1,14 +1,15 @@
-from flask import request, jsonify
 from http import HTTPStatus
 from secrets import token_urlsafe
+
+from flask import jsonify, request
 from sqlalchemy import exc
 from sqlalchemy.orm.session import Session
 
-from app.configs.database import db
 from app.configs.auth import auth_employee
-
+from app.configs.database import db
 from app.models.employee_model import EmployeeModel
 from app.services.decorators import verify_some_keys
+
 
 def sigin():
     data = request.get_json()

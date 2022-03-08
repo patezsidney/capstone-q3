@@ -1,5 +1,6 @@
 from flask.testing import FlaskClient
 
+
 def test_delete_absence_success(client: FlaskClient):
     request_data = {
         "name": "felipe",

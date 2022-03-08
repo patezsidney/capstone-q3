@@ -1,8 +1,10 @@
-from flask import jsonify
 from http import HTTPStatus
+
+from flask import jsonify
 from sqlalchemy.exc import DataError
-from app.models import StudentsModel, GradesModel
+
 from app.configs.database import db
+from app.models import GradesModel, StudentsModel
 
 
 def create_grade():
