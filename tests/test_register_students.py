@@ -34,4 +34,4 @@ def test_register_one_student_with_incorretc_key(client: FlaskClient):
     
     request_response = client.post("/api/students/register",json=request_data)
     
-    assert (request_response.status_code == 400), "Verificar se o status code é OK"
+    assert (request_response.status_code == 400), "Verificar se o status code é NOT FOUND"
