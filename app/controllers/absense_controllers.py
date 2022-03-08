@@ -55,7 +55,9 @@ def delete_absense(absence_id: str):
     return {}, HTTPStatus.NO_CONTENT
 
 def get_all_absense():
-    pass
+    absences: AbsenceModel = db.session.query(AbsenceModel).all()
+
+    return jsonify(absences), HTTPStatus.OK
 
 def get_student_absense(student_id: str):
     
