@@ -1,4 +1,5 @@
 from flask import Blueprint
+
 from app.controllers import grades_controllers
 
 bp = Blueprint('grades', __name__, url_prefix='/grades')
