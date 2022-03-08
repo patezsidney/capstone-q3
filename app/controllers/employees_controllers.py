@@ -14,7 +14,7 @@ def sigin():
     data = request.get_json()
 
     try:
-        employee: EmployeeModel = EmployeeModel.query.filter_by(employee_id=data['employee_id']).one()
+        employee: EmployeeModel = EmployeeModel.query.filter_by(email=data['email']).one()
     
         if employee.check_password(data['password']):
             return {
@@ -33,7 +33,7 @@ def sigin():
         return {"msg": "Employee not found"}, HTTPStatus.UNAUTHORIZED
 
     except exc.DatabaseError:
-        return {"msg": "Invalid employee id"}, HTTPStatus.UNAUTHORIZED
+        return {"msg": "Invalid employee email"}, HTTPStatus.UNAUTHORIZED
 
 def create_employee():
     session: Session = db.session
