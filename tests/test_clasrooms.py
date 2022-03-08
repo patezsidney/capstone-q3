@@ -1,5 +1,6 @@
 from flask.testing import FlaskClient
 
+
 def test_get_all_classrooms(client):
     request_response = client.get("/api/classrooms")
 

@@ -1,5 +1,6 @@
 from flask.testing import FlaskClient
 
+
 def test_login_students_success(client: FlaskClient):
     request_login_data = {
         "cpf": "11111111111", 

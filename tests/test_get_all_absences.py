@@ -1,5 +1,6 @@
 from flask.testing import FlaskClient
 
+
 def test_get_all_absences(client: FlaskClient):
     request_response = client.get("/api/absences")
 

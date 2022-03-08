@@ -1,9 +1,12 @@
 from http import HTTPStatus
-from flask import request,jsonify,current_app
-from app.models.books_model import BooksModel
-from app.configs.auth import auth_employee
+
+from flask import current_app, jsonify, request
 from werkzeug.exceptions import NotFound
-from app.models.exc import IncorrectKeyError,MissingKeyError
+
+from app.configs.auth import auth_employee
+from app.models.books_model import BooksModel
+from app.models.exc import IncorrectKeyError, MissingKeyError
+
 
 # @auth_employee.login_required(role=["librarian","admin"])
 def patch_book_by_id(book_id):
@@ -42,3 +45,18 @@ def register_books():
         return {"msg":"Incorrect key use"},HTTPStatus.BAD_REQUEST
     except MissingKeyError:
         return {"msg":"Missing key in request"},HTTPStatus.BAD_REQUEST
+
+# @auth_employee.login_required(role="admin")
+def delete_book_by_id(book_id):
+    try:
+        book = BooksModel.query.filter_by(book_id=book_id).first()
+
+        if book == None:
+            raise NotFound
+        
+        current_app.db.session.delete(book)
+        current_app.db.session.commit()
+
+        return "",HTTPStatus.OK
+    except NotFound:
+        return {"msg":"Book not found!"},HTTPStatus.NOT_FOUND

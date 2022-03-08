@@ -1,5 +1,6 @@
 from flask.testing import FlaskClient
 
+
 def test_delete_grades_success(client :FlaskClient):
 
     request_delete = client.delete("/api/grades/14cff389-868d-4858-8e3b-466ab29c8137")

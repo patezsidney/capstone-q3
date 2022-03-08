@@ -1,7 +1,10 @@
 import re
+
 from flask import request
 from flask.testing import FlaskClient
+
 from app.models.employee_model import EmployeeModel
+
 
 def test_create_employee(client: FlaskClient):
     request_data = {
