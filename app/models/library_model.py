@@ -6,7 +6,7 @@ from sqlalchemy import Column, Date, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
 
 from app.configs.database import db
-from app.models.exc import IncorrectKeyError, MissingKeyError
+from app.models.exc import IncorrectKeyError, MissingKeyError, TypeValueError
 
 
 @dataclass
@@ -24,19 +24,25 @@ class LibraryModel(db.Model):
 
     @classmethod
     def check_incorrect_keys(cls,data):
-        key_error = [key for key in data.keys() if key not in ["employee_id","book_id","student_id"]]
-
-        if len(key_error) > 0:
-            raise IncorrectKeyError
-        
+        if len([key for key in data.keys() if key not in ["employee_id","book_id","student_id"]]):
+            raise IncorrectKeyError        
         return True
 
     @classmethod
     def missing_key(cls,data):
-        key_error = [key for key in ["employee_id","book_id","student_id"] if key not in data.keys()]
+        if len([key for key in ["employee_id","book_id","student_id"] if key not in data.keys()]):
+            raise MissingKeyError        
+        return True
 
-        if len(key_error) > 0:
-            raise MissingKeyError
-        
+    @classmethod
+    def check_key_in_edit_book_or_student_in_rental(cls,data):
+        if len([key for key in data.keys() if key not in ["book_id","student_id"]]):
+            raise IncorrectKeyError        
+        return True
+
+    @classmethod
+    def check_type_value(cls,data):
+        if len([value for value in data.values() if type(value)!=str]):
+            raise TypeValueError
         return True
 
