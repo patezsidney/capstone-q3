@@ -1,11 +1,12 @@
 from http import HTTPStatus
-
 from flask import jsonify, request
 from sqlalchemy import exc
 from sqlalchemy.orm.session import Session
-
 from app.configs.database import db
+
 from app.models.classroom_model import ClassroomModel
+
+from app.services.decorators import verify_some_keys
 
 
 def create_classroom():
@@ -28,12 +29,13 @@ def create_classroom():
 def update_classroom(classroom_id: str):
     try:
         data = request.get_json()
+
         classroom: ClassroomModel = ClassroomModel.query.get(classroom_id)
+        
         if classroom is None: 
             return {'msg': 'Classroom not found'}, HTTPStatus.NOT_FOUND
 
-        for key, value in data.items():    
-            setattr(classroom, key, value)    
+        setattr(classroom, 'name', data['name'])  
         
         db.session.add(classroom)
         db.session.commit()
@@ -46,6 +48,8 @@ def update_classroom(classroom_id: str):
     except AttributeError:
         return {'msg': 'could not assign a classroom'}, HTTPStatus.BAD_REQUEST
 
+    except KeyError:
+        return {'msg': 'could not assign a classroom'}, HTTPStatus.BAD_REQUEST
 
 def delete_classroom(classroom_id: str):
     try:
