@@ -58,4 +58,4 @@ def get_library(library_id: str):
         return jsonify(response), HTTPStatus.OK
     
     except DataError:
-        return {"msg": "rental_id not found"}, HTTPStatus.NOT_FOUND
+        return {"msg": "library_id not found"}, HTTPStatus.NOT_FOUND
