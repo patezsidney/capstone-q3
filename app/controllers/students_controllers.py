@@ -16,7 +16,7 @@ from sqlalchemy import exc
 
 def signin():
     data = request.get_json()
-    print(data)
+    
     try:
         student: StudentsModel = StudentsModel.query.filter_by(cpf=data['cpf']).one()
     
