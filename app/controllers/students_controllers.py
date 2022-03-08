@@ -1,6 +1,5 @@
 from http import HTTPStatus
 from secrets import token_urlsafe
-from tkinter import N
 
 from flask import current_app, jsonify, request
 from sqlalchemy import exc
@@ -47,7 +46,7 @@ def register():
         
 def signin():
     data = request.get_json()
-    print(data)
+    
     try:
         student: StudentsModel = StudentsModel.query.filter_by(cpf=data['cpf']).one()
     
