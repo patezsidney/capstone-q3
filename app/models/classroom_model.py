@@ -1,9 +1,12 @@
-from app.configs.database import db
-from sqlalchemy import Column,String
 from dataclasses import dataclass
 from uuid import uuid4
+
+from sqlalchemy import Column, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
+
+from app.configs.database import db
+
 
 @dataclass
 class ClassroomModel(db.Model):

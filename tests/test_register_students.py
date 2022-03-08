@@ -1,5 +1,6 @@
 from flask.testing import FlaskClient
 
+
 def test_register_one_student(client: FlaskClient):
 
     request_data = {

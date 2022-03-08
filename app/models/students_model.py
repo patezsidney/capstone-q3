@@ -1,14 +1,15 @@
 from dataclasses import dataclass
 from uuid import uuid4
-from werkzeug.security import generate_password_hash, check_password_hash
 
-from sqlalchemy import Column, String, Date, ForeignKey
+from sqlalchemy import Column, Date, ForeignKey, String
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import relationship,backref
-from app.models.exc import IncorrectKeyError, MissingKeyError
+from sqlalchemy.orm import backref, relationship
+from werkzeug.security import check_password_hash, generate_password_hash
 
 from app.configs.database import db
 from app.models.absence_model import AbsenceModel
+from app.models.exc import IncorrectKeyError, MissingKeyError
+
 
 @dataclass
 class StudentsModel(db.Model):

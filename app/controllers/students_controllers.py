@@ -1,14 +1,16 @@
 from http import HTTPStatus
 from secrets import token_urlsafe
 from tkinter import N
-from flask import current_app, jsonify, request
-from app.configs.auth import auth_employee
-from app.models.exc import IncorrectKeyError,MissingKeyError
 
-from sqlalchemy.exc import DataError
-from app.models.students_model import StudentsModel
-from werkzeug.exceptions import NotFound
+from flask import current_app, jsonify, request
 from sqlalchemy import exc
+from sqlalchemy.exc import DataError
+from werkzeug.exceptions import NotFound
+
+from app.configs.auth import auth_employee
+from app.models.exc import IncorrectKeyError, MissingKeyError
+from app.models.students_model import StudentsModel
+
 # from flask_httpauth import HTTPTokenAuth
 
 

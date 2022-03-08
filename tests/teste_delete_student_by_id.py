@@ -1,5 +1,6 @@
 from flask.testing import FlaskClient
 
+
 def test_del_student_by_id(client: FlaskClient): 
     
     request_response = client.delete("/api/students/1d5225ef-5638-4397-9989-e604a2cceca0")

@@ -1,6 +1,8 @@
 from functools import wraps
-from flask import request
 from http import HTTPStatus
+
+from flask import request
+
 
 def verify_some_keys(trusted_keys: "list[str]"):
     def test_key(func):

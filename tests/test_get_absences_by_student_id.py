@@ -1,5 +1,6 @@
 from flask.testing import FlaskClient
 
+
 def test_get_absences_by_student_id(client: FlaskClient):
     response = client.get("/api/absences/2a465bd0-22cd-45e7-9fd1-142dee2cca78")
     mock_response = {

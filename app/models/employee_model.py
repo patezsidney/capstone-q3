@@ -1,16 +1,16 @@
-from uuid import uuid4
-from werkzeug.security import generate_password_hash, check_password_hash
-from dataclasses import dataclass
-from sqlalchemy import Column, VARCHAR, Float
-from sqlalchemy.orm import validates
-from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import relationship, backref
 import re
+from dataclasses import dataclass
+from uuid import uuid4
 
+from sqlalchemy import VARCHAR, Column, Float
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import backref, relationship, validates
+from werkzeug.security import check_password_hash, generate_password_hash
 
 from app.configs.database import db
 from app.models import school_subjects_model
 from app.models.exc import EmailError, EmployeeAtributeTypeError
+
 
 @dataclass
 class EmployeeModel(db.Model):

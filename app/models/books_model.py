@@ -1,10 +1,13 @@
 from dataclasses import dataclass
-from sqlalchemy import Column, String, Integer
-from sqlalchemy.orm import relationship,backref
+from uuid import uuid4
+
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import backref, relationship
+
 from app.configs.database import db
 
-from sqlalchemy.dialects.postgresql import UUID
-from uuid import uuid4
+
 @dataclass
 class BooksModel(db.Model):
 
