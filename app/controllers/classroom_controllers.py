@@ -53,24 +53,9 @@ def get_all_classroom():
     return jsonify(data), HTTPStatus.OK
 
 def get_employee_classroom(classroom_id: str):
-    # query = """
-    #     SELECT * 
-    #     FROM classrooms c
-    #     JOIN school_subjects s 
-    #         ON s.classroom_id = c.classroom_id
-    #     JOIN school_subjects s 
-    #         ON s.classroom_id = c.classroom_id
-    # """
-    # classroom = session.execute('SELECT * FROM classrooms;').mappings().all()
-    
-    # print(dict(classroom[0].items()))
-    # for key, value in classroom[0].items:
-    #     result[key] = value
-    # classroom: ClassroomModel = ClassroomModel.query.filter_by(classroom_id=classroom_id).one()
-    # alunos, matéria, nota, se tiver e falta, se tiver.
-
     classroom: ClassroomModel = ClassroomModel.query.filter_by(classroom_id=classroom_id).one()
     subjects = []
+
     for subject in classroom.school_subjects:
         subjects.append({
             "school_subject_id": subject.school_subject_id,
@@ -81,11 +66,10 @@ def get_employee_classroom(classroom_id: str):
 
     return {
             "classroom_id": classroom.classroom_id,
-            "classroom_name": classroom.name,
+            "name": classroom.name,
             "absences": classroom.absences,
             "school_subjects": subjects,
             "grades": classroom.grades,
             "students": classroom.students
 
         }, HTTPStatus.OK
-    # return jsonify(dict(classroom[0].items())), HTTPStatus.OK
