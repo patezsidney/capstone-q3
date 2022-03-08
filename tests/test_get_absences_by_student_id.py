@@ -5,12 +5,14 @@ def test_get_absences_by_student_id(client: FlaskClient):
     mock_response = {
                     "name": "renato",
                     "absences": [
-                                {
-                                "date": "Sat, 15 Feb 2020 00:00:00 GMT",
-                                "justify": False,
-                                "classroom_id": "cf43d8ca-37a8-4140-bc97-32192e151a27"
-                                }
-                                ]
+                        {
+                        "absence_id": "d98c6e17-d6ce-4432-bc31-b10418a7cf44",
+                        "date": "Sat, 15 Feb 2020 00:00:00 GMT",
+                        "justify": False,
+                        "classroom_id": "cf43d8ca-37a8-4140-bc97-32192e151a27",
+                        "student_id": "2a465bd0-22cd-45e7-9fd1-142dee2cca78"
+                        }
+                    ]
                     }
     
     response_json = response.get_json()

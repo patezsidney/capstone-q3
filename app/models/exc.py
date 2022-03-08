@@ -3,3 +3,6 @@ class EmailError(Exception):
 
 class EmployeeAtributeTypeError(Exception):
     pass
+
+class IncorrectKeyError(Exception):
+    pass

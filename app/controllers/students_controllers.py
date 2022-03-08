@@ -1,5 +1,8 @@
 from http import HTTPStatus
 from flask import current_app, jsonify, request
+from app.configs.auth import auth_employee
+from app.models.exc import IncorrectKeyError
+
 from sqlalchemy.exc import DataError
 from app.models.students_model import StudentsModel
 from sqlalchemy import exc
@@ -39,8 +42,24 @@ def signin():
 def create_student():
     pass
 
-def update_student():
-    pass
+# @auth_employee.login_required(role='admin')
+def update_student(student_id:str):
+    try:
+        data = request.get_json()
+
+        StudentsModel.check_keys(data)
+
+        student:StudentsModel = StudentsModel.query.filter_by(registration_student_id=student_id).first()
+
+        for key, value in data.items():
+            setattr(student,key,value)
+
+        current_app.db.session.add(student)
+        current_app.db.session.commit()
+
+        return jsonify(student),HTTPStatus.OK
+    except IncorrectKeyError:
+        return {"msg": "Use of invalid key"},HTTPStatus.CONFLICT
 
 def delete_student():
     pass
