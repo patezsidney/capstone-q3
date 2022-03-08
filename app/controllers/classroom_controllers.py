@@ -3,10 +3,11 @@ from flask import jsonify, request
 from sqlalchemy import exc
 from sqlalchemy.orm.session import Session
 from app.configs.database import db
-
+from app.configs.auth import auth_employee
 from app.models.classroom_model import ClassroomModel
 
 
+@auth_employee.login_required(role='admin')
 def create_classroom():
     try:
         session: Session = db.session
@@ -24,6 +25,7 @@ def create_classroom():
         return {'msg': 'could not assign a classroom'}, HTTPStatus.BAD_REQUEST
 
 
+@auth_employee.login_required(role=['admin', 'teacher'])
 def update_classroom(classroom_id: str):
     try:
         data = request.get_json()
@@ -49,6 +51,8 @@ def update_classroom(classroom_id: str):
     except KeyError:
         return {'msg': 'could not assign a classroom'}, HTTPStatus.BAD_REQUEST
 
+
+@auth_employee.login_required(role='admin')
 def delete_classroom(classroom_id: str):
     try:
         classroom: ClassroomModel = ClassroomModel.query.get(classroom_id)
@@ -64,6 +68,7 @@ def delete_classroom(classroom_id: str):
         return {'msg': 'Classroom id is invalid'}
 
 
+@auth_employee.login_required(role='admin')
 def get_all_classroom():
     session: Session = db.session
     data = session.query(ClassroomModel).all()
@@ -71,6 +76,7 @@ def get_all_classroom():
     return jsonify(data), HTTPStatus.OK
 
 
+@auth_employee.login_required(role=['admin', 'teacher'])
 def get_employee_classroom(classroom_id: str):
     try:
         classroom: ClassroomModel = ClassroomModel.query.filter_by(classroom_id=classroom_id).one()
