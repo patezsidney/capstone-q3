@@ -1,7 +1,9 @@
 from http import HTTPStatus
+from secrets import token_urlsafe
 
-from flask import current_app, jsonify
+from flask import current_app, jsonify, request
 from sqlalchemy.exc import DataError
+from sqlalchemy.orm.session import Session
 
 from app.configs.database import db
 from app.models.absence_model import AbsenceModel
@@ -9,7 +11,17 @@ from app.models.students_model import StudentsModel
 
 
 def create_absense():
-    pass
+    session: Session = db.session
+
+    data = request.get_json()
+
+    absence = AbsenceModel(**data)
+
+    session.add(absence)
+    session.commit()
+
+    return jsonify(absence), HTTPStatus.CREATED
+    
 
 def update_absense(absence_id: str):
     session = current_app.db.session
@@ -45,7 +57,9 @@ def delete_absense(absence_id: str):
     return {}, HTTPStatus.NO_CONTENT
 
 def get_all_absense():
-    pass
+    absences: AbsenceModel = db.session.query(AbsenceModel).all()
+
+    return jsonify(absences), HTTPStatus.OK
 
 def get_student_absense(student_id: str):
     

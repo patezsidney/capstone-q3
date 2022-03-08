@@ -89,8 +89,8 @@ def test_patch_employee_error_conflict(client: FlaskClient):
 
 def test_patch_employee_error_wrong_key(client: FlaskClient):
     request_data = {
-        "name": "Jhon",
-        "email": "jhon@mail.com",
+        "name": "Jhon9",
+        "email": "jhon9@mail.com",
         "wage": 3020.90,
         "access_level": "admin",
         "password": "1234"
@@ -159,7 +159,7 @@ def test_login_employee_success(client):
     request_register_response = client.post("/api/employees", json=request_register_data, follow_redirects=True )
     response_register_json: dict = request_register_response.get_json()
     request_login_data = {
-        "employee_id": response_register_json["employee_id"], 
+        "email": response_register_json["email"], 
 	    "password": request_register_data["password"]
     }
 
@@ -180,13 +180,13 @@ def test_login_employee_error_password(client):
     request_register_response = client.post("/api/employees", json=request_register_data, follow_redirects=True )
     response_register_json: dict = request_register_response.get_json()
     request_login_data = {
-        "employee_id": "1234312412", 
+        "email": "renat@mail.com", 
 	    "password": request_register_data["password"]
     }
 
     request_login_response = client.post("/api/employees/login", json=request_login_data, follow_redirects=True )
 
-    assert( request_login_response.get_json().get("msg") == "Invalid employee id"), "Verificar se retornou a mensagem correta"
+    assert( request_login_response.get_json().get("msg") == "Employee not found"), "Verificar se retornou a mensagem correta"
     assert(request_login_response.status_code == 401), "Verificar se o status code é Unauthorized"
 
 def test_login_employee_error_id(client):
@@ -201,7 +201,7 @@ def test_login_employee_error_id(client):
     request_register_response = client.post("/api/employees", json=request_register_data, follow_redirects=True )
     response_register_json: dict = request_register_response.get_json()
     request_login_data = {
-        "employee_id": response_register_json["employee_id"], 
+        "email": response_register_json["email"], 
 	    "password": "123"
     }
 

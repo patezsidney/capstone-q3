@@ -1,7 +1,8 @@
 from http import HTTPStatus
 
 from flask import jsonify, request
-from sqlalchemy import exc
+from sqlalchemy import exc, inspect
+from sqlalchemy.engine.row import RowMapping
 from sqlalchemy.orm.session import Session
 
 from app.configs.database import db
@@ -53,5 +54,24 @@ def get_all_classroom():
 
     return jsonify(data), HTTPStatus.OK
 
-def get_employee_classroom(id: str):
-    pass
+def get_employee_classroom(classroom_id: str):
+    classroom: ClassroomModel = ClassroomModel.query.filter_by(classroom_id=classroom_id).one()
+    subjects = []
+
+    for subject in classroom.school_subjects:
+        subjects.append({
+            "school_subject_id": subject.school_subject_id,
+			"school_subject": subject.school_subject,
+			"employee_id": subject.employee_id,
+			"classroom_id": subject.teacher
+        })
+
+    return {
+            "classroom_id": classroom.classroom_id,
+            "name": classroom.name,
+            "absences": classroom.absences,
+            "school_subjects": subjects,
+            "grades": classroom.grades,
+            "students": classroom.students
+
+        }, HTTPStatus.OK

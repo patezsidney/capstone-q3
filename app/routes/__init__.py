@@ -1,6 +1,7 @@
 from flask import Blueprint, Flask
 
 from app.routes.absences_routes import bp as bp_absences
+from app.routes.books_routes import bp as bp_books
 from app.routes.clasroom_routes import bp as bp_classroom
 from app.routes.employees_routes import bp as bp_employees
 from app.routes.grades_routes import bp as bp_grades
@@ -16,4 +17,5 @@ def init_app(app: Flask):
     bp.register_blueprint(bp_library)
     bp.register_blueprint(bp_classroom)
     bp.register_blueprint(bp_grades)
+    bp.register_blueprint(bp_books)
     app.register_blueprint(bp)
