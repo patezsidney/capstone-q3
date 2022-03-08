@@ -6,3 +6,6 @@ class EmployeeAtributeTypeError(Exception):
 
 class IncorrectKeyError(Exception):
     pass
+
+class MissingKeyError(Exception):
+    pass
