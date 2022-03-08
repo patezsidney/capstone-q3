@@ -7,8 +7,9 @@ from sqlalchemy.orm.session import Session
 from app.configs.database import db
 from app.models.library_model import LibraryModel
 from app.models.exc import IncorrectKeyError,MissingKeyError
+from app.configs.auth import auth_employee
 
-
+# @auth_employee.login_required(role=['admin','librarian'])
 def library_register():
     try:
         data = request.get_json()
@@ -20,6 +21,8 @@ def library_register():
 
         current_app.db.session.add(rent)
         current_app.db.session.commit()
+        
+        return jsonify(rent),HTTPStatus.CREATED
     except IncorrectKeyError:
         return {"msg":"Incorrect key use"},HTTPStatus.BAD_REQUEST
     except MissingKeyError:

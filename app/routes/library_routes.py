@@ -7,4 +7,5 @@ bp = Blueprint('library', __name__, url_prefix='/library')
 bp.get("")(library_controllers.get_book_list)
 
 bp.get('/<book_id>')(library_controllers.get_book)
+bp.post("/rental")(library_controllers.library_register)
 
