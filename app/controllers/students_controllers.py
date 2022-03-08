@@ -1,5 +1,4 @@
 from http import HTTPStatus
-from tkinter import N
 
 from flask import current_app, jsonify, request
 from sqlalchemy import exc
