@@ -115,9 +115,9 @@ def delete_student(student_id):
 
 # @auth.login_required(role="admin")
 def get_all_students():
-    data = current_app.db.session.query(StudentsModel).all()
+    data = current_app.db.session.query(StudentsModel).paginate(page=None,per_page=20)
 
-    return jsonify(data), HTTPStatus.OK
+    return jsonify(data.items), HTTPStatus.OK
 
 
 
