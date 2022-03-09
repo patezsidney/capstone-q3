@@ -7,9 +7,11 @@ from app.configs.auth import auth_employee
 from app.configs.database import db
 from app.models.books_model import BooksModel
 from app.models.exc import IncorrectKeyError, MissingKeyError
+from app.services.decorators import verify_some_keys
 
 
-# @auth_employee.login_required(role=["librarian","admin"])
+@auth_employee.login_required(role=["librarian","admin"])
+@verify_some_keys(["title","author","quantity"])                           
 def patch_book_by_id(book_id):
     try:
         data = request.get_json()
@@ -23,12 +25,13 @@ def patch_book_by_id(book_id):
             setattr(book,key,value)
             
         return data, HTTPStatus.OK
+
     except NotFound:
         return {"msg":"book not found"},HTTPStatus.NOT_FOUND
 
         
 
-# @auth_employee.login_required(role=['librarian','admin'])
+@auth_employee.login_required(role=['librarian','admin'])
 def register_books():
     try:
         data = request.get_json()
@@ -42,12 +45,14 @@ def register_books():
         current_app.db.session.commit()
 
         return jsonify(book),HTTPStatus.CREATED
+
     except IncorrectKeyError:
         return {"msg":"Incorrect key use"},HTTPStatus.BAD_REQUEST
+
     except MissingKeyError:
         return {"msg":"Missing key in request"},HTTPStatus.BAD_REQUEST
 
-# @auth_employee.login_required(role="admin")
+@auth_employee.login_required(role=["admin", "librarian"])
 def delete_book_by_id(book_id):
     try:
         book = BooksModel.query.filter_by(book_id=book_id).first()
@@ -58,18 +63,27 @@ def delete_book_by_id(book_id):
         current_app.db.session.delete(book)
         current_app.db.session.commit()
 
-        return "",HTTPStatus.OK
+        return "",HTTPStatus.NO_CONTENT
+
     except NotFound:
         return {"msg":"Book not found!"},HTTPStatus.NOT_FOUND
 
+@auth_employee.login_required(role=["admin", "librarian"])
 def get_all_books():
     
     books: BooksModel = db.session.query(BooksModel).all()
 
     return jsonify(books), HTTPStatus.OK
-    
+
+@auth_employee.login_required(role=["admin", "librarian"])
 def get_book_by_id(book_id: str):
+    try:
+        book: BooksModel = BooksModel.query.get(book_id)
 
-    book: BooksModel = BooksModel.query.get(book_id)
+        if book == None:
+            raise NotFound
 
-    return jsonify(book), HTTPStatus.OK
+        return jsonify(book), HTTPStatus.OK
+
+    except NotFound:
+        return {"msg":"Book not found!"},HTTPStatus.NOT_FOUND
