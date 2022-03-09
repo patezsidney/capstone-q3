@@ -1,5 +1,6 @@
 from flask.testing import FlaskClient
 
+
 def test_get_book_by_id(client: FlaskClient):
     response = client.get("/api/books/081c575b-a38f-4f41-bf15-2593cd58ab93", headers={"Authorization": 'Bearer 1234'})
     mock_response = {
