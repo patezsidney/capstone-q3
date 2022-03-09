@@ -1,5 +1,5 @@
-from datetime import datetime
 from http import HTTPStatus
+from datetime import datetime
 
 from flask import current_app, jsonify, request
 from sqlalchemy.exc import DataError
@@ -31,7 +31,6 @@ def library_register():
     except MissingKeyError:
         return {"msg":"Missing key"},HTTPStatus.BAD_REQUEST
 
-# @auth_employee.login_required(["librarian","admin"])
 def edit_book_or_student_in_book_rental_by_id(id: str):
     try:
         data = request.get_json()
@@ -49,7 +48,7 @@ def edit_book_or_student_in_book_rental_by_id(id: str):
         current_app.db.session.add(rental)
         current_app.db.session.commit()
 
-        return jsonify(data),HTTPStatus.OK
+        return jsonify(data),HTTPStatus.ACCEPTED
     except IncorrectKeyError:
         return {"msg":"Incorrect key use"},HTTPStatus.BAD_REQUEST
     except TypeValueError:
@@ -77,7 +76,7 @@ def register_book_rental_return_by_id(id:str):
         current_app.db.session.add(rental)
         current_app.db.session.commit()
 
-        return jsonify(data),HTTPStatus.OK
+        return jsonify(data),HTTPStatus.ACCEPTED
     except IncorrectKeyError:
         return {"msg":"Incorrect key use"},HTTPStatus.BAD_REQUEST
     except TypeValueError:
@@ -85,7 +84,6 @@ def register_book_rental_return_by_id(id:str):
     except NotFound:
         return {"msg":"rental not found"},HTTPStatus.NOT_FOUND
 
-# @auth_employee.login_required(role="admin")
 def delete_library(library_id: str):
     
     try:
@@ -101,13 +99,13 @@ def delete_library(library_id: str):
 
 def get_library_list():
     session: Session = db.session
-    data = session.query(LibraryModel).all().paginate(page=None,per_page=20)
+    data = session.query(LibraryModel).paginate(page=None,per_page=20)
 
-    return jsonify(data), HTTPStatus.OK
+    return jsonify(data.items), HTTPStatus.OK
 
 def get_library(book_id: str):
     try:
-        book: LibraryModel = LibraryModel.query.get(book_id).paginate(page=None,per_page=20)
+        book: LibraryModel = LibraryModel.query.get(book_id)
     
         return jsonify(book), HTTPStatus.OK
     
