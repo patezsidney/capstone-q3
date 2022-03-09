@@ -19,9 +19,9 @@ def delete_library(id: str):
 
 def get_library_list():
     session: Session = db.session
-    data = session.query(LibraryModel).all()
+    data = session.query(LibraryModel).paginate(page=None,per_page=20)
 
-    return jsonify(data), HTTPStatus.OK
+    return jsonify(data.items), HTTPStatus.OK
 
 def get_library(book_id: str):
     try:
