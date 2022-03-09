@@ -4,6 +4,7 @@ from http import HTTPStatus
 from flask import current_app, jsonify, request
 from sqlalchemy.exc import DataError
 from sqlalchemy.orm.session import Session
+from werkzeug.exceptions import NotFound
 
 from app.configs.auth import auth_employee
 from app.configs.database import db
@@ -31,13 +32,16 @@ def library_register():
         return {"msg":"Missing key"},HTTPStatus.BAD_REQUEST
 
 # @auth_employee.login_required(["librarian","admin"])
-def edit_book_or_student_in_book_rental(id: str):
+def edit_book_or_student_in_book_rental_by_id(id: str):
     try:
         data = request.get_json()
         LibraryModel.check_key_in_edit_book_or_student_in_rental(data)
         LibraryModel.check_type_value(data)
 
         rental = LibraryModel.query.filter_by(library_id=id).first()
+
+        if rental == None:
+            raise NotFound
 
         for key,value in data.items():
             setattr(rental,key,value)
@@ -50,9 +54,11 @@ def edit_book_or_student_in_book_rental(id: str):
         return {"msg":"Incorrect key use"},HTTPStatus.BAD_REQUEST
     except TypeValueError:
         return {"msg":"request with incorrect value type!"},HTTPStatus.BAD_REQUEST
+    except NotFound:
+        return {"msg":"rental not found"},HTTPStatus.NOT_FOUND
 
 # @auth_employee.login_required(["admin","librarian"])
-def register_book_rental_return(id:str):
+def register_book_rental_return_by_id(id:str):
     try:
         data = request.get_json()
         LibraryModel.check_incorrect_keys(data)
@@ -62,6 +68,9 @@ def register_book_rental_return(id:str):
 
         rental = LibraryModel.query.filter_by(library_id=id).first()
 
+        if rental == None:
+            raise NotFound
+
         for key,value in data.items():
             setattr(rental,key,value)
 
@@ -73,6 +82,8 @@ def register_book_rental_return(id:str):
         return {"msg":"Incorrect key use"},HTTPStatus.BAD_REQUEST
     except TypeValueError:
         return {"msg":"request with incorrect value type!"},HTTPStatus.BAD_REQUEST
+    except NotFound:
+        return {"msg":"rental not found"},HTTPStatus.NOT_FOUND
 
 # @auth_employee.login_required(role="admin")
 def delete_library(library_id: str):
