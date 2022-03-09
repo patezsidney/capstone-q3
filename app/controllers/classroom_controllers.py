@@ -5,6 +5,7 @@ from sqlalchemy.orm.session import Session
 from app.configs.database import db
 from app.configs.auth import auth_employee
 from app.models.classroom_model import ClassroomModel
+from app.models.employee_model import EmployeeModel
 
 
 @auth_employee.login_required(role='admin')
@@ -80,24 +81,21 @@ def get_all_classroom():
 def get_employee_classroom(classroom_id: str):
     try:
         classroom: ClassroomModel = ClassroomModel.query.filter_by(classroom_id=classroom_id).one()
-        subjects = []
+        teacher: EmployeeModel = EmployeeModel.query.filter_by(employee_id=classroom.school_subjects[0].employee_id).one()
 
-        for subject in classroom.school_subjects:
-            subjects.append({
-                "school_subject_id": subject.school_subject_id,
-                "school_subject": subject.school_subject,
-                "employee_id": subject.employee_id,
-                "classroom_id": subject.teacher
+        students = []
+
+        for student in classroom.students:
+            students.append({
+                "name": student.name.title()
             })
 
         return {
                 "classroom_id": classroom.classroom_id,
                 "name": classroom.name,
-                "absences": classroom.absences,
-                "school_subjects": subjects,
-                "grades": classroom.grades,
-                "students": classroom.students
-
+                "teacher": teacher.name.title(),
+                "school_subjects": classroom.school_subjects[0].school_subject.title(),
+                "students": students
             }, HTTPStatus.OK
 
     except exc.NoResultFound:
