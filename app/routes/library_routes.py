@@ -9,4 +9,5 @@ bp.get("")(library_controllers.get_library_list)
 bp.get('/<book_id>')(library_controllers.get_library)
 bp.post("/rental")(library_controllers.library_register)
 bp.delete('/<library_id>')(library_controllers.delete_library)
+bp.get("/rented_books/<id>")(library_controllers.student_get_rented_books_by_id)
 

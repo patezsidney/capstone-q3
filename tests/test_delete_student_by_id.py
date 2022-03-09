@@ -11,6 +11,6 @@ def test_del_student_by_id(client: FlaskClient):
 
 def test_del_student_with_ivld_key(client: FlaskClient):
     
-    request_response = client.patch("/api/students/51df51e0-00a7-49e3-9f")
+    request_response = client.delete("/api/students/51df51e0-00a7-49e3-9f")
     
     assert (request_response.status_code == 404), "Verificar se o status code é OK"

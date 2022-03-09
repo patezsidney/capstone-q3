@@ -1,13 +1,17 @@
 from http import HTTPStatus
 
 from flask import current_app, jsonify, request
+from sqlalchemy import null
 from sqlalchemy.exc import DataError
 from sqlalchemy.orm.session import Session
+from werkzeug.exceptions import NotFound
+from sqlalchemy.orm import Query
 
 from app.configs.auth import auth_employee
 from app.configs.database import db
 from app.models.exc import IncorrectKeyError, MissingKeyError
 from app.models.library_model import LibraryModel
+from app.models.students_model import StudentsModel
 
 
 # @auth_employee.login_required(role=['admin','librarian'])
@@ -59,3 +63,18 @@ def get_library(book_id: str):
     
     except DataError:
         return {"msg": "Book not found"}, HTTPStatus.NOT_FOUND
+
+def student_get_rented_books_by_id(id:str):
+    try:
+        books = LibraryModel.query.filter_by(student_id=id).paginate(page=None,per_page=20)
+   
+        if books == None:
+            raise NotFound
+
+        if not len(books):
+            return {"msg":"You don't have any books to rent"}
+
+        else:
+            return jsonify(books.items),HTTPStatus.OK
+    except NotFound:
+        return {"msg":"No student records"},HTTPStatus.NOT_FOUND
