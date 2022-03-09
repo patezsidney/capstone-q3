@@ -1,8 +1,10 @@
 from http import HTTPStatus
+
 from flask import jsonify, request
 from sqlalchemy.exc import DataError, StatementError
-from app.configs.auth import auth_employee
 from werkzeug.exceptions import NotFound
+
+from app.configs.auth import auth_employee
 from app.configs.database import db
 from app.models import GradesModel, StudentsModel
 from app.services.decorators import verify_some_keys
