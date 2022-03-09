@@ -1,8 +1,10 @@
+from email import header
 from flask.testing import FlaskClient
 
 
 def test_get_all_classrooms(client):
-    request_response = client.get("/api/classrooms")
+    headers = {"Authorization": "Bearer 1234"}
+    request_response = client.get("/api/classrooms", headers=headers)
 
     assert (request_response.status_code == 200), "Verificar se o status code é ok"
 
@@ -10,10 +12,11 @@ def test_create_classroom(client: FlaskClient):
     request_data = {
         "name": "1C"
     }
+    headers = {"Authorization": "Bearer 1234"}
     expected_keys = ["name", "classroom_id"]
     expected_keys.sort()
     
-    request_response = client.post("/api/classrooms", json=request_data, follow_redirects=True )
+    request_response = client.post("/api/classrooms", json=request_data, follow_redirects=True, headers=headers )
     response_json: dict = request_response.get_json()
     response_keys = list(response_json.keys())
     response_keys.sort()
@@ -27,16 +30,18 @@ def test_delete_success(client):
         "name": "2B"
     }
 
-    request_response = client.post("/api/classrooms", json=request_data, follow_redirects=True )
+    headers = {"Authorization": "Bearer 1234"}
+
+    request_response = client.post("/api/classrooms", json=request_data, follow_redirects=True, headers=headers )
     response_json: dict = request_response.get_json()
 
-    request_delete = client.delete(f"/api/classrooms/{response_json['classroom_id']}")
+    request_delete = client.delete(f"/api/classrooms/{response_json['classroom_id']}", headers=headers)
 
     assert (request_delete.status_code == 204), "Verificar se o status code é No Content"
 
 def test_delete_error(client):
-
-    request_delete = client.delete(f"/api/classrooms/b3298cfc-7fb8-47af-91ed-f2d8c4545cdd")
+    headers = {"Authorization": "Bearer 1234"}
+    request_delete = client.delete(f"/api/classrooms/b3298cfc-7fb8-47af-91ed-f2d8c4545cdd", headers=headers)
 
     assert (request_delete.status_code == 404), "Verificar se o status code é Not Found"
 
@@ -49,11 +54,11 @@ def test_patch_classroom_success(client: FlaskClient):
     patch_data = {
         "name": "3A",
     }
-
-    request_response = client.post("/api/classrooms", json=request_data, follow_redirects=True )
+    headers = {"Authorization": "Bearer 1234"}
+    request_response = client.post("/api/classrooms", json=request_data, follow_redirects=True, headers=headers )
     response_json: dict = request_response.get_json()
 
-    patch_response = client.patch(f"/api/classrooms/{response_json['classroom_id']}", json=patch_data, follow_redirects=True )
+    patch_response = client.patch(f"/api/classrooms/{response_json['classroom_id']}", json=patch_data, follow_redirects=True, headers=headers )
     patch_json: dict = patch_response.get_json()
     
 
@@ -64,14 +69,15 @@ def test_get_on_classroom_success(client: FlaskClient):
     request_data = {
         "name": "3T",
     }
+    headers = {"Authorization": "Bearer 1234"}
 
-    request_response = client.post("/api/classrooms", json=request_data, follow_redirects=True )
+    request_response = client.post("/api/classrooms", json=request_data, follow_redirects=True, headers=headers )
     response_json: dict = request_response.get_json() 
 
     expected_keys = ["name", "classroom_id", "absences", "school_subjects", "grades", "students"]
     expected_keys.sort()
     
-    request_response_get = client.get(f"/api/classrooms/{response_json['classroom_id']}", json=request_data, follow_redirects=True )
+    request_response_get = client.get(f"/api/classrooms/{response_json['classroom_id']}", json=request_data, follow_redirects=True, headers=headers )
     response_json_get: dict = request_response_get.get_json()
     response_keys = list(response_json_get.keys())
     response_keys.sort()

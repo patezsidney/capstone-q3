@@ -25,7 +25,7 @@ def create_classroom():
         return {'msg': 'could not assign a classroom'}, HTTPStatus.BAD_REQUEST
 
 
-@auth_employee.login_required(role=['admin', 'teacher'])
+# @auth_employee.login_required(role=['admin', 'teacher'])
 def update_classroom(classroom_id: str):
     try:
         data = request.get_json()
