@@ -56,7 +56,7 @@ def test_patch_employee_success(client: FlaskClient):
     
 
     assert (patch_json['name'] == patch_data['name']), "verifique se o nome foi retornado correto"
-    assert (patch_response.status_code == 200), "Verificar se o status code é OK"
+    assert (patch_response.status_code == 202), "Verificar se o status code é OK"
 
 def test_patch_employee_error_conflict(client: FlaskClient):
     request_data = {
