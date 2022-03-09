@@ -11,7 +11,7 @@ from app.configs.database import db
 @dataclass
 class ClassroomModel(db.Model):
     __tablename__="classrooms"
-    classroom_id:str = Column(UUID(as_uuid=True),primary_key=True, default=uuid4)
+    classroom_id = Column(UUID(as_uuid=True),primary_key=True, default=uuid4)
     name:str = Column(String(255),nullable=False)
     school_subjects = relationship("SchoolSubjectsModel",backref="classroom")
     absences = relationship("AbsenceModel",backref="classroom")
