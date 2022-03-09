@@ -12,7 +12,6 @@ def verify_some_keys(trusted_keys: "list[str]"):
                 data = request.get_json()
                 for key in data.keys():
                     if key not in trusted_keys:
-                        print(key)
                         raise KeyError
                 return func(*args, **kargs)
             except KeyError:
