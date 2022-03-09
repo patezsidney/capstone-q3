@@ -1,4 +1,5 @@
 from http import HTTPStatus
+from pickle import NONE
 from flask import jsonify, request
 from sqlalchemy import exc
 from sqlalchemy.orm.session import Session
@@ -72,9 +73,24 @@ def delete_classroom(classroom_id: str):
 @auth_employee.login_required(role='admin')
 def get_all_classroom():
     session: Session = db.session
-    data = session.query(ClassroomModel).all()
+    data = session.query(ClassroomModel).paginate(page=None, per_page=20)
+    
+    response = []
 
-    return jsonify(data), HTTPStatus.OK
+    for classroom in data.items:
+
+        school_subject = classroom.school_subjects[0].school_subject if len(classroom.school_subjects) != 0 else ''
+        employee_id = classroom.school_subjects[0].employee_id if len(classroom.school_subjects) != 0 else ''
+        teacher: EmployeeModel = EmployeeModel.query.filter_by(employee_id=employee_id).one()
+        
+        response.append({
+            "classroom_id": classroom.classroom_id,
+            "name": classroom.name,
+            "teacher": teacher.name.title(),
+            "school_subject": school_subject.title()
+        })
+
+    return jsonify(response), HTTPStatus.OK
 
 
 @auth_employee.login_required(role=['admin', 'teacher'])
