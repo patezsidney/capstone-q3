@@ -4,6 +4,7 @@ from flask import current_app, jsonify, request
 from werkzeug.exceptions import NotFound
 
 from app.configs.auth import auth_employee
+from app.configs.database import db
 from app.models.books_model import BooksModel
 from app.models.exc import IncorrectKeyError, MissingKeyError
 
@@ -60,3 +61,15 @@ def delete_book_by_id(book_id):
         return "",HTTPStatus.OK
     except NotFound:
         return {"msg":"Book not found!"},HTTPStatus.NOT_FOUND
+
+def get_all_books():
+    
+    books: BooksModel = db.session.query(BooksModel).all()
+
+    return jsonify(books), HTTPStatus.OK
+    
+def get_book_by_id(book_id: str):
+
+    book: BooksModel = BooksModel.query.get(book_id)
+
+    return jsonify(book), HTTPStatus.OK
