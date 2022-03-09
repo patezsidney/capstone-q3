@@ -2,7 +2,6 @@ from datetime import datetime
 from http import HTTPStatus
 
 from flask import current_app, jsonify, request
-from sqlalchemy import null
 from sqlalchemy.exc import DataError
 from sqlalchemy.orm.session import Session
 from werkzeug.exceptions import NotFound
@@ -11,7 +10,6 @@ from app.configs.auth import auth_employee
 from app.configs.database import db
 from app.models.exc import IncorrectKeyError, MissingKeyError, TypeValueError
 from app.models.library_model import LibraryModel
-from app.models.students_model import StudentsModel
 
 
 # @auth_employee.login_required(role=['admin','librarian'])
@@ -61,10 +59,7 @@ def edit_book_or_student_in_book_rental_by_id(id: str):
 # @auth_employee.login_required(["admin","librarian"])
 def register_book_rental_return_by_id(id:str):
     try:
-        data = request.get_json()
-        LibraryModel.check_incorrect_keys(data)
-        LibraryModel.check_type_value(data)
-
+        data = dict()
         data["date_return"]=datetime.now()
 
         rental = LibraryModel.query.filter_by(library_id=id).first()

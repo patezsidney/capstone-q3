@@ -4,10 +4,10 @@ from flask.testing import FlaskClient
 def test_edit_book_or_student_in_book_rental_by_id(client: FlaskClient):
 
     request_data = {
-        "student_id":"1d5225ef-5638-4397-9989-e604a2cceca0"
+        "student_id":"2a465bd0-22cd-45e7-9fd1-142dee2cca78"
     }    
     
-    request_response = client.patch("/api/library/023b926d-8f03-460d-be7b-840d80f91f6e",json=request_data)
+    request_response = client.patch("/api/library/23c3c4c8-d923-43d3-bc1b-c47d7b741ee1",json=request_data)
     
     assert (request_response.status_code == 202), "Verificar se o status code é ACCEPTED"
 
