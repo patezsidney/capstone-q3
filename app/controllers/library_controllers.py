@@ -12,7 +12,7 @@ from app.models.exc import IncorrectKeyError, MissingKeyError, TypeValueError
 from app.models.library_model import LibraryModel
 
 
-# @auth_employee.login_required(role=['admin','librarian'])
+@auth_employee.login_required(role=['admin','librarian'])
 def library_register():
     try:
         data = request.get_json()
@@ -31,6 +31,7 @@ def library_register():
     except MissingKeyError:
         return {"msg":"Missing key"},HTTPStatus.BAD_REQUEST
 
+@auth_employee.login_required(role=["admin","librarian"])
 def edit_book_or_student_in_book_rental_by_id(id: str):
     try:
         data = request.get_json()
@@ -56,7 +57,7 @@ def edit_book_or_student_in_book_rental_by_id(id: str):
     except NotFound:
         return {"msg":"rental not found"},HTTPStatus.NOT_FOUND
 
-# @auth_employee.login_required(["admin","librarian"])
+@auth_employee.login_required(role=["admin","librarian"])
 def register_book_rental_return_by_id(id:str):
     try:
         data = dict()
@@ -81,6 +82,7 @@ def register_book_rental_return_by_id(id:str):
     except NotFound:
         return {"msg":"rental not found"},HTTPStatus.NOT_FOUND
 
+@auth_employee.login_required(role=["admin","librarian"])
 def delete_library(library_id: str):
     
     try:
@@ -94,12 +96,14 @@ def delete_library(library_id: str):
     except DataError:
         return {"mgs": "library_id not found"}, HTTPStatus.NOT_FOUND
 
+@auth_employee.login_required(role=["admin","librarian"])
 def get_library_list():
     session: Session = db.session
     data = session.query(LibraryModel).paginate(page=None,per_page=20)
 
     return jsonify(data.items), HTTPStatus.OK
 
+@auth_employee.login_required(role=["admin","librarian"])
 def get_library(library_id: str):
 
     try:

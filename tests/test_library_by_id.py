@@ -4,7 +4,7 @@ from flask.testing import FlaskClient
 # que acontece antes desse.
 
 def test_get_library_by_id(client: FlaskClient):
-    response = client.get("/api/library/3554e9f0-8208-4e99-81c1-d79f3caf891c")
+    response = client.get("/api/library/3554e9f0-8208-4e99-81c1-d79f3caf891c",headers={"Authorization": "Bearer 1234"})
 
     # response = client.get("/api/library/3554e9f0-8208-4e99-81c1-d79f3caf891c")
     mock_reponse = {
