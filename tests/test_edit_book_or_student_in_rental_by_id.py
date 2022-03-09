@@ -8,8 +8,6 @@ def test_edit_book_or_student_in_book_rental_by_id(client: FlaskClient):
     }    
     
     request_response = client.patch("/api/library/023b926d-8f03-460d-be7b-840d80f91f6e",json=request_data)
-
-    print(request_response)
     
     assert (request_response.status_code == 202), "Verificar se o status code é ACCEPTED"
 
