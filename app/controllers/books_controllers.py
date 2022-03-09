@@ -67,3 +67,9 @@ def get_all_books():
     books: BooksModel = db.session.query(BooksModel).all()
 
     return jsonify(books), HTTPStatus.OK
+    
+def get_book_by_id(book_id: str):
+
+    book: BooksModel = BooksModel.query.get(book_id)
+
+    return jsonify(book), HTTPStatus.OK

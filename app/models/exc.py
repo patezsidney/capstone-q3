@@ -9,3 +9,6 @@ class IncorrectKeyError(Exception):
 
 class MissingKeyError(Exception):
     pass
+
+class TypeValueError(Exception):
+    pass
