@@ -115,8 +115,23 @@ def delete_employee(employee_id: str):
 
 @auth_employee.login_required(role='admin')
 def get_all_employees():
+    
+    get_args = request.args
+    args_model = {
+            "employee_id": get_args.get('employee_id'),
+			"name": get_args.get('name'),
+			"email": get_args.get('email'),
+			"wage":get_args.get('wage'),
+			"access_level": get_args.get('access_level')
+            }
+    args = {}
+    for key, value in args_model.items():
+        if value != None:
+            args[key] = value
+    		
     session: Session = db.session
-    data = session.query(EmployeeModel).all()
+
+    data = session.query(EmployeeModel).filter_by(**args).all()
 
     return jsonify(data), HTTPStatus.OK
 
