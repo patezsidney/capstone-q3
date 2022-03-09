@@ -122,5 +122,9 @@ def get_all_employees():
 
 @auth_employee.login_required(role='admin')
 def get_employee_by_id(employee_id:str):
-    employee: EmployeeModel = EmployeeModel.query.filter_by(employee_id=employee_id).one()
+    employee: EmployeeModel = EmployeeModel.query.get(employee_id)
+
+    if employee == None:
+        return {'msg': 'Employee not found'}, HTTPStatus.NOT_FOUND
+
     return jsonify(employee), HTTPStatus.OK
