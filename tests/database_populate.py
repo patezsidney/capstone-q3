@@ -75,13 +75,13 @@ def populate_database(app:Flask):
                         password_hash='pbkdf2:sha256:260000$CGnI1ihhhndhuDTJ$56a23d6eedf63f1745d5ddb40315705101692bb0cd16c25b0e6e1d910c17d06e', api_key='1234', access_level='admin'
                 ),
                 EmployeeModel ( employee_id='6d4b0f4d-a418-432e-a112-b44527ea33d4', name='chrystian', email='chrystian@email.com', wage=10000.00, 
-                        password_hash='pbkdf2:sha256:260000$CGnI1ihhhndhuDTJ$56a23d6eedf63f1745d5ddb40315705101692bb0cd16c25b0e6e1d910c17d06e', api_key='1234', access_level='teacher'
+                        password_hash='pbkdf2:sha256:260000$CGnI1ihhhndhuDTJ$56a23d6eedf63f1745d5ddb40315705101692bb0cd16c25b0e6e1d910c17d06e', api_key='1235', access_level='teacher'
                 ),
                 EmployeeModel (employee_id='b3298cfc-7fb8-47af-91ed-f2d8c4545cdd', name='matheus' , email='matheus@email.com', wage=2000.00, 
-                        password_hash='pbkdf2:sha256:260000$CGnI1ihhhndhuDTJ$56a23d6eedf63f1745d5ddb40315705101692bb0cd16c25b0e6e1d910c17d06e', api_key='1234', access_level='librarian'
+                        password_hash='pbkdf2:sha256:260000$CGnI1ihhhndhuDTJ$56a23d6eedf63f1745d5ddb40315705101692bb0cd16c25b0e6e1d910c17d06e', api_key='1236', access_level='librarian'
                 ),
                 EmployeeModel (employee_id='3f5e5df3-651b-46ec-9c42-be4a863f974a', name='paulo' , email='paulo@email.com', wage=2000.00,
-                        password_hash='pbkdf2:sha256:260000$CGnI1ihhhndhuDTJ$56a23d6eedf63f1745d5ddb40315705101692bb0cd16c25b0e6e1d910c17d06e', api_key='1234', access_level='teacher'
+                        password_hash='pbkdf2:sha256:260000$CGnI1ihhhndhuDTJ$56a23d6eedf63f1745d5ddb40315705101692bb0cd16c25b0e6e1d910c17d06e', api_key='1237', access_level='teacher'
                 ),
 
                 # Populate school subjects 

@@ -8,7 +8,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from app.configs.database import db
 from app.models.absence_model import AbsenceModel
-from app.models.exc import IncorrectKeyError, MissingKeyError
+from app.models.exc import IncorrectKeyError, MissingKeyError,TypeValueError
 
 
 @dataclass
@@ -50,18 +50,18 @@ class StudentsModel(db.Model):
 
     @classmethod
     def check_incorrect_keys(cls,data):
-        key_error = [key for key in data.keys() if key not in ["name","contact_name","contact_email","cpf","birth_date","gender","photo","password","classroom_id"]]
-
-        if len(key_error) > 0:
-            raise IncorrectKeyError
-        
+        if len([key for key in data.keys() if key not in ["name","contact_name","contact_email","cpf","birth_date","gender","photo","password","classroom_id"]]):
+            raise IncorrectKeyError        
         return True
 
     @classmethod
     def check_keys(cls,data):
-        missing_key = [key for key in ["name","contact_name","contact_email","cpf","birth_date","gender","photo","password","classroom_id"] if key not in data.keys()]
-
-        if len(missing_key) > 0:
-            raise MissingKeyError
-        
+        if len([key for key in ["name","contact_name","contact_email","cpf","birth_date","gender","photo","password","classroom_id"] if key not in data.keys()]):
+            raise MissingKeyError        
+        return True
+    
+    @classmethod
+    def check_type_value(cls,data):
+        if len([value for value in data.values() if type(value)!= str]):
+            raise TypeValueError
         return True
