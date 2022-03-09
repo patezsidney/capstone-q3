@@ -24,14 +24,34 @@ def test_get_grades_by_student_id(client: FlaskClient):
     assert(response.status_code == 200), "Verificar se o status code é OK"
 
 
+def test_get_grades_by_student_id_error(client: FlaskClient):
+    response = client.get("/api/grades/1d5225ef-5638-4397-9989-e604a2ccecb8")
+    response_json = response.get_json()
+
+    assert(response_json['msg'] == "student not found"), "Verificar se id invalido"
+    assert(response.status_code == 404), "Verificar se o status code é NOT FOUND"
+
 def test_get_all_grades(client:FlaskClient):
     response = client.get("/api/grades")
     response_json = response.get_json()
     assert(type(response_json) is list), "Verificar se está retornando um list"
-    assert(type(response_json[0]) is dict), "Verificar se está retornando um dict"
+    assert(type(response_json[0]) is dict), "Verificar se a lista contem um dict"
     assert(response.status_code == 200), "Verificar se o status code é OK"
     assert(len(response_json) == 4), "O comprimento da resposta esta menor do que o esperado"
 
+
+def test_get_grades_classroom(client:FlaskClient):
+    response = client.get("/api/grades?classroom=51df51e0-00a7-49e3-9f2e-0405574f5c20")
+    response_json = response.get_json()
+    assert(type(response_json) is list), "Verificar se está retornando um list"
+    assert(type(response_json[0]) is dict), "Verificar se a lista contem um dict"
+    assert(response.status_code == 200), "Verificar se o status code é OK"
+
+def test_get_all_grades_error(client:FlaskClient):
+    response = client.get("/api/grades?classroom=51df51e0-00a7-49e3-9f2e-0405574f5c56")
+    response_json = response.get_json()
+    assert(response_json['msg'] == "classroom id not found"), "Verificar se id invalido"
+    assert(response.status_code == 404), "Verificar se o status code é NOT FOUND"
 
 def test_post_new_grade(client:FlaskClient):
     data ={
@@ -40,8 +60,21 @@ def test_post_new_grade(client:FlaskClient):
             "student_id": '51df51e0-00a7-49e3-9f2e-0405574f5c20',
             "classrom_id": '51df51e0-00a7-49e3-9f2e-0405574f5c20'
             }
-    request_response = client.post("/api/grades",json=data, follow_redirects=True)
-    assert (request_response.status_code == 201), "Verificar se o status code é OK"
+    response = client.post("/api/grades",json=data, follow_redirects=True)
+    response_json = response.get_json()
+    assert(response_json == data), "Verificar se o retorno está correto"
+    assert (response.status_code == 201), "Verificar se o status code é CREATED"
+
+def test_post_new_grade_error(client:FlaskClient):
+    data ={
+            "ativit": "debug",
+            "grade": 10,
+            "student_id": '51df51e0-00a7-49e3-9f2e-0405574f5c20',
+            "classrom_id": '51df51e0-00a7-49e3-9f2e-0405574f5c20'
+            }
+    response = client.post("/api/grades",json=data, follow_redirects=True)
+    response_json = response.get_json()
+    assert (response.status_code == 422), "Verificar se o status code é CREATED"
 
 
 def test_patch_grade(client:FlaskClient):
@@ -52,3 +85,12 @@ def test_patch_grade(client:FlaskClient):
     grade = request_response.get_json()
     assert (data["ativity"] == grade["ativity"]), "Verificar se o ativity foi atualizada"
     assert (request_response.status_code == 202), "Verificar se o status code é OK"
+
+def test_patch_grade_error(client:FlaskClient):
+    data ={
+            "ativity": "testando"
+            }
+    response = client.patch("/api/grades/14cff389-868d-4858-8e3b-466ab29c8154",json=data)
+    grade = response.get_json()
+    assert (grade["msg"] == "id not found"), "Verificar se o ativity foi atualizada"
+    assert(response.status_code == 404), "Verificar se o status code é NOT FOUND"

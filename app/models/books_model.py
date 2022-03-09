@@ -3,6 +3,7 @@ from uuid import uuid4
 
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import backref, relationship
 
 from app.configs.database import db
 from app.models.exc import IncorrectKeyError, MissingKeyError
@@ -10,6 +11,11 @@ from app.models.exc import IncorrectKeyError, MissingKeyError
 
 @dataclass
 class BooksModel(db.Model):
+
+    book_id: str
+    title: str
+    author: str
+    quantity: int
 
     __tablename__ = "books"
 
