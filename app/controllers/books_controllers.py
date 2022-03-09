@@ -60,3 +60,9 @@ def delete_book_by_id(book_id):
         return "",HTTPStatus.OK
     except NotFound:
         return {"msg":"Book not found!"},HTTPStatus.NOT_FOUND
+
+def get_book_by_id(book_id: str):
+
+    book: BooksModel = BooksModel.query.get(book_id)
+
+    return jsonify(book), HTTPStatus.OK
