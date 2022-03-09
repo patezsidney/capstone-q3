@@ -72,8 +72,10 @@ def delete_classroom(classroom_id: str):
 
 @auth_employee.login_required(role='admin')
 def get_all_classroom():
+    page = request.args.get('page', 1, type=int)
+    per_page = 20
     session: Session = db.session
-    data = session.query(ClassroomModel).paginate(page=None, per_page=20)
+    data = session.query(ClassroomModel).paginate(page, per_page=per_page, error_out=False)
     
     response = []
 
@@ -90,7 +92,12 @@ def get_all_classroom():
             "school_subject": school_subject.title()
         })
 
-    return jsonify(response), HTTPStatus.OK
+    result = {"result": response}
+    result['page'] = data.page
+    result['total_number_of_pages'] = data.pages
+        
+
+    return jsonify(result), HTTPStatus.OK
 
 
 @auth_employee.login_required(role=['admin', 'teacher'])
@@ -98,7 +105,7 @@ def get_employee_classroom(classroom_id: str):
     try:
         classroom: ClassroomModel = ClassroomModel.query.filter_by(classroom_id=classroom_id).one()
         teacher: EmployeeModel = EmployeeModel.query.filter_by(employee_id=classroom.school_subjects[0].employee_id).one()
-
+        response = []
         students = []
 
         for student in classroom.students:
@@ -106,13 +113,15 @@ def get_employee_classroom(classroom_id: str):
                 "name": student.name.title()
             })
 
-        return {
+        response.append({
                 "classroom_id": classroom.classroom_id,
                 "name": classroom.name,
                 "teacher": teacher.name.title(),
                 "school_subjects": classroom.school_subjects[0].school_subject.title(),
                 "students": students
-            }, HTTPStatus.OK
+            })
+
+        return jsonify(response), HTTPStatus.OK
 
     except exc.NoResultFound:
         return {'msg': 'Classroom not found'}, HTTPStatus.NOT_FOUND
