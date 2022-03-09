@@ -20,6 +20,6 @@ def verify_some_keys(trusted_keys: "list[str]"):
                         "error": "incorrect key(s)",
                         "expected to be in": trusted_keys,
                         "received": list(data.keys())
-                        }, HTTPStatus.UNPROCESSABLE_ENTITY
+                        }, HTTPStatus.BAD_REQUEST
         return wraped_function
     return test_key

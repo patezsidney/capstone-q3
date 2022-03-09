@@ -44,8 +44,10 @@ def register_books():
         current_app.db.session.commit()
 
         return jsonify(book),HTTPStatus.CREATED
+
     except IncorrectKeyError:
         return {"msg":"Incorrect key use"},HTTPStatus.BAD_REQUEST
+        
     except MissingKeyError:
         return {"msg":"Missing key in request"},HTTPStatus.BAD_REQUEST
 

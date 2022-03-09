@@ -41,7 +41,7 @@ def sigin():
                 "error": "incorrect key(s)",
                 "expected to be": ['email','password'],
                 "received": list(data.keys())
-                }, HTTPStatus.UNPROCESSABLE_ENTITY
+                }, HTTPStatus.BAD_REQUEST
 
 @auth_employee.login_required(role='admin')
 def create_employee():
@@ -67,7 +67,7 @@ def create_employee():
                 "error": "incorrect key(s)",
                 "expected to be": ['name', 'email', 'wage', 'access_level','password'],
                 "received": list(data.keys())
-                }, HTTPStatus.UNPROCESSABLE_ENTITY
+                }, HTTPStatus.BAD_REQUEST
 
 
 @verify_some_keys(['name', 'email', 'wage', 'access_level','password' ,'school_subjects'])
