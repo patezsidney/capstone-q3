@@ -66,20 +66,15 @@ def test_patch_classroom_success(client: FlaskClient):
     assert (patch_response.status_code == 202), "Verificar se o status code é OK"
 
 def test_get_on_classroom_success(client: FlaskClient):
-    request_data = {
-        "name": "3T",
-    }
     headers = {"Authorization": "Bearer 1234"}
 
-    request_response = client.post("/api/classrooms", json=request_data, follow_redirects=True, headers=headers )
-    response_json: dict = request_response.get_json() 
-
-    expected_keys = ["name", "classroom_id", "absences", "school_subjects", "grades", "students"]
+    expected_keys = ["name", "classroom_id", "school_subjects", "students", "teacher"]
     expected_keys.sort()
     
-    request_response_get = client.get(f"/api/classrooms/{response_json['classroom_id']}", json=request_data, follow_redirects=True, headers=headers )
+    request_response_get = client.get(f"/api/classrooms/51df51e0-00a7-49e3-9f2e-0405574f5c20", headers=headers )
+
     response_json_get: dict = request_response_get.get_json()
-    response_keys = list(response_json_get.keys())
+    response_keys = list(response_json_get[0].keys())
     response_keys.sort()
 
     assert (response_keys == expected_keys), "verifique as keys retornadas"
