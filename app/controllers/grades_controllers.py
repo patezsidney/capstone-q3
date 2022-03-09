@@ -8,9 +8,9 @@ from app.models import GradesModel, StudentsModel
 from app.services.decorators import verify_some_keys
 
 
-#@auth_employee.login_required(role=['admin','teacher'])
+@auth_employee.login_required(role=['admin','teacher'])
 @verify_some_keys(["ativity", "grade", "student_id", "classrom_id"])
-def create_grade(_):
+def create_grade(*_):
     data = request.get_json()
     new_grade = GradesModel(**data)
     db.session.add(new_grade)
@@ -18,7 +18,7 @@ def create_grade(_):
     return jsonify(new_grade), HTTPStatus.CREATED
 
 
-#@auth_employee.login_required(role=['admin','teacher'])
+@auth_employee.login_required(role=['admin','teacher'])
 def update_grade(id: str):
     try:
         data = request.get_json()
@@ -33,7 +33,7 @@ def update_grade(id: str):
     except DataError:
         return {"msg": "grade id invalid"}, HTTPStatus.BAD_REQUEST
 
-#@auth_employee.login_required(role=['admin','teacher'])
+@auth_employee.login_required(role=['admin','teacher'])
 def delete_grade(grade_id: str):
     try:
         grade: GradesModel = GradesModel.query.filter_by(grade_id=grade_id).one()
@@ -44,7 +44,7 @@ def delete_grade(grade_id: str):
         return {"msg": "grade id invalid"}, HTTPStatus.BAD_REQUEST
 
 
-#@auth_employee.login_required(role=['admin','teacher'])
+@auth_employee.login_required(role=['admin','teacher'])
 def get_all_grades():
     try:
         page = request.args.get("page", 1, type=int)
@@ -63,7 +63,7 @@ def get_all_grades():
         return {"msg": "page not found"}, HTTPStatus.NOT_FOUND
     
 
-##@auth_employee.login_required(role=['admin','teacher'])
+@auth_employee.login_required(role=['admin','teacher'])
 def get_student_grades(student_id: str):
     
     try:
