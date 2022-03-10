@@ -413,6 +413,19 @@ RESPONSE FORMAT STATUS 200
 ]
 ```
 
+### Get grade student
+
+`GET /grades/student`
+
+RESPONSE FORMAT STATUS 200
+```json
+{
+    "grades_class": "1A",
+    "school_subject": "React",
+    "grade": 9.0
+}
+```
+
 ### Update grade
 
 `PATCH /grades/:grade_id`
@@ -1022,13 +1035,18 @@ RESPONSE FORMAT STATUS 202
 REQUEST FORMAT
 ```json
 {
-    
+    "school_subject":"Matemática do 1º ano A do ensino médio",
+    "employee_id": "6d4b0f4d-a418-432e-a112-b44527ea33d4", 
+    "classroom_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20"
 }
 ```
 RESPONSE FORMAT STATUS 201
 ```json
 {
-    
+    "school_subject_id": "031a682f-2971-479e-b8ae-8f449734259a",
+    "school_subject": "Matemática do 1º ano A do ensino médio",
+    "classroom": "1A",
+    "teacher": "chrystian"
 }
 ```
 
