@@ -112,6 +112,7 @@ def get_all_absense():
         students: StudentsModel = StudentsModel.query.filter_by(
             registration_student_id=absence.student_id).first()
 
+        print(absence)
         response = {
             "absence_id": absence.absence_id,
             "date": absence.date.strftime('%d/%m/%Y'),
