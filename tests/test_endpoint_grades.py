@@ -3,22 +3,19 @@ headers = {"Authorization": "Bearer 1234"}
 
 def test_get_grades_by_student_id(client: FlaskClient):
     response = client.get("/api/grades/1d5225ef-5638-4397-9989-e604a2cceca0",headers=headers)
-    mock_response = {
-            "name": "matheus",
-            "grades": [
-                {
-                    "ativity": "codar",
-                    "grade": 3.5,
-                    "student_id": "1d5225ef-5638-4397-9989-e604a2cceca0",
-                    "classrom_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20"
-                    }
-                ]
-            }
+    mock_response = [
+            {
+                'ativity': 'codar',
+                'classrom': {'classroom_id': '51df51e0-00a7-49e3-9f2e-0405574f5c20','name': '1A'},
+                'grade': 3.5,
+                'student': {'name': 'matheus','student_id': '1d5225ef-5638-4397-9989-e604a2cceca0'}
+                }
+        ]
 
     response_json = response.get_json()
 
     assert(response_json == mock_response), "Verificar se o retorno está correto"
-    assert(type(response_json) is dict), "Verificar se está retornando um dict"
+    assert(type(response_json) is list), "Verificar se está retornando um dict"
     assert(response.status_code == 200), "Verificar se o status code é OK"
 
 
@@ -55,6 +52,11 @@ def test_get_all_grades_error(client:FlaskClient):
 
 
 def test_post_new_grade(client:FlaskClient):
+    mock= {
+            'ativity': 'debug',
+            'classrom': {'classroom_id': '51df51e0-00a7-49e3-9f2e-0405574f5c20', 'name': '1A'},
+            'grade': 10.0, 'student': {'name': 'felipe','student_id': '51df51e0-00a7-49e3-9f2e-0405574f5c20'}
+            }
     data ={
             "ativity": "debug",
             "grade": 10,
@@ -63,7 +65,7 @@ def test_post_new_grade(client:FlaskClient):
             }
     response = client.post("/api/grades",json=data, follow_redirects=True,headers=headers)
     response_json = response.get_json()
-    assert(response_json == data), "Verificar se o retorno está correto"
+    assert(response_json == mock), "Verificar se o retorno está correto"
     assert (response.status_code == 201), "Verificar se o status code é CREATED"
 
 
