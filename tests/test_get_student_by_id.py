@@ -1,8 +1,9 @@
 from flask.testing import FlaskClient
+headers = {"Authorization": "Bearer 1234"}
 
 
 def test_get_student_by_id(client: FlaskClient):
-    response = client.get("/api/students/51df51e0-00a7-49e3-9f2e-0405574f5c20")
+    response = client.get("/api/students/51df51e0-00a7-49e3-9f2e-0405574f5c20", headers=headers)
     mock_reponse = {
                     "registration_student_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
                     "name": "felipe",
