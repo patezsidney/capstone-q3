@@ -9,7 +9,7 @@ def test_register_teacher_in_school_subject(client: FlaskClient):
         'classroom_id':'51df51e0-00a7-49e3-9f2e-0405574f5c20'
     }    
     
-    request_response = client.post("/api/school_subjects/register",json=request_data)
+    request_response = client.post("/api/school_subjects/register",json=request_data,headers={"Authorization": "Bearer 1234"})
 
     response = request_response.get_json()
     

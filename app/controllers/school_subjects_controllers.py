@@ -11,6 +11,7 @@ from app.configs.database import db
 from app.models.exc import IncorrectKeyError, MissingKeyError, TypeValueError
 from app.models.school_subjects_model import SchoolSubjectsModel
 
+@auth_employee.login_required(role='admin')
 def register_teacher_in_school_subject():
     data = request.get_json()
 
@@ -26,6 +27,7 @@ def register_teacher_in_school_subject():
             "teacher":school_subject.teacher.name
             },HTTPStatus.CREATED
 
+@auth_employee.login_required(role='admin')
 def edit_school_subject_by_id(school_subject_id:str):
     data = request.get_json()
     new_school_subject = SchoolSubjectsModel.query.filter_by(school_subject_id=school_subject_id).first()
