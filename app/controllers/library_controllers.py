@@ -20,6 +20,8 @@ def library_register():
         LibraryModel.check_incorrect_keys(data)
         LibraryModel.missing_key(data)
 
+        if len(LibraryModel.query.filter_by(student_id=f"{data['student_id']}",date_return=None).paginate(page=None,per_page=20).items) >= 2:
+            return {"msg":"The limit of books for rent has been reached"},HTTPStatus.CONFLICT
         rent = LibraryModel(**data)
 
         current_app.db.session.add(rent)
