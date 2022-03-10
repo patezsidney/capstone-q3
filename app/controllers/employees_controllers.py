@@ -35,21 +35,43 @@ def sigin():
 
     except exc.DatabaseError:
         return {"msg": "Invalid employee email"}, HTTPStatus.UNAUTHORIZED
+    
+    except KeyError:
+        return {
+                "error": "incorrect key(s)",
+                "expected to be": ['email','password'],
+                "received": list(data.keys())
+                }, HTTPStatus.BAD_REQUEST
 
+@auth_employee.login_required(role='admin')
 def create_employee():
-    session: Session = db.session
+    try:
+        session: Session = db.session
 
-    data = request.get_json()
-    data["api_key"] = token_urlsafe(16)
+        data = request.get_json()
+        data["api_key"] = token_urlsafe(16)
 
-    employee = EmployeeModel(**data)
+        employee = EmployeeModel(**data)
 
-    session.add(employee)
-    session.commit()
+        session.add(employee)
+        session.commit()
 
-    return jsonify(employee), HTTPStatus.CREATED
+        return jsonify(employee), HTTPStatus.CREATED
+
+    except exc.IntegrityError:
+        return {'msg': 'Email already exists'}, HTTPStatus.CONFLICT
+
+    except TypeError:
+        data.pop('api_key')
+        return {
+                "error": "incorrect key(s)",
+                "expected to be": ['name', 'email', 'wage', 'access_level','password'],
+                "received": list(data.keys())
+                }, HTTPStatus.BAD_REQUEST
+
 
 @verify_some_keys(['name', 'email', 'wage', 'access_level','password' ,'school_subjects'])
+@auth_employee.login_required(role=['admin', 'teacher'])
 def update_employee(employee_id: str):
     try: 
         data = request.get_json()
@@ -58,6 +80,9 @@ def update_employee(employee_id: str):
         if employee is None: 
             return {'msg': 'Employee not found'}, HTTPStatus.NOT_FOUND
 
+        if auth_employee.current_user().access_level == 'teacher' and employee != auth_employee.current_user():
+            return {'msg': 'No authtorization for this action'}, HTTPStatus.UNAUTHORIZED
+            
         password = data.get('password')
 
         if password is not None:
@@ -72,10 +97,12 @@ def update_employee(employee_id: str):
         db.session.add(employee)
         db.session.commit()
 
-        return jsonify(employee), HTTPStatus.OK
+        return jsonify(employee), HTTPStatus.ACCEPTED
+
     except exc.IntegrityError:
         return {'msg': 'Email already exists'}, HTTPStatus.CONFLICT
 
+@auth_employee.login_required(role='admin')
 def delete_employee(employee_id: str):
     employee: EmployeeModel = EmployeeModel.query.get(employee_id)
     if employee is None:
@@ -86,6 +113,7 @@ def delete_employee(employee_id: str):
 
     return {}, HTTPStatus.NO_CONTENT
 
+@auth_employee.login_required(role='admin')
 def get_all_employees():
     session: Session = db.session
     data = session.query(EmployeeModel).all()
@@ -94,5 +122,9 @@ def get_all_employees():
 
 @auth_employee.login_required(role='admin')
 def get_employee_by_id(employee_id:str):
-    employee: EmployeeModel = EmployeeModel.query.filter_by(employee_id=employee_id).one()
+    employee: EmployeeModel = EmployeeModel.query.get(employee_id)
+
+    if employee == None:
+        return {'msg': 'Employee not found'}, HTTPStatus.NOT_FOUND
+
     return jsonify(employee), HTTPStatus.OK
