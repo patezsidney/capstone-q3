@@ -20,6 +20,8 @@ def library_register():
         LibraryModel.check_incorrect_keys(data)
         LibraryModel.missing_key(data)
 
+        if len(LibraryModel.query.filter_by(student_id=f"{data['student_id']}",date_return=None).paginate(page=None,per_page=20).items) >= 2:
+            return {"msg":"The limit of books for rent has been reached"},HTTPStatus.CONFLICT
         rent = LibraryModel(**data)
 
         current_app.db.session.add(rent)
@@ -79,7 +81,7 @@ def register_book_rental_return_by_id(library_id:str):
         data = dict()
         data["date_return"]=datetime.now()
 
-        rental = LibraryModel.query.filter_by(library_id=library_id).first()
+        rental = LibraryModel.query.filter_by(library_id=library_id,date_return=None).first()
 
         if rental == None:
             raise NotFound
@@ -99,10 +101,6 @@ def register_book_rental_return_by_id(library_id:str):
             "data_return":rental.date_return,
             "data_accurrancy":rental.date_accurancy
             },HTTPStatus.ACCEPTED
-    except IncorrectKeyError:
-        return {"msg":"Incorrect key use"},HTTPStatus.BAD_REQUEST
-    except TypeValueError:
-        return {"msg":"request with incorrect value type!"},HTTPStatus.BAD_REQUEST
     except NotFound:
         return {"msg":"rental not found"},HTTPStatus.NOT_FOUND
 
