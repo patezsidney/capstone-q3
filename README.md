@@ -274,10 +274,26 @@ header {
 
 ```json
 {
-
+    "ativity": "debug",
+    "grade": 10.0,
+    "student_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
+    "classrom_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20" 
 }
 ```
-
+```json
+{
+  "ativity": "debug",
+  "grade": 10.0,
+  "student": {
+    "student_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
+    "name": "felipe"
+  },
+  "classrom": {
+    "classroom_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
+    "name": "1A"
+  }
+}
+```
 ### Get all grades
 
 `GET /grades`
@@ -301,13 +317,22 @@ header {
 
 ### Get only grade
 
-`GET /grades/:id`
+`GET /grades/:student_id`
 
 ```json
 [
- {
-
- }
+    {
+        "ativity": "codar",
+        "grade": 9.0,
+        "student": {
+            "student_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
+            "name": "felipe"
+        },
+        "classrom": {
+            "classroom_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
+            "name": "1A"
+        }
+    }
 ]
 ```
 
@@ -321,17 +346,13 @@ header {
 
 ```json
 {
-    "name": "Hamburguer upgrade",
-    "category": "Sanduíches",
-    "price": 7.99,
-    "userId": 2,
-    "quantity": 2
+    
 }
 ```
 
 ### Delete grade
 
-`DELETE /grades/:id`
+`DELETE /grades/:grade_id`
 
 header {
     Authorization: Bearer token
