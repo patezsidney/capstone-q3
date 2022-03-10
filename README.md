@@ -388,11 +388,13 @@ header {
 
 ```json
 {
-    "name": "Hamburguer",
-    "category": "Sanduíches",
-    "price": 7.99,
-    "userId": 2,
-    "quantity": 1
+    "name": "1A",
+}
+```
+```json
+{
+    "classroom_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
+    "name": "1A"
 }
 ```
 
@@ -402,13 +404,13 @@ header {
 
 ```json
 [
- {
-    "id": 1,
-    "name": "Hamburguer",
-    "category": "Sanduíches",
-    "price": 7.99,
-    "userId": 2,
-    "quantity": 1
+  {
+    "classroom_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
+    "name": "1A"
+  },
+  {
+    "classroom_id": "1446d11e-6985-4979-8e7f-15d5ddf0a81f",
+    "name": "1B"
   }
 ]
 ```
@@ -418,16 +420,39 @@ header {
 `GET /classrooms/:id`
 
 ```json
-[
- {
-    "id": 1,
-    "name": "Hamburguer",
-    "category": "Sanduíches",
-    "price": 7.99,
-    "userId": 2,
-    "quantity": 1
-  }
-]
+{
+
+    "classroom_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
+
+    "1A": [
+
+        {
+
+        "teacher": "Paulo",
+
+        "school_subject": "React",
+
+        "students": [
+
+                {
+
+                    "name": "Arthur"
+
+                },
+
+                {
+
+                    "name": "Sidney"
+
+                }
+
+            ]
+
+        }
+
+    ]
+
+}
 ```
 
 ### Update classroom
@@ -440,11 +465,13 @@ header {
 
 ```json
 {
-    "name": "Hamburguer upgrade",
-    "category": "Sanduíches",
-    "price": 7.99,
-    "userId": 2,
-    "quantity": 2
+    "name": "2B",
+}
+```
+```json
+{
+    "classroom_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
+    "name": "2B"
 }
 ```
 
