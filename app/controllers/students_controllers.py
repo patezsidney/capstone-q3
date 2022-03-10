@@ -39,7 +39,9 @@ def signin():
         student: StudentsModel = StudentsModel.query.filter_by(cpf=data['cpf']).one()
     
         if student.check_password(data['password']):
-            return StudentsModel.serialize(student), HTTPStatus.OK
+            data = StudentsModel.serialize(student)
+            data['api_key'] = student.api_key
+            return data, HTTPStatus.OK
     
         else:
             return {'msg': 'Wrong password'}, HTTPStatus.UNAUTHORIZED
@@ -102,7 +104,7 @@ def get_all_students():
 
 
 
-@auth_employee.login_required(role=['admin'])
+#@auth_employee.login_required(role=['admin'])
 def get_student_by_api_key():
     bearer_token = request.headers.get('Authorization').split(' ')[1]
 
@@ -115,7 +117,6 @@ def get_student_by_api_key():
 
 @auth_employee.login_required(role=['admin'])
 def get_student_by_id(student_id: str):
-
     try:
         student: StudentsModel = StudentsModel.query.filter_by(
         registration_student_id = student_id).first()
