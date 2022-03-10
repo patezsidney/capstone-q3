@@ -8,7 +8,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from app.configs.database import db
 from app.models.absence_model import AbsenceModel
-from app.models.exc import IncorrectKeyError, MissingKeyError,TypeValueError
+from app.models.exc import IncorrectKeyError, MissingKeyError, TypeValueError
 
 
 @dataclass

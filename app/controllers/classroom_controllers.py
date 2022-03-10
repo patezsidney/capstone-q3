@@ -1,10 +1,10 @@
 from http import HTTPStatus
-from pickle import NONE
 from flask import jsonify, request
 from sqlalchemy import exc
 from sqlalchemy.orm.session import Session
-from app.configs.database import db
+
 from app.configs.auth import auth_employee
+from app.configs.database import db
 from app.models.classroom_model import ClassroomModel
 from app.models.employee_model import EmployeeModel
 
