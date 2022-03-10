@@ -2,7 +2,6 @@ from datetime import datetime
 from http import HTTPStatus
 
 from flask import current_app, jsonify, request
-from sqlalchemy import null
 from sqlalchemy.exc import DataError
 from sqlalchemy.orm.session import Session
 from werkzeug.exceptions import NotFound
@@ -11,7 +10,6 @@ from app.configs.auth import auth_employee
 from app.configs.database import db
 from app.models.exc import IncorrectKeyError, MissingKeyError, TypeValueError
 from app.models.library_model import LibraryModel
-from app.models.students_model import StudentsModel
 
 
 @auth_employee.login_required(role=['admin','librarian'])
@@ -166,6 +164,8 @@ def get_library(library_id: str):
 @auth_employee.login_required(role=['admin','librarian'])
 def get_unreturned_book_rental():
     unreturned_rental = LibraryModel.query.filter_by(date_return=None).paginate(page=None,per_page=20)
+    if not len(unreturned_rental):
+        return {"msg":"There are no books to return"},HTTPStatus.OK
 
     return jsonify(
         [{
@@ -184,6 +184,9 @@ def student_books_not_yet_returned(student_id):
 
     rented_books = LibraryModel.query.filter_by(student_id=student_id,date_return=None).paginate(page=None,per_page=20)
 
+    if not len(rented_books) or rented_books==None:
+        return {"msg":"There are no books to return"},HTTPStatus.OK
+
     return jsonify([{"student":rented.student.name,
              "book":rented.book.title,
              "date_accurancy":rented.date_accurancy} 
@@ -193,6 +196,9 @@ def student_books_not_yet_returned(student_id):
 def get_books_rented(student_id):
 
     rented_books = LibraryModel.query.filter_by(student_id=student_id).paginate(page=None,per_page=20)
+
+    if not len(rented_books) or rented_books==None:
+        return {"msg":"No books have been rented so far"},HTTPStatus.OK
 
     return jsonify([{"student":rented.student.name,
                     "book":rented.book.title,
