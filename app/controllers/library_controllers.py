@@ -123,3 +123,13 @@ def get_library(library_id: str):
     
     except DataError:
         return {"msg": "library_id not found"}, HTTPStatus.NOT_FOUND
+
+def get_books_of_student(student_id):
+
+    rented_books = LibraryModel.query.filter_by(student_id=student_id,date_return=None).paginate(page=None,per_page=20)
+
+    return jsonify([{"student":rented.student.name,
+             "book":rented.book.title,
+             "date_accurancy":rented.date_accurancy} 
+             for rented in rented_books.items ]),HTTPStatus.OK
+
