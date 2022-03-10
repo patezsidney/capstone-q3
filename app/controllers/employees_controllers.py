@@ -115,10 +115,16 @@ def delete_employee(employee_id: str):
 
 @auth_employee.login_required(role='admin')
 def get_all_employees():
-    session: Session = db.session
-    data = session.query(EmployeeModel).all()
 
-    return jsonify(data), HTTPStatus.OK
+    page = request.args.get('page', 1, type=int)
+    per_page = 20
+    session: Session = db.session
+    data = session.query(EmployeeModel).paginate(page, per_page, error_out=False)
+    result = {"result": data.items}
+    result['page'] = data.page
+    result['total_number_of_pages'] = data.pages
+
+    return jsonify(result), HTTPStatus.OK
 
 @auth_employee.login_required(role='admin')
 def get_employee_by_id(employee_id:str):
