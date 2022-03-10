@@ -102,22 +102,50 @@ header {
 ```json
 [
   {
-    "registration_student_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
+    "id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
     "name": "felipe",
-    "contact_name": "Rosita",
-    "contact_email": "rosita@email.com",
     "cpf": "11111111111",
     "birth_date": "Sun, 20 Feb 2000 00:00:00 GMT",
-    "absences": [
-        {
-            "absence_id": "494925c7-7399-44e2-a00e-653581145979",
-            "date": "Sat, 15 Feb 2020 00:00:00 GMT",
-            "justify": false,
-            "classroom_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
-            "student_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20"
-        }
-    ]
+    "contact_name": "Rosita",
+    "contact_email": "rosita@email.com",
+    "gender": "Feminino"
   },
+  {
+    "id": "1d5225ef-5638-4397-9989-e604a2cceca0",
+    "name": "matheus",
+    "cpf": "11111111112",
+    "birth_date": "Sun, 20 Feb 2000 00:00:00 GMT",
+    "contact_name": "Sirlei",
+    "contact_email": "sirlei@email.com",
+    "gender": "Feminino"
+  },
+  {
+    "id": "7dc82c28-4766-4bff-829b-2198a2e1ef98",
+    "name": "rafael",
+    "cpf": "11111111113",
+    "birth_date": "Sun, 20 Feb 2000 00:00:00 GMT",
+    "contact_name": "Maria",
+    "contact_email": "maria@email.com",
+    "gender": "Feminino"
+  },
+  {
+    "id": "2a465bd0-22cd-45e7-9fd1-142dee2cca78",
+    "name": "renato",
+    "cpf": "11111111114",
+    "birth_date": "Sun, 20 Feb 2000 00:00:00 GMT",
+    "contact_name": "Maria",
+    "contact_email": "mariaa@email.com",
+    "gender": "Feminino"
+  },
+  {
+    "id": "e1623b44-080c-4d3f-82d0-6237ff6f9077",
+    "name": "Uzumake Naruto",
+    "cpf": "99999999999",
+    "birth_date": "Wed, 26 May 1999 00:00:00 GMT",
+    "contact_name": "Umino Iruka",
+    "contact_email": "IrukaTeacher@ninjaschool.com",
+    "gender": "Masculino"
+  }
 ]
 ```
 
@@ -131,21 +159,13 @@ header {
 
 ```json
 {
-    "registration_student_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
+    "id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
     "name": "felipe",
-    "contact_name": "Rosita",
-    "contact_email": "rosita@email.com",
     "cpf": "11111111111",
     "birth_date": "Sun, 20 Feb 2000 00:00:00 GMT",
-    "absences": [
-        {
-            "absence_id": "494925c7-7399-44e2-a00e-653581145979",
-            "date": "Sat, 15 Feb 2020 00:00:00 GMT",
-            "justify": false,
-            "classroom_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
-            "student_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20"
-        }
-    ]
+    "contact_name": "Rosita",
+    "contact_email": "rosita@email.com",
+    "gender": "M"
 }
 ```
 
@@ -159,26 +179,18 @@ header {
 
 ```json
 {
-    "name": "felipe larson"
+    "gender": "M"
 }
 ```
 ```json
 {
-    "registration_student_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
+    "id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
     "name": "felipe",
-    "contact_name": "Rosita",
-    "contact_email": "rosita@email.com",
     "cpf": "11111111111",
     "birth_date": "Sun, 20 Feb 2000 00:00:00 GMT",
-    "absences": [
-        {
-            "absence_id": "494925c7-7399-44e2-a00e-653581145979",
-            "date": "Sat, 15 Feb 2020 00:00:00 GMT",
-            "justify": false,
-            "classroom_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
-            "student_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20"
-        }
-    ]
+    "contact_name": "Rosita",
+    "contact_email": "rosita@email.com",
+    "gender": "Masculino"
 }
 ```
 
