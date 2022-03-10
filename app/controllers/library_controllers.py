@@ -27,7 +27,14 @@ def library_register():
         current_app.db.session.add(rent)
         current_app.db.session.commit()
         
-        return jsonify(rent),HTTPStatus.CREATED
+        return {
+            "library_id":rent.library_id,
+            "librarian":rent.employee.name,
+            "book":rent.book.title,
+            "student":rent.student.name,
+            "data_withdraw":rent.date_withdrawal,
+            "data_accurrancy":rent.date_accurancy
+        },HTTPStatus.CREATED
     except IncorrectKeyError:
         return {"msg":"Incorrect key use"},HTTPStatus.BAD_REQUEST
     except MissingKeyError:
@@ -50,7 +57,15 @@ def edit_book_or_student_in_book_rental_by_id(id: str):
         current_app.db.session.add(rental)
         current_app.db.session.commit()
 
-        return jsonify(data),HTTPStatus.ACCEPTED
+        return {
+            "library_id":rental.library_id,
+            "librarian":rental.employee.name,
+            "book":rental.book.title,
+            "student":rental.student.name,
+            "data_withdraw":rental.date_withdrawal,
+            "data_return":rental.date_return,
+            "data_accurrancy":rental.date_accurancy
+        },HTTPStatus.ACCEPTED
     except IncorrectKeyError:
         return {"msg":"Incorrect key use"},HTTPStatus.BAD_REQUEST
     except TypeValueError:
@@ -78,7 +93,15 @@ def register_book_rental_return_by_id(id:str):
         current_app.db.session.add(rental)
         current_app.db.session.commit()
 
-        return jsonify(data),HTTPStatus.ACCEPTED
+        return {
+            "library_id":rental.library_id,
+            "librarian":rental.employee.name,
+            "book":rental.book.title,
+            "student":rental.student.name,
+            "data_withdraw":rental.date_withdrawal,
+            "data_return":rental.date_return,
+            "data_accurrancy":rental.date_accurancy
+            },HTTPStatus.ACCEPTED
     except IncorrectKeyError:
         return {"msg":"Incorrect key use"},HTTPStatus.BAD_REQUEST
     except TypeValueError:
@@ -103,7 +126,17 @@ def get_library_list():
     session: Session = db.session
     data = session.query(LibraryModel).paginate(page=None,per_page=20)
 
-    return jsonify(data.items), HTTPStatus.OK
+    lista = [ {
+            "library_id":rental.library_id,
+            "librarian":rental.employee.name,
+            "book":rental.book.title,
+            "student":rental.student.name,
+            "data_withdraw":rental.date_withdrawal,
+            "data_return":rental.date_return,
+            "data_accurrancy":rental.date_accurancy
+            } for rental in data.items]
+
+    return jsonify(lista), HTTPStatus.OK
 
 def get_library(library_id: str):
 
@@ -112,14 +145,15 @@ def get_library(library_id: str):
         library_id=library_id
     ).first()
 
-        response = {
-            "library": library,
-            "student": library.student.name,
-            "book": library.book.title,
-            "employee": library.employee.name
-        }
-
-        return jsonify(response), HTTPStatus.OK
+        return {
+            "library_id":library.library_id,
+            "librarian":library.employee.name,
+            "book":library.book.title,
+            "student":library.student.name,
+            "date_withdraw":library.date_withdrawal,
+            "date_return":library.date_return,
+            "date_accurrancy":library.date_accurancy,
+        }, HTTPStatus.OK
     
     except DataError:
         return {"msg": "library_id not found"}, HTTPStatus.NOT_FOUND
@@ -139,3 +173,22 @@ def get_unreturned_book_rental():
         } 
         for rental in unreturned_rental.items],HTTPStatus.OK
     )
+#lista de livros que o aluno alugou e ainda não devolveu
+def student_books_not_yet_returned(student_id):
+
+    rented_books = LibraryModel.query.filter_by(student_id=student_id,date_return=None).paginate(page=None,per_page=20)
+
+    return jsonify([{"student":rented.student.name,
+             "book":rented.book.title,
+             "date_accurancy":rented.date_accurancy} 
+             for rented in rented_books.items ]),HTTPStatus.OK
+
+#lista de livros alugados pelo aluno, tanto devolvidos como não devolvidos
+def get_books_rented(student_id):
+
+    rented_books = LibraryModel.query.filter_by(student_id=student_id).paginate(page=None,per_page=20)
+
+    return jsonify([{"student":rented.student.name,
+                    "book":rented.book.title,
+                    "date_accurancy":rented.date_accurancy} 
+                    for rented in rented_books.items ]),HTTPStatus.OK
