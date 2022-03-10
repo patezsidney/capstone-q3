@@ -63,7 +63,7 @@ body
 
 `POST /students/register`
 
-header {
+>header {
     Authorization: Bearer token
 }
 
@@ -97,7 +97,7 @@ body
 
 `GET /students`
 
-header {
+>header {
     Authorization: Bearer token
 }
 
@@ -155,7 +155,7 @@ header {
 
 `GET /students/:id`
 
-header {
+>header {
     Authorization: Bearer token
 }
 
@@ -175,7 +175,7 @@ header {
 
 `PATCH /students/:student_id`
 
-header {
+>header {
     Authorization: Bearer token
 }
 
@@ -201,7 +201,7 @@ body
 
 `DELETE /students/:id`
 
-header {
+>header {
     Authorization: Bearer token
 }
 
@@ -234,7 +234,7 @@ body
 
 `Post /employees`
 
-header {
+>header {
     Authorization: Bearer token
 }
 
@@ -294,7 +294,7 @@ body
 
 `PATCH /employees/:employee_id`
 
-header {
+>header {
     Authorization: Bearer token
 }
 
@@ -319,7 +319,7 @@ body
 
 `DELETE /employees/:id`
 
-header {
+>header {
     Authorization: Bearer token
 }
 
@@ -331,7 +331,7 @@ header {
 
 `Post /grades`
 
-header {
+>header {
     Authorization: Bearer token
 }
 
@@ -404,7 +404,7 @@ body
 
 `PATCH /grades/:grade_id`
 
-header {
+>header {
     Authorization: Bearer token
 }
 
@@ -433,7 +433,7 @@ body
 
 `DELETE /grades/:grade_id`
 
-header {
+>header {
     Authorization: Bearer token
 }
 
@@ -445,7 +445,7 @@ header {
 
 `Post /books/register`
 
-header {
+>header {
     Authorization: Bearer token
 }
 
@@ -510,7 +510,7 @@ body
 
 `PATCH /books/:book_id`
 
-header {
+>header {
     Authorization: Bearer token
 }
 
@@ -532,7 +532,7 @@ body
 
 `DELETE /books/:id`
 
-header {
+>header {
     Authorization: Bearer token
 }
 
@@ -544,7 +544,7 @@ header {
 
 `Post /classrooms`
 
-header {
+>header {
     Authorization: Bearer token
 }
 
@@ -643,7 +643,7 @@ body
 
 `PATCH /classrooms/:classroom_id`
 
-header {
+>header {
     Authorization: Bearer token
 }
 
@@ -664,7 +664,7 @@ body
 
 `DELETE /classrooms/:id`
 
-header {
+>header {
     Authorization: Bearer token
 }
 
@@ -676,7 +676,7 @@ header {
 
 `Post /library/rental`
 
-header {
+>header {
     Authorization: Bearer token
 }
 
@@ -739,7 +739,7 @@ body
 
 `PATCH /library/:library_id`
 
-header {
+>header {
     Authorization: Bearer token
 }
 
@@ -764,7 +764,7 @@ body
 
 `PATCH /library/return/:library_id`
 
-header {
+>header {
     Authorization: Bearer token
 }
 
@@ -789,7 +789,7 @@ body
 
 `Get /library/unreturned_rental`
 
-header {
+>header {
     Authorization: Bearer token
 }
 
@@ -811,7 +811,7 @@ header {
 
 `GET /library/rented/<student_id>`
 
-header {
+>header {
     Authorization: Bearer token
 }
 
@@ -828,7 +828,7 @@ header {
 
 `GET /library/rented_for_student/<student_id>`
 
-header {
+>header {
     Authorization: Bearer token
 }
 
@@ -850,7 +850,7 @@ header {
 
 `DELETE /library/:id`
 
-header {
+>header {
     Authorization: Bearer token
 }
 
@@ -862,7 +862,7 @@ header {
 
 `Post /absences`
 
-header {
+>header {
     Authorization: Bearer token
 }
 body
@@ -946,7 +946,7 @@ body
 
 `PATCH /absences/:absence_id`
 
-header {
+>header {
     Authorization: Bearer token
 }
 
@@ -971,7 +971,7 @@ body
 
 `DELETE /absences/:id`
 
-header {
+>header {
     Authorization: Bearer token
 }
 
@@ -983,7 +983,7 @@ header {
 
 `Post /school_subjects/register`
 
-header {
+>header {
     Authorization: Bearer token
 }
 body
@@ -1039,19 +1039,24 @@ body
 
 ### Update school_subject
 
-`PATCH /school_subjects/:school_subject_id`
+`PATCH /school_subjects/edit/:school_subject_id`
 
-header {
+>header {
     Authorization: Bearer token
 }
 
 body
 ```json
-
+{
+    "school_subject": "React Native"
+}
 ```
 ```json
 {
-    
+  "school_subject_id": "62921285-ac00-4f38-ab44-356cdea16631",
+  "school_subject": "React Native",
+  "classroom": "1A",
+  "teacher": "paulo"
 }
 ```
 
@@ -1059,7 +1064,7 @@ body
 
 `DELETE /school_subjects/:id`
 
-header {
+>header {
     Authorization: Bearer token
 }
 
