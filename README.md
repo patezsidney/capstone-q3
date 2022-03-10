@@ -505,3 +505,90 @@ header {
 }
 
 ---
+
+## Library
+
+### Create new library
+
+`Post /library`
+
+header {
+    Authorization: Bearer token
+}
+
+```json
+{
+    "name": "1A",
+}
+```
+```json
+{
+    "classroom_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
+    "name": "1A"
+}
+```
+
+### Get all library
+
+`GET /library`
+
+```json
+[
+  {
+    "classroom_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
+    "name": "1A"
+  },
+  {
+    "classroom_id": "1446d11e-6985-4979-8e7f-15d5ddf0a81f",
+    "name": "1B"
+  }
+]
+```
+
+### Get only library
+
+`GET /library/:id`
+
+```json
+[
+  {
+    "library_id": "3554e9f0-8208-4e99-81c1-d79f3caf891c",
+    "librarian": "matheus",
+    "book": "Harry Potter - E a pedra filosofal",
+    "student": "felipe",
+    "data_withdraw": "Sat, 01 Feb 2020 00:00:00 GMT",
+    "data_return": "Sat, 15 Feb 2020 00:00:00 GMT",
+    "data_accurrancy": "Sat, 15 Feb 2020 00:00:00 GMT"
+  },
+]
+```
+
+### Update library
+
+`PATCH /library/:id`
+
+header {
+    Authorization: Bearer token
+}
+
+```json
+{
+    "name": "2B",
+}
+```
+```json
+{
+    "classroom_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
+    "name": "2B"
+}
+```
+
+### Delete library
+
+`DELETE /library/:id`
+
+header {
+    Authorization: Bearer token
+}
+
+---
