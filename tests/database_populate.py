@@ -1,4 +1,5 @@
 from flask import Flask
+from sqlalchemy import null
 
 from app.models import (AbsenceModel, BooksModel, ClassroomModel,
                         EmployeeModel, GradesModel, LibraryModel,
@@ -24,22 +25,22 @@ def populate_database(app:Flask):
                 StudentsModel (registration_student_id='51df51e0-00a7-49e3-9f2e-0405574f5c20', name='felipe', contact_name='Rosita',
                     contact_email='rosita@email.com', cpf='11111111111', birth_date='2000-02-20', gender='Feminino', 
                     password_hash='pbkdf2:sha256:260000$Qm0vHzt1WUw2GEE3$0133835de0c8006712fdad354ead0112aee9c77984e6c19ee24d3805d8c05614',
-                    api_key='1234', classroom_id='51df51e0-00a7-49e3-9f2e-0405574f5c20', photo=None
+                    api_key='1230', classroom_id='51df51e0-00a7-49e3-9f2e-0405574f5c20', photo=None
                 ),
                 StudentsModel (registration_student_id='1d5225ef-5638-4397-9989-e604a2cceca0', name='matheus', contact_name='Sirlei', 
                     contact_email='sirlei@email.com', cpf='11111111112', birth_date='2000-02-20', gender='Feminino', 
                     password_hash='pbkdf2:sha256:260000$Qm0vHzt1WUw2GEE3$0133835de0c8006712fdad354ead0112aee9c77984e6c19ee24d3805d8c05614',
-                    api_key='1234',  classroom_id='51df51e0-00a7-49e3-9f2e-0405574f5c20', photo=None
+                    api_key='1231',  classroom_id='51df51e0-00a7-49e3-9f2e-0405574f5c20', photo=None
                 ),
                 StudentsModel (registration_student_id='7dc82c28-4766-4bff-829b-2198a2e1ef98', name='rafael', contact_name='Maria',
                     contact_email='maria@email.com', cpf='11111111113', birth_date='2000-02-20', gender='Feminino',
                     password_hash='pbkdf2:sha256:260000$Qm0vHzt1WUw2GEE3$0133835de0c8006712fdad354ead0112aee9c77984e6c19ee24d3805d8c05614',
-                    api_key='1234',  classroom_id='1446d11e-6985-4979-8e7f-15d5ddf0a81f', photo=None
+                    api_key='1232',  classroom_id='1446d11e-6985-4979-8e7f-15d5ddf0a81f', photo=None
                 ),
                 StudentsModel (registration_student_id='2a465bd0-22cd-45e7-9fd1-142dee2cca78', name='renato', contact_name='Maria',
                     contact_email='mariaa@email.com', cpf='11111111114', birth_date='2000-02-20', gender='Feminino', 
                     password_hash='pbkdf2:sha256:260000$Qm0vHzt1WUw2GEE3$0133835de0c8006712fdad354ead0112aee9c77984e6c19ee24d3805d8c05614',
-                    api_key='1234',classroom_id='cf43d8ca-37a8-4140-bc97-32192e151a27', photo=None
+                    api_key='1233',classroom_id='cf43d8ca-37a8-4140-bc97-32192e151a27', photo=None
                 ),
 
                 # Populate grades
@@ -106,6 +107,24 @@ def populate_database(app:Flask):
                         employee_id='b3298cfc-7fb8-47af-91ed-f2d8c4545cdd', book_id='081c575b-a38f-4f41-bf15-2593cd58ab93', student_id='7dc82c28-4766-4bff-829b-2198a2e1ef98'
                 ),
                 LibraryModel (library_id='023b926d-8f03-460d-be7b-840d80f91f6e', date_withdrawal='2020-02-01', date_return='2020-02-15', date_accurancy='2020-02-15', 
+                        employee_id='b3298cfc-7fb8-47af-91ed-f2d8c4545cdd', book_id='cc733168-68ae-45b8-b4c2-434901ccea0f', student_id='2a465bd0-22cd-45e7-9fd1-142dee2cca78'
+                ),
+                LibraryModel (library_id='872bda57-7606-40e6-a05c-47d38926ed9b', date_withdrawal='2020-02-01', date_accurancy='2020-02-15', 
+                        employee_id='b3298cfc-7fb8-47af-91ed-f2d8c4545cdd', book_id='cc733168-68ae-45b8-b4c2-434901ccea0f', student_id='2a465bd0-22cd-45e7-9fd1-142dee2cca78'
+                ),
+                LibraryModel (library_id='dd2af223-8f20-4019-90da-00c07aa3f1fe', date_withdrawal='2020-02-01', date_return='2020-02-15', date_accurancy='2020-02-15',
+                        employee_id='b3298cfc-7fb8-47af-91ed-f2d8c4545cdd', book_id='cc733168-68ae-45b8-b4c2-434901ccea0f', student_id='2a465bd0-22cd-45e7-9fd1-142dee2cca78'
+                ), 
+                LibraryModel (library_id='536801db-e27e-470e-b180-3e9905938808', date_withdrawal='2020-02-01', date_accurancy='2020-02-15', 
+                        employee_id='b3298cfc-7fb8-47af-91ed-f2d8c4545cdd', book_id='2fc09626-8a2c-4ef7-b59d-4a56e77e5714', student_id='7dc82c28-4766-4bff-829b-2198a2e1ef98'
+                ),
+                LibraryModel (library_id='ecca9507-bc4d-4185-a86b-a4d221c91b21', date_withdrawal='2020-02-01', date_accurancy='2020-02-15', 
+                        employee_id='b3298cfc-7fb8-47af-91ed-f2d8c4545cdd', book_id='2fc09626-8a2c-4ef7-b59d-4a56e77e5714', student_id='7dc82c28-4766-4bff-829b-2198a2e1ef98'
+                ),
+                LibraryModel (library_id='eaa92dfa-114e-4ec3-81bd-6a712e528700', date_withdrawal='2020-02-01', date_return='2020-02-15', date_accurancy='2020-02-15', 
+                        employee_id='b3298cfc-7fb8-47af-91ed-f2d8c4545cdd', book_id='081c575b-a38f-4f41-bf15-2593cd58ab93', student_id='7dc82c28-4766-4bff-829b-2198a2e1ef98'
+                ),
+                LibraryModel (library_id='5fccac38-4be1-4c5a-97aa-2da65ff8804c', date_withdrawal='2020-02-01', date_return='2020-02-15', date_accurancy='2020-02-15', 
                         employee_id='b3298cfc-7fb8-47af-91ed-f2d8c4545cdd', book_id='cc733168-68ae-45b8-b4c2-434901ccea0f', student_id='2a465bd0-22cd-45e7-9fd1-142dee2cca78'
                 )
         ])
