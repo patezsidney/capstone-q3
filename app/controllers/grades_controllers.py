@@ -7,6 +7,7 @@ from werkzeug.exceptions import NotFound
 from app.configs.auth import auth_employee
 from app.configs.database import db
 from app.models import GradesModel
+from app.models import StudentsModel
 from app.services.decorators import verify_some_keys
 
 
@@ -77,3 +78,27 @@ def get_student_grades(student_id: str):
         return {"msg": "student id invalid"}, HTTPStatus.BAD_REQUEST
     except AttributeError:
         return {"msg": "student not found"}, HTTPStatus.NOT_FOUND
+
+
+def get_student_grades_by_api_key():
+    bearer_token = request.headers.get('Authorization').split(' ')[1]
+
+    student: StudentsModel = StudentsModel.query.filter_by(api_key=bearer_token).first()
+
+    if not student:
+        return {"msg": "unauthorized token!"}, HTTPStatus.BAD_REQUEST
+
+    output = []
+
+    for grades in student.grades:
+        grades: GradesModel
+
+        response = {
+                "grades_class": grades.classroom.name,
+                "school_subject": grades.classroom.school_subjects[0].school_subject.title(),
+                "grade": grades.grade
+        }
+
+        output.append(response)
+
+    return jsonify(output), HTTPStatus.OK
