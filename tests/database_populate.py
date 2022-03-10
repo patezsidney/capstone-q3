@@ -107,6 +107,12 @@ def populate_database(app:Flask):
                 ),
                 LibraryModel (library_id='023b926d-8f03-460d-be7b-840d80f91f6e', date_withdrawal='2020-02-01', date_return='2020-02-15', date_accurancy='2020-02-15', 
                         employee_id='b3298cfc-7fb8-47af-91ed-f2d8c4545cdd', book_id='cc733168-68ae-45b8-b4c2-434901ccea0f', student_id='2a465bd0-22cd-45e7-9fd1-142dee2cca78'
+                ),
+                LibraryModel (library_id='872bda57-7606-40e6-a05c-47d38926ed9b', date_withdrawal='2020-02-01', date_accurancy='2020-02-15', 
+                        employee_id='b3298cfc-7fb8-47af-91ed-f2d8c4545cdd', book_id='cc733168-68ae-45b8-b4c2-434901ccea0f', student_id='2a465bd0-22cd-45e7-9fd1-142dee2cca78'
+                ),
+                LibraryModel (library_id='dd2af223-8f20-4019-90da-00c07aa3f1fe', date_withdrawal='2020-02-01', date_return='2020-02-15', date_accurancy='2020-02-15', 
+                        employee_id='b3298cfc-7fb8-47af-91ed-f2d8c4545cdd', book_id='cc733168-68ae-45b8-b4c2-434901ccea0f', student_id='2a465bd0-22cd-45e7-9fd1-142dee2cca78'
                 )
         ])
         app.db.session.commit()
