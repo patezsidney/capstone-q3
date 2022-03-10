@@ -25,3 +25,18 @@ def register_teacher_in_school_subject():
             "classroom":school_subject.classroom.name,
             "teacher":school_subject.teacher.name
             },HTTPStatus.CREATED
+
+def edit_school_subject(school_subject_id:str):
+    data = request.get_json()
+    new_school_subject = SchoolSubjectsModel.query.filter_by(school_subject_id=school_subject_id).first()
+
+    for key,value in data.items():
+        setattr(new_school_subject,key,value)
+
+    current_app.db.session.add(new_school_subject)
+    current_app.db.session.commit()
+
+    return {"school_subject_id":new_school_subject.school_subject_id,
+            "school_subject":new_school_subject.school_subject,
+            "classroom":new_school_subject.classroom.name,
+            "teacher":new_school_subject.teacher.name},HTTPStatus.ACCEPTED
