@@ -150,9 +150,9 @@ def get_library(library_id: str):
             "librarian":library.employee.name,
             "book":library.book.title,
             "student":library.student.name,
-            "data_withdraw":library.date_withdrawal,
-            "data_return":library.date_return,
-            "data_accurrancy":library.date_accurancy
+            "date_withdraw":library.date_withdrawal,
+            "date_return":library.date_return,
+            "date_accurrancy":library.date_accurancy,
         }, HTTPStatus.OK
     
     except DataError:
