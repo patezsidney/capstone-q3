@@ -4,12 +4,10 @@ from flask.testing import FlaskClient
 def test_create_absence(client: FlaskClient):
     
     request_data = {
-        "absence_id": 'b20dfcbb-f121-41ef-bf96-cb988d333333',
-        "date": "Sat, 15 Feb 2020 00:00:00 GMT",
-        "justify": True,
-        "classroom_id": '51df51e0-00a7-49e3-9f2e-0405574f5c20',
-        "student_id": '1d5225ef-5638-4397-9989-e604a2cceca0'
-    }
+                    "date": "02/02/2020",
+                    "classroom_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
+                    "student_id": "1d5225ef-5638-4397-9989-e604a2cceca0"
+                    }
 
     response = client.post("/api/absences", json=request_data, follow_redirects=True, headers={"Authorization": "Bearer 1234"})
 

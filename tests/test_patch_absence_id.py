@@ -2,16 +2,14 @@ from flask.testing import FlaskClient
 
 
 def test_patch_absense_by_id(client: FlaskClient):
-    response = client.patch("/api/absences/494925c7-7399-44e2-a00e-653581145979", headers={"Authorization": "Bearer 1234"})
+    response = client.patch("/api/absences/b20dfcbb-f121-41ef-bf96-cb988d68a35a", headers={"Authorization": "Bearer 1234"})
     mock_reponse = {
-                    "name": "felipe",
-                    "absence": {
-                        "absence_id": "494925c7-7399-44e2-a00e-653581145979",
-                        "date": "Sat, 15 Feb 2020 00:00:00 GMT",
-                        "justify": True,
-                        "classroom_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
-                        "student_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20"
-                    }
+                    "absence_id": "b20dfcbb-f121-41ef-bf96-cb988d68a35a",
+                    "date": "15/02/2020",
+                    "justify": True,
+                    "classroom": "1A",
+                    "student": "Matheus",
+                    "school_subject": "React"
                     }
     
     response_json: dict = response.get_json()
