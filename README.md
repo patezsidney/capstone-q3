@@ -39,13 +39,14 @@ https://piaget-system.herokuapp.com/api
 
 `POST /login`
 
-body
+REQUEST FORMAT
 ```json
 {
     "cpf": "11111111111",
     "password": "1234"
 }
 ```
+RESPONSE FORMAT STATUS 200
 ```json
 {
   "registration_student_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
@@ -67,7 +68,7 @@ body
     Authorization: Bearer token
 }
 
-body
+REQUEST FORMAT
 ```json
 {
     "name" : "Uzumake Naruto",
@@ -81,6 +82,7 @@ body
     "classroom_id" : "51df51e0-00a7-49e3-9f2e-0405574f5c20"       
 }
 ```
+RESPONSE FORMAT STATUS 201
 ```json
 {
     "id": "e1623b44-080c-4d3f-82d0-6237ff6f9077",
@@ -101,6 +103,7 @@ body
     Authorization: Bearer token
 }
 
+RESPONSE FORMAT STATUS 200
 ```json
 [
   {
@@ -159,6 +162,7 @@ body
     Authorization: Bearer token
 }
 
+RESPONSE FORMAT STATUS 200
 ```json
 {
     "id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
@@ -179,12 +183,13 @@ body
     Authorization: Bearer token
 }
 
-body
+REQUEST FORMAT
 ```json
 {
     "gender": "M"
 }
 ```
+RESPONSE FORMAT STATUS 202
 ```json
 {
     "id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
@@ -212,13 +217,14 @@ body
 
 `POST /login`
 
-body
+REQUEST FORMAT
 ```json
 {
     "email": "lucira@email.com",
     "password": "1234"
 }
 ```
+RESPONSE FORMAT STATUS 200
 ```json
 {
   "employee_id": "b70c93e0-a6c0-43f1-8c7b-ea3b1b3f00f4",
@@ -238,7 +244,7 @@ body
     Authorization: Bearer token
 }
 
-body
+REQUEST FORMAT
 ```json
 {
     "name": "Jhon Doe",
@@ -248,6 +254,7 @@ body
     "password": "1234"
 }
 ```
+RESPONSE FORMAT STATUS 201
 ```json
 {
     "employee_id": "32e20b1f-340f-447a-b019-c0b7353d1f82",
@@ -262,6 +269,7 @@ body
 
 `GET /employees`
 
+RESPONSE FORMAT STATUS 200
 ```json
 {
     "result": [
@@ -280,6 +288,7 @@ body
 
 `GET /employees/:employee_id`
 
+RESPONSE FORMAT STATUS 200
 ```json
 {
     "employee_id": "b70c93e0-a6c0-43f1-8c7b-ea3b1b3f00f4",
@@ -298,13 +307,14 @@ body
     Authorization: Bearer token
 }
 
-body
+REQUEST FORMAT
 ```json
 {
     "name": "John Doe",
     "email": "johndoe11234@mail.com"
 }
 ```
+RESPONSE FORMAT STATUS 202
 ```json
 {
     "employee_id": "32e20b1f-340f-447a-b019-c0b7353d1f82",
@@ -335,7 +345,7 @@ body
     Authorization: Bearer token
 }
 
-body
+REQUEST FORMAT
 ```json
 {
     "ativity": "debug",
@@ -344,6 +354,7 @@ body
     "classrom_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20" 
 }
 ```
+RESPONSE FORMAT STATUS 201
 ```json
 {
   "ativity": "debug",
@@ -362,6 +373,7 @@ body
 
 `GET /grades`
 
+RESPONSE FORMAT STATUS 200
 ```json
 [
   {
@@ -383,6 +395,7 @@ body
 
 `GET /grades/:student_id`
 
+RESPONSE FORMAT STATUS 200
 ```json
 [
     {
@@ -408,12 +421,13 @@ body
     Authorization: Bearer token
 }
 
-body
+REQUEST FORMAT
 ```json
 {
     "grade": "10.0"
 }
 ```
+RESPONSE FORMAT STATUS 202
 ```json
 {
   "ativity": "codar",
@@ -449,7 +463,7 @@ body
     Authorization: Bearer token
 }
 
-body
+REQUEST FORMAT
 ```json
 {
     "title": "Harry Potter - E A Pedra Filosofal",
@@ -457,6 +471,7 @@ body
     "quantity": 4
 }
 ```
+RESPONSE FORMAT STATUS 201
 ```json
 {
     "title": "Harry Potter - E A Pedra Filosofal",
@@ -469,6 +484,7 @@ body
 
 `GET /books`
 
+RESPONSE FORMAT STATUS 200
 ```json
 [
   {
@@ -498,6 +514,7 @@ body
 
 `GET /books/:book_id`
 
+RESPONSE FORMAT STATUS 200
 ```json
 {
   "title": "Harry Potter E A Câmara Dos Segredos",
@@ -514,12 +531,13 @@ body
     Authorization: Bearer token
 }
 
-body
+REQUEST FORMAT
 ```json
 {
     "title": "Excel nunca mais"
 }
 ```
+RESPONSE FORMAT STATUS 202
 ```json
 {
     "title": "Excel Nunca Mais",
@@ -548,12 +566,13 @@ body
     Authorization: Bearer token
 }
 
-body
+REQUEST FORMAT
 ```json
 {
     "name": "1A",
 }
 ```
+RESPONSE FORMAT STATUS 201
 ```json
 {
     "classroom_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
@@ -565,6 +584,7 @@ body
 
 `GET /classrooms`
 
+RESPONSE FORMAT STATUS 200
 ```json
 {
   "result": [
@@ -618,6 +638,7 @@ body
 
 `GET /classrooms/:classroom_id`
 
+RESPONSE FORMAT STATUS 200
 ```json
 {
 
@@ -647,12 +668,13 @@ body
     Authorization: Bearer token
 }
 
-body
+REQUEST FORMAT
 ```json
 {
     "name": "2B",
 }
 ```
+RESPONSE FORMAT STATUS 202
 ```json
 {
     "classroom_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
@@ -680,7 +702,7 @@ body
     Authorization: Bearer token
 }
 
-body
+REQUEST FORMAT
 ```json
 {
     "employee_id":"3f5e5df3-651b-46ec-9c42-be4a863f974a",
@@ -688,6 +710,7 @@ body
     "student_id":"51df51e0-00a7-49e3-9f2e-0405574f5c20"
 }
 ```
+RESPONSE FORMAT STATUS 201
 ```json
 {
     "library_id": "ce3e70be-bb53-4289-8751-1efed4014bd4",
@@ -703,6 +726,7 @@ body
 
 `GET /library`
 
+RESPONSE FORMAT STATUS 200
 ```json
 [
     {
@@ -721,6 +745,7 @@ body
 
 `GET /library/:library_id`
 
+RESPONSE FORMAT STATUS 200
 ```json
 [
     {
@@ -743,12 +768,13 @@ body
     Authorization: Bearer token
 }
 
-body
+REQUEST FORMAT
 ```json
 {
     "book_id": "081c575b-a38f-4f41-bf15-2593cd58ab93"
 }
 ```
+RESPONSE FORMAT STATUS 202
 ```json
 {
   "library_id": "3554e9f0-8208-4e99-81c1-d79f3caf891c",
@@ -768,11 +794,11 @@ body
     Authorization: Bearer token
 }
 
-body
+REQUEST FORMAT
 ```json
 
 ```
-
+RESPONSE FORMAT STATUS 202
 ```json
 {
   "library_id": "c2c414b7-f972-424b-8243-246b7c942e28",
@@ -793,6 +819,7 @@ body
     Authorization: Bearer token
 }
 
+RESPONSE FORMAT STATUS 200
 ```json
 [
     [
@@ -815,6 +842,7 @@ body
     Authorization: Bearer token
 }
 
+RESPONSE FORMAT STATUS 200
 ```json
 [
     {
@@ -832,6 +860,7 @@ body
     Authorization: Bearer token
 }
 
+RESPONSE FORMAT STATUS 200
 ```json
 [
     {
@@ -865,7 +894,7 @@ body
 >header {
     Authorization: Bearer token
 }
-body
+REQUEST FORMAT
 ```json
 {
     "date": "02/02/2020",
@@ -873,6 +902,7 @@ body
     "student_id": "1d5225ef-5638-4397-9989-e604a2cceca0"
 }
 ```
+RESPONSE FORMAT STATUS 201
 ```json
 {
     "absence_id": "12f9efee-4010-4ec2-8370-1873f4ec0a60",
@@ -888,6 +918,7 @@ body
 
 `GET /absences`
 
+RESPONSE FORMAT STATUS 200
 ```json
 [
   {
@@ -929,6 +960,7 @@ body
 
 `GET /absences/:absence_id`
 
+RESPONSE FORMAT STATUS 200
 ```json
 [
   {
@@ -950,10 +982,11 @@ body
     Authorization: Bearer token
 }
 
-body
+REQUEST FORMAT
 ```json
 
 ```
+RESPONSE FORMAT STATUS 202
 ```json
 {
   {
@@ -986,12 +1019,13 @@ body
 >header {
     Authorization: Bearer token
 }
-body
+REQUEST FORMAT
 ```json
 {
     
 }
 ```
+RESPONSE FORMAT STATUS 201
 ```json
 {
     
@@ -1002,6 +1036,7 @@ body
 
 `GET /school_subjects`
 
+RESPONSE FORMAT STATUS 200
 ```json
 [
   {
@@ -1045,12 +1080,13 @@ body
     Authorization: Bearer token
 }
 
-body
+REQUEST FORMAT
 ```json
 {
     "school_subject": "React Native"
 }
 ```
+RESPONSE FORMAT STATUS 202
 ```json
 {
   "school_subject_id": "62921285-ac00-4f38-ab44-356cdea16631",
