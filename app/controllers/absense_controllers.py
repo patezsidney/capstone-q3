@@ -78,7 +78,7 @@ def get_all_absense():
 
     return jsonify(absences), HTTPStatus.OK
 
-# @auth_employee.login_required(role=['admin', 'teacher'])
+@auth_employee.login_required(role=['admin', 'teacher'])
 def get_student_absense(student_id: str):
     
     try:
@@ -96,3 +96,26 @@ def get_student_absense(student_id: str):
     except DataError:
         return {"msg": "student not found!"}, HTTPStatus.NOT_FOUND
 
+
+def get_student_absence_by_api_key():
+    bearer_token = request.headers.get('Authorization').split(' ')[1]
+
+    student: StudentsModel = StudentsModel.query.filter_by(api_key=bearer_token).first()
+
+    if not student:
+        return {"msg": "unauthorized token!"}, HTTPStatus.BAD_REQUEST
+
+    output = []
+
+    for absence in student.absences:
+        absence: AbsenceModel
+
+        response = {
+                "absence_class": absence.classroom.name,
+                "school_subject": absence.classroom.school_subjects[0].school_subject.title(),
+                "absence_date": absence.date.strftime('%d/%m/%Y')
+        }
+
+        output.append(response)
+
+    return jsonify(output), HTTPStatus.OK
