@@ -9,7 +9,7 @@ def test_register_book_rental_return_by_id(client: FlaskClient):
         'student_id' : '7dc82c28-4766-4bff-829b-2198a2e1ef98'
     }    
     
-    request_response = client.patch("/api/library/return/023b926d-8f03-460d-be7b-840d80f91f6e",json=request_data)
+    request_response = client.patch("/api/library/return/201e6867-ec20-4834-b4ce-1f01b0b9e8db",json=request_data)
     
     assert (request_response.status_code == 202), "Verificar se o status code é ACCEPTED"
 

@@ -12,7 +12,6 @@ from app.models.exc import IncorrectKeyError, MissingKeyError
 @dataclass
 class BooksModel(db.Model):
 
-    book_id: str
     title: str
     author: str
     quantity: int
