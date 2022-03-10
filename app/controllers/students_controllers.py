@@ -132,7 +132,7 @@ def get_student_by_api_key():
 
     return jsonify(student), HTTPStatus.OK
 
-#auth.login_required(role="admin")
+# @auth.login_required(role="admin")
 def get_student_by_id(student_id: str):
 
     try:
