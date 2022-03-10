@@ -157,3 +157,23 @@ def get_library(library_id: str):
     
     except DataError:
         return {"msg": "library_id not found"}, HTTPStatus.NOT_FOUND
+
+#lista de livros que o aluno alugou e ainda não devolveu
+def student_books_not_yet_returned(student_id):
+
+    rented_books = LibraryModel.query.filter_by(student_id=student_id,date_return=None).paginate(page=None,per_page=20)
+
+    return jsonify([{"student":rented.student.name,
+             "book":rented.book.title,
+             "date_accurancy":rented.date_accurancy} 
+             for rented in rented_books.items ]),HTTPStatus.OK
+
+#lista de livros alugados pelo aluno, tanto devolvidos como não devolvidos
+def get_books_rented(student_id):
+
+    rented_books = LibraryModel.query.filter_by(student_id=student_id).paginate(page=None,per_page=20)
+
+    return jsonify([{"student":rented.student.name,
+                    "book":rented.book.title,
+                    "date_accurancy":rented.date_accurancy} 
+                    for rented in rented_books.items ]),HTTPStatus.OK
