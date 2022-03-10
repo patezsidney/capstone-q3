@@ -216,7 +216,7 @@ header {
 
 ### Get only employee
 
-`GET /employees/:id`
+`GET /employees/:employee_id`
 
 ```json
 {
@@ -230,7 +230,7 @@ header {
 
 ### Update employee
 
-`PATCH /employees/:id`
+`PATCH /employees/:employee_id`
 
 header {
     Authorization: Bearer token
@@ -338,7 +338,7 @@ header {
 
 ### Update grade
 
-`PATCH /grades/:id`
+`PATCH /grades/:grade_id`
 
 header {
     Authorization: Bearer token
@@ -346,7 +346,21 @@ header {
 
 ```json
 {
-    
+    "grade": "10.0"
+}
+```
+```json
+{
+  "ativity": "codar",
+  "grade": 10.0,
+  "student": {
+    "student_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
+    "name": "felipe"
+  },
+  "classrom": {
+    "classroom_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
+    "name": "1A"
+  }
 }
 ```
 
@@ -428,7 +442,7 @@ header {
 
 ### Update book
 
-`PATCH /books/:id`
+`PATCH /books/:book_id`
 
 header {
     Authorization: Bearer token
@@ -534,7 +548,7 @@ header {
 
 ### Get only classroom
 
-`GET /classrooms/:id`
+`GET /classrooms/:classroom_id`
 
 ```json
 {
@@ -559,7 +573,7 @@ header {
 
 ### Update classroom
 
-`PATCH /classrooms/:id`
+`PATCH /classrooms/:classroom_id`
 
 header {
     Authorization: Bearer token
@@ -591,7 +605,7 @@ header {
 
 ### Create new library
 
-`Post /library`
+`Post /library/rental`
 
 header {
     Authorization: Bearer token
@@ -599,13 +613,19 @@ header {
 
 ```json
 {
-    "name": "1A",
+    "employee_id":"3f5e5df3-651b-46ec-9c42-be4a863f974a",
+    "book_id":"2fc09626-8a2c-4ef7-b59d-4a56e77e5714",
+    "student_id":"51df51e0-00a7-49e3-9f2e-0405574f5c20"
 }
 ```
 ```json
 {
-    "classroom_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
-    "name": "1A"
+    "library_id": "ce3e70be-bb53-4289-8751-1efed4014bd4",
+    "librarian": "paulo",
+    "book": "Harry Potter - E a pedra filosofal",
+    "student": "felipe",
+    "data_withdraw": "Thu, 10 Mar 2022 00:00:00 GMT",
+    "data_accurrancy": "Fri, 25 Mar 2022 00:00:00 GMT"
 }
 ```
 
@@ -615,38 +635,39 @@ header {
 
 ```json
 [
-  {
-    "classroom_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
-    "name": "1A"
-  },
-  {
-    "classroom_id": "1446d11e-6985-4979-8e7f-15d5ddf0a81f",
-    "name": "1B"
-  }
+    {
+        "library_id": "3554e9f0-8208-4e99-81c1-d79f3caf891c",
+        "librarian": "matheus",
+        "book": "Harry Potter - E a pedra filosofal",
+        "student": "felipe",
+        "data_withdraw": "Sat, 01 Feb 2020 00:00:00 GMT",
+        "data_return": "Sat, 15 Feb 2020 00:00:00 GMT",
+        "data_accurrancy": "Sat, 15 Feb 2020 00:00:00 GMT"
+    },
 ]
 ```
 
 ### Get only library
 
-`GET /library/:id`
+`GET /library/:library_id`
 
 ```json
 [
-  {
-    "library_id": "3554e9f0-8208-4e99-81c1-d79f3caf891c",
-    "librarian": "matheus",
-    "book": "Harry Potter - E a pedra filosofal",
-    "student": "felipe",
-    "data_withdraw": "Sat, 01 Feb 2020 00:00:00 GMT",
-    "data_return": "Sat, 15 Feb 2020 00:00:00 GMT",
-    "data_accurrancy": "Sat, 15 Feb 2020 00:00:00 GMT"
-  },
+    {
+        "library_id": "3554e9f0-8208-4e99-81c1-d79f3caf891c",
+        "librarian": "matheus",
+        "book": "Harry Potter - E a pedra filosofal",
+        "student": "felipe",
+        "data_withdraw": "Sat, 01 Feb 2020 00:00:00 GMT",
+        "data_return": "Sat, 15 Feb 2020 00:00:00 GMT",
+        "data_accurrancy": "Sat, 15 Feb 2020 00:00:00 GMT"
+    },
 ]
 ```
 
 ### Update library
 
-`PATCH /library/:id`
+`PATCH /library/:library_id`
 
 header {
     Authorization: Bearer token
@@ -654,16 +675,94 @@ header {
 
 ```json
 {
-    "name": "2B",
+
 }
 ```
 ```json
 {
-    "classroom_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
-    "name": "2B"
+
+}
+```
+### Update library return
+
+`PATCH /library/return/:library_id`
+
+header {
+    Authorization: Bearer token
+}
+
+```json
+{
+
+}
+```
+```json
+{
+
 }
 ```
 
+### Get library unreturned
+
+`PATCH /library/unreturned_rental`
+
+header {
+    Authorization: Bearer token
+}
+
+```json
+[
+    [
+        {
+            "rental_id": "ce3e70be-bb53-4289-8751-1efed4014bd4",
+            "book": "Harry Potter - E a pedra filosofal",
+            "date_withdrawal": "Thu, 10 Mar 2022 00:00:00 GMT",
+            "date_return": null,
+            "student": "felipe",
+            "librarian": "paulo"
+        }
+    ]
+]
+```
+### Get library unreturned
+
+`PATCH /library/rented/<student_id>`
+
+header {
+    Authorization: Bearer token
+}
+
+```json
+[
+    {
+        "student": "felipe",
+        "book": "Harry Potter - E a pedra filosofal",
+        "date_accurancy": "Fri, 25 Mar 2022 00:00:00 GMT"
+    }
+]
+```
+### Get library unreturned
+
+`PATCH /library/rented_for_student/<student_id>`
+
+header {
+    Authorization: Bearer token
+}
+
+```json
+[
+    {
+        "student": "felipe",
+        "book": "Harry Potter - E a pedra filosofal",
+        "date_accurancy": "Sat, 15 Feb 2020 00:00:00 GMT"
+    },
+    {
+        "student": "felipe",
+        "book": "Harry Potter - E a pedra filosofal",
+        "date_accurancy": "Fri, 25 Mar 2022 00:00:00 GMT"
+    }
+]
+```
 ### Delete library
 
 `DELETE /library/:id`
