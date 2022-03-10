@@ -2,7 +2,7 @@ from http import HTTPStatus
 from secrets import token_urlsafe
 from flask import current_app, jsonify, request
 from sqlalchemy import exc
-from sqlalchemy.exc import DataError
+from sqlalchemy.exc import DataError, IntegrityError
 from werkzeug.exceptions import NotFound
 from app.configs.auth import auth_employee
 from app.models.exc import IncorrectKeyError, MissingKeyError, TypeValueError
@@ -31,6 +31,8 @@ def register():
         return {"msg": "Use of invalid key"},HTTPStatus.BAD_REQUEST
     except TypeValueError:
         return {"msg":"request with incorrect value type!"},HTTPStatus.BAD_REQUEST
+    except IntegrityError:
+        return {"msg":"CPF already registered"},HTTPStatus.CONFLICT
         
 def signin():
     data = request.get_json()
@@ -79,6 +81,8 @@ def update_student(student_id:str):
         return {"msg":"Student not found"},HTTPStatus.NOT_FOUND
     except TypeValueError:
         return {"msg":"request with incorrect value type!"},HTTPStatus.BAD_REQUEST
+    except IntegrityError:
+        return {"msg":"CPF already registered"},HTTPStatus.CONFLICT
 
 @auth_employee.login_required(role=['admin'])
 def delete_student(student_id):
@@ -113,9 +117,14 @@ def get_student_by_api_key():
     if not student:
         return {"msg": "unauthorized token!"}, HTTPStatus.BAD_REQUEST
 
-    return jsonify(StudentsModel.serialize(student)), HTTPStatus.OK
+    return {"name":student.name,
+            "contact_name":student.contact_name,
+            "contact_email":student.contact_email,
+            "cpf":student.cpf,
+            "birth_date":student.birth_date,
+            "gender":student.gender}, HTTPStatus.OK
 
-@auth_employee.login_required(role=['admin'])
+@auth_employee.login_required(role="admin")
 def get_student_by_id(student_id: str):
     try:
         student: StudentsModel = StudentsModel.query.filter_by(
