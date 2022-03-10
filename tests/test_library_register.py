@@ -10,8 +10,6 @@ def test_register_rental(client: FlaskClient):
     }    
     
     request_response = client.post("/api/library/rental",json=request_data)
-
-    print("PRINTZÂO====>",request_response.get_json())
     
     assert (request_response.status_code == 201), "Verificar se o status code é CREATED"
 
