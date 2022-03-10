@@ -60,7 +60,7 @@ https://piaget-system.herokuapp.com/api
 
 ### Create new student
 
-`POST /students`
+`POST /students/register`
 
 header {
     Authorization: Bearer token
@@ -68,10 +68,26 @@ header {
 
 ```json
 {
-    "name": "Hamburguer",
-    "category": "Sanduíches",
-    "price": 7.99,
-    "userId": 2
+    "name" : "Uzumake Naruto",
+    "contact_name" : "Umino Iruka",
+    "contact_email" : "IrukaTeacher@ninjaschool.com",
+    "cpf" : "99999999999",
+    "birth_date" : "1999/05/26",
+    "gender" : "Masculino",
+    "photo" : "alt.png",
+    "password" : "viladafolhaoculta",
+    "classroom_id" : "51df51e0-00a7-49e3-9f2e-0405574f5c20"       
+}
+```
+```json
+{
+    "id": "e1623b44-080c-4d3f-82d0-6237ff6f9077",
+    "name" : "Uzumake Naruto",
+    "contact_name" : "Umino Iruka",
+    "contact_email" : "IrukaTeacher@ninjaschool.com",
+    "cpf" : "99999999999",
+    "birth_date" : "1999/05/26",
+    "gender" : "Masculino",
 }
 ```
 
@@ -85,13 +101,9 @@ header {
 
 ```json
 [
- {
-    "id": 1,
-    "name": "Hamburguer",
-    "category": "Sanduíches",
-    "price": 7.99,
-    "userId": 2
-  }
+    {
+
+    }
 ]
 ```
 
@@ -105,13 +117,9 @@ header {
 
 ```json
 [
- {
-    "id": 1,
-    "name": "Hamburguer",
-    "category": "Sanduíches",
-    "price": 7.99,
-    "userId": 2
-  }
+    {
+
+    }
 ]
 ```
 
@@ -125,10 +133,7 @@ header {
 
 ```json
 {
-    "name": "Hamburguer upgrade",
-    "category": "Sanduíches",
-    "price": 7.99,
-    "userId": 2
+
 }
 ```
 
@@ -174,11 +179,20 @@ header {
 
 ```json
 {
-    "name": "Hamburguer",
-    "category": "Sanduíches",
-    "price": 7.99,
-    "userId": 2,
-    "quantity": 1
+    "name": "Jhon Doe",
+    "email": "jhondoe11234@mail.com",
+    "wage": 3020.90,
+    "access_level": "admin",
+    "password": "1234"
+}
+```
+```json
+{
+    "employee_id": "32e20b1f-340f-447a-b019-c0b7353d1f82",
+    "name": "Jhon Doe",
+    "email": "jhondoe11234@mail.com",
+    "wage": 3020.9,
+    "access_level": "admin"
 }
 ```
 
@@ -187,16 +201,17 @@ header {
 `GET /employees`
 
 ```json
-[
- {
-    "id": 1,
-    "name": "Hamburguer",
-    "category": "Sanduíches",
-    "price": 7.99,
-    "userId": 2,
-    "quantity": 1
-  }
-]
+{
+    "result": [
+        {
+            "employee_id": "b70c93e0-a6c0-43f1-8c7b-ea3b1b3f00f4",
+            "name": "lucira",
+            "email": "lucira@email.com",
+            "wage": 4000.0,
+            "access_level": "admin"
+        },
+    ]
+}
 ```
 
 ### Get only employee
@@ -204,16 +219,13 @@ header {
 `GET /employees/:id`
 
 ```json
-[
- {
-    "id": 1,
-    "name": "Hamburguer",
-    "category": "Sanduíches",
-    "price": 7.99,
-    "userId": 2,
-    "quantity": 1
-  }
-]
+{
+    "employee_id": "b70c93e0-a6c0-43f1-8c7b-ea3b1b3f00f4",
+    "name": "lucira",
+    "email": "lucira@email.com",
+    "wage": 4000.0,
+    "access_level": "admin"
+}
 ```
 
 ### Update employee
@@ -226,11 +238,17 @@ header {
 
 ```json
 {
-    "name": "Hamburguer upgrade",
-    "category": "Sanduíches",
-    "price": 7.99,
-    "userId": 2,
-    "quantity": 2
+    "name": "John Doe",
+    "email": "johndoe11234@mail.com"
+}
+```
+```json
+{
+    "employee_id": "32e20b1f-340f-447a-b019-c0b7353d1f82",
+    "name": "John Doe",
+    "email": "johndoe11234@mail.com",
+    "wage": 3020.9,
+    "access_level": "admin"
 }
 ```
 
@@ -256,11 +274,7 @@ header {
 
 ```json
 {
-    "name": "Hamburguer",
-    "category": "Sanduíches",
-    "price": 7.99,
-    "userId": 2,
-    "quantity": 1
+
 }
 ```
 
@@ -292,13 +306,8 @@ header {
 ```json
 [
  {
-    "id": 1,
-    "name": "Hamburguer",
-    "category": "Sanduíches",
-    "price": 7.99,
-    "userId": 2,
-    "quantity": 1
-  }
+
+ }
 ]
 ```
 
