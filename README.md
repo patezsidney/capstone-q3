@@ -484,16 +484,52 @@ header {
 `GET /classrooms`
 
 ```json
-[
-  {
-    "classroom_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
-    "name": "1A"
-  },
-  {
-    "classroom_id": "1446d11e-6985-4979-8e7f-15d5ddf0a81f",
-    "name": "1B"
-  }
-]
+{
+  "result": [
+    {
+      "classroom_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
+      "1A": [
+        {
+          "materia": "react",
+          "teacher": "paulo"
+        },
+        {
+          "materia": "javascript",
+          "teacher": "chrystian"
+        }
+      ]
+    },
+    {
+      "classroom_id": "1446d11e-6985-4979-8e7f-15d5ddf0a81f",
+      "1B": [
+        {
+          "materia": "python",
+          "teacher": "chrystian"
+        }
+      ]
+    },
+    {
+      "classroom_id": "cf43d8ca-37a8-4140-bc97-32192e151a27",
+      "2A": [
+        {
+          "materia": "node",
+          "teacher": "paulo"
+        }
+      ]
+    },
+    {
+      "classroom_id": "3df783ee-d140-47cd-9c65-213b830a7ca6",
+      "2B": [
+        {
+          "materia": "python",
+          "teacher": "chrystian"
+        }
+      ]
+    }
+  ],
+  "page": 1,
+  "total_number_of_pages": 1
+}
 ```
 
 ### Get only classroom
