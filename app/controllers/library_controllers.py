@@ -158,6 +158,21 @@ def get_library(library_id: str):
     except DataError:
         return {"msg": "library_id not found"}, HTTPStatus.NOT_FOUND
 
+#lista de locações não devolvidas
+def get_unreturned_book_rental():
+    unreturned_rental = LibraryModel.query.filter_by(date_return=None).paginate(page=None,per_page=20)
+
+    return jsonify(
+        [{
+            "rental_id":rental.library_id,
+            "book":rental.book.title,
+            "date_withdrawal":rental.date_withdrawal,
+            "date_return":rental.date_return,
+            "student":rental.student.name,
+            "librarian":rental.employee.name
+        } 
+        for rental in unreturned_rental.items],HTTPStatus.OK
+    )
 #lista de livros que o aluno alugou e ainda não devolveu
 def student_books_not_yet_returned(student_id):
 
