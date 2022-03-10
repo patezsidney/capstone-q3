@@ -15,7 +15,7 @@ def test_register_one_student(client: FlaskClient):
         "classroom_id" : "51df51e0-00a7-49e3-9f2e-0405574f5c20"       
     }    
     
-    request_response = client.post("/api/students/register",json=request_data)
+    request_response = client.post("/api/students/register",json=request_data,headers={"Authorization": 'Bearer 1234'})
 
     assert (request_response.status_code == 201), "Verificar se o status code é OK"
 
@@ -33,7 +33,7 @@ def test_register_one_student_with_incorretc_key(client: FlaskClient):
         "classroom_id" : "51df51e0-00a7-49e3-9f2e-0405574f5c20"        
     }    
     
-    request_response = client.post("/api/students/register",json=request_data)
+    request_response = client.post("/api/students/register",json=request_data,headers={"Authorization": 'Bearer 1234'})
     
     assert (request_response.status_code == 400), "Verificar se o status code é BAD REQUEST"
 
@@ -50,7 +50,7 @@ def test_register_one_student_with_missing_key(client: FlaskClient):
         "classroom_id" : "51df51e0-00a7-49e3-9f2e-0405574f5c20"        
     }    
     
-    request_response = client.post("/api/students/register",json=request_data)
+    request_response = client.post("/api/students/register",json=request_data,headers={"Authorization": 'Bearer 1234'})
     
     assert (request_response.status_code == 400), "Verificar se o status code é BAD REQUEST"
 
@@ -68,6 +68,6 @@ def test_register_one_student_with_incorretc_type_key(client: FlaskClient):
         "classroom_id" : "51df51e0-00a7-49e3-9f2e-0405574f5c20"        
     }    
     
-    request_response = client.post("/api/students/register",json=request_data)
+    request_response = client.post("/api/students/register",json=request_data,headers={"Authorization": 'Bearer 1234'})
     
     assert (request_response.status_code == 400), "Verificar se o status code é BAD REQUEST"

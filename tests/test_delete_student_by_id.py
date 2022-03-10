@@ -15,15 +15,15 @@ def test_del_student_by_id(client: FlaskClient):
         "classroom_id" : "51df51e0-00a7-49e3-9f2e-0405574f5c20"       
     }    
     
-    student_response = client.post("/api/students/register",json=student_data)
+    student_response = client.post("/api/students/register",json=student_data,headers={"Authorization": 'Bearer 1234'})
     student_json = student_response.get_json()
-    request_response = client.delete(f"/api/students/{student_json['id']}")
+    request_response = client.delete(f"/api/students/{student_json['id']}",headers={"Authorization": 'Bearer 1234'})
 
       
     assert (request_response.status_code == 204), "Verificar se o status code é OK"
 
 def test_del_student_with_ivld_key(client: FlaskClient):
     
-    request_response = client.delete("/api/students/51df51e0-00a7-49e3-9f2e-0405574f5c88")
+    request_response = client.delete("/api/students/51df51e0-00a7-49e3-9f2e-0405574f5c88",headers={"Authorization": 'Bearer 1234'})
     
     assert (request_response.status_code == 404), "Verificar se o status code é NOT FOUND"

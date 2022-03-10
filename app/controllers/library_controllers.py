@@ -164,7 +164,7 @@ def get_library(library_id: str):
 @auth_employee.login_required(role=['admin','librarian'])
 def get_unreturned_book_rental():
     unreturned_rental = LibraryModel.query.filter_by(date_return=None).paginate(page=None,per_page=20)
-    if not len(unreturned_rental):
+    if not len(unreturned_rental.items):
         return {"msg":"There are no books to return"},HTTPStatus.OK
 
     return jsonify(
@@ -184,7 +184,7 @@ def student_books_not_yet_returned(student_id):
 
     rented_books = LibraryModel.query.filter_by(student_id=student_id,date_return=None).paginate(page=None,per_page=20)
 
-    if not len(rented_books) or rented_books==None:
+    if not len(rented_books.items) or rented_books==None:
         return {"msg":"There are no books to return"},HTTPStatus.OK
 
     return jsonify([{"student":rented.student.name,
@@ -197,7 +197,7 @@ def get_books_rented(student_id):
 
     rented_books = LibraryModel.query.filter_by(student_id=student_id).paginate(page=None,per_page=20)
 
-    if not len(rented_books) or rented_books==None:
+    if not len(rented_books.items) or rented_books==None:
         return {"msg":"No books have been rented so far"},HTTPStatus.OK
 
     return jsonify([{"student":rented.student.name,
