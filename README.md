@@ -143,6 +143,27 @@ header {
 ---
 ## Employee
 
+### Login
+
+`POST /login`
+
+```json
+{
+    "email": "lucira@email.com",
+    "password": "1234"
+}
+```
+```json
+{
+  "employee_id": "b70c93e0-a6c0-43f1-8c7b-ea3b1b3f00f4",
+  "name": "lucira",
+  "email": "lucira@email.com",
+  "wage": 4000.0,
+  "access_level": "admin",
+  "api_key": "1234"
+}
+```
+
 ### Create new employee
 
 `Post /employees`
