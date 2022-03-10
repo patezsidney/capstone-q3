@@ -423,35 +423,20 @@ header {
 {
 
     "classroom_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
-
     "1A": [
-
         {
-
         "teacher": "Paulo",
-
         "school_subject": "React",
-
         "students": [
-
                 {
-
                     "name": "Arthur"
-
                 },
-
                 {
-
                     "name": "Sidney"
-
                 }
-
             ]
-
         }
-
     ]
-
 }
 ```
 
