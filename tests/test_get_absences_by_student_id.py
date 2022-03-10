@@ -3,18 +3,16 @@ from flask.testing import FlaskClient
 
 def test_get_absences_by_student_id(client: FlaskClient):
     response = client.get("/api/absences/2a465bd0-22cd-45e7-9fd1-142dee2cca78")
-    mock_response = {
-                    "name": "renato",
-                    "absences": [
+    mock_response = [
                         {
                         "absence_id": "d98c6e17-d6ce-4432-bc31-b10418a7cf44",
-                        "date": "Sat, 15 Feb 2020 00:00:00 GMT",
+                        "date": "15/02/2020",
                         "justify": False,
-                        "classroom_id": "cf43d8ca-37a8-4140-bc97-32192e151a27",
-                        "student_id": "2a465bd0-22cd-45e7-9fd1-142dee2cca78"
+                        "classroom": "2A",
+                        "student": "Renato",
+                        "school_subject": "Node"
                         }
                     ]
-                    }
     
     response_json = response.get_json()
 
@@ -30,4 +28,4 @@ def test_status_code_get_absences_by_student_id(client: FlaskClient):
 def test_type_get_absences_by_student_id(client: FlaskClient):
     response = client.get("/api/absences/2a465bd0-22cd-45e7-9fd1-142dee2cca78")
 
-    assert(type(response.get_json()) == dict), "Verificar se está retornando um dict"
+    assert(type(response.get_json()) == list), "Verificar se está retornando um dict"
