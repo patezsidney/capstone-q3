@@ -115,6 +115,9 @@ def delete_employee(employee_id: str):
 
 @auth_employee.login_required(role='admin')
 def get_all_employees():
+
+    page = request.args.get('page', 1, type=int)
+    per_page = 20
     session: Session = db.session
     
     get_args = request.args
