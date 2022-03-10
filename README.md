@@ -364,7 +364,7 @@ header {
 
 ### Create new book
 
-`Post /books`
+`Post /books/register`
 
 header {
     Authorization: Bearer token
@@ -372,11 +372,16 @@ header {
 
 ```json
 {
-    "name": "Hamburguer",
-    "category": "Sanduíches",
-    "price": 7.99,
-    "userId": 2,
-    "quantity": 1
+    "title": "Harry Potter - E A Pedra Filosofal",
+    "author": "J.K. Rowling",
+    "quantity": 4
+}
+```
+```json
+{
+    "title": "Harry Potter - E A Pedra Filosofal",
+    "author": "J.K. Rowling",
+    "quantity": 4
 }
 ```
 
@@ -386,32 +391,39 @@ header {
 
 ```json
 [
- {
-    "id": 1,
-    "name": "Hamburguer",
-    "category": "Sanduíches",
-    "price": 7.99,
-    "userId": 2,
-    "quantity": 1
+  {
+    "title": "Harry Potter - E A Pedra Filosofal",
+    "author": "J.K. Rowling",
+    "quantity": 5
+  },
+  {
+    "title": "Harry Potter E A Câmara Dos Segredos",
+    "author": "J.K. Rowling",
+    "quantity": 3
+  },
+  {
+    "title": "Harry Potter E A Criança Amaldiçoada - Parte 1",
+    "author": "J.K. Rowling",
+    "quantity": 5
+  },
+  {
+    "title": "Harry Potter E A Criança Amaldiçoada - Parte 2",
+    "author": "J.K. Rowling",
+    "quantity": 5
   }
 ]
 ```
 
 ### Get only book
 
-`GET /books/:id`
+`GET /books/:book_id`
 
 ```json
-[
- {
-    "id": 1,
-    "name": "Hamburguer",
-    "category": "Sanduíches",
-    "price": 7.99,
-    "userId": 2,
-    "quantity": 1
-  }
-]
+{
+  "title": "Harry Potter E A Câmara Dos Segredos",
+  "author": "J.K. Rowling",
+  "quantity": 3
+}
 ```
 
 ### Update book
@@ -424,11 +436,14 @@ header {
 
 ```json
 {
-    "name": "Hamburguer upgrade",
-    "category": "Sanduíches",
-    "price": 7.99,
-    "userId": 2,
-    "quantity": 2
+    "title": "Excel nunca mais"
+}
+```
+```json
+{
+    "title": "Excel Nunca Mais",
+    "author": "J.K. Rowling",
+    "quantity": 3
 }
 ```
 
