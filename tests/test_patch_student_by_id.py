@@ -8,7 +8,7 @@ def test_patch_student_by_id(client: FlaskClient):
         "contact_email":"student02@mail.com"
     }    
     
-    request_response = client.patch("/api/students/51df51e0-00a7-49e3-9f2e-0405574f5c20",json=request_data, heades=headers)
+    request_response = client.patch("/api/students/51df51e0-00a7-49e3-9f2e-0405574f5c20",json=request_data, headers=headers)
     
     assert (request_response.status_code == 202), "Verificar se o status code é ACCEPTED"
 
