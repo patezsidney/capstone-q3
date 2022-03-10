@@ -39,6 +39,7 @@ https://piaget-system.herokuapp.com/api
 
 `POST /login`
 
+body
 ```json
 {
     "cpf": "11111111111",
@@ -66,6 +67,7 @@ header {
     Authorization: Bearer token
 }
 
+body
 ```json
 {
     "name" : "Uzumake Naruto",
@@ -177,6 +179,7 @@ header {
     Authorization: Bearer token
 }
 
+body
 ```json
 {
     "gender": "M"
@@ -209,6 +212,7 @@ header {
 
 `POST /login`
 
+body
 ```json
 {
     "email": "lucira@email.com",
@@ -234,6 +238,7 @@ header {
     Authorization: Bearer token
 }
 
+body
 ```json
 {
     "name": "Jhon Doe",
@@ -293,6 +298,7 @@ header {
     Authorization: Bearer token
 }
 
+body
 ```json
 {
     "name": "John Doe",
@@ -329,6 +335,7 @@ header {
     Authorization: Bearer token
 }
 
+body
 ```json
 {
     "ativity": "debug",
@@ -401,6 +408,7 @@ header {
     Authorization: Bearer token
 }
 
+body
 ```json
 {
     "grade": "10.0"
@@ -441,6 +449,7 @@ header {
     Authorization: Bearer token
 }
 
+body
 ```json
 {
     "title": "Harry Potter - E A Pedra Filosofal",
@@ -505,6 +514,7 @@ header {
     Authorization: Bearer token
 }
 
+body
 ```json
 {
     "title": "Excel nunca mais"
@@ -538,6 +548,7 @@ header {
     Authorization: Bearer token
 }
 
+body
 ```json
 {
     "name": "1A",
@@ -636,6 +647,7 @@ header {
     Authorization: Bearer token
 }
 
+body
 ```json
 {
     "name": "2B",
@@ -668,6 +680,7 @@ header {
     Authorization: Bearer token
 }
 
+body
 ```json
 {
     "employee_id":"3f5e5df3-651b-46ec-9c42-be4a863f974a",
@@ -730,6 +743,7 @@ header {
     Authorization: Bearer token
 }
 
+body
 ```json
 {
     "book_id": "081c575b-a38f-4f41-bf15-2593cd58ab93"
@@ -754,6 +768,11 @@ header {
     Authorization: Bearer token
 }
 
+body
+```json
+
+```
+
 ```json
 {
   "library_id": "c2c414b7-f972-424b-8243-246b7c942e28",
@@ -766,9 +785,9 @@ header {
 }
 ```
 
-### Get library unreturned
+### Get library unreturned rental
 
-`PATCH /library/unreturned_rental`
+`Get /library/unreturned_rental`
 
 header {
     Authorization: Bearer token
@@ -788,9 +807,9 @@ header {
     ]
 ]
 ```
-### Get library unreturned
+### Get library rented by id
 
-`PATCH /library/rented/<student_id>`
+`GET /library/rented/<student_id>`
 
 header {
     Authorization: Bearer token
@@ -805,9 +824,9 @@ header {
     }
 ]
 ```
-### Get library unreturned
+### Get library rented for students
 
-`PATCH /library/rented_for_student/<student_id>`
+`GET /library/rented_for_student/<student_id>`
 
 header {
     Authorization: Bearer token
@@ -830,6 +849,127 @@ header {
 ### Delete library
 
 `DELETE /library/:id`
+
+header {
+    Authorization: Bearer token
+}
+
+---
+
+## Absence
+
+### Create new absence
+
+`Post /absences`
+
+header {
+    Authorization: Bearer token
+}
+body
+```json
+{
+    "date": "02/02/2020",
+    "classroom_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
+    "student_id": "1d5225ef-5638-4397-9989-e604a2cceca0"
+}
+```
+```json
+{
+    "absence_id": "12f9efee-4010-4ec2-8370-1873f4ec0a60",
+    "date": "02/02/2020",
+    "justify": false,
+    "classroom": "1A",
+    "student": "Matheus",
+    "school_subject": "React"
+}
+```
+
+### Get all absences
+
+`GET /absences`
+
+```json
+[
+  {
+    "absence_id": "b20dfcbb-f121-41ef-bf96-cb988d68a35a",
+    "date": "15/02/2020",
+    "justify": false,
+    "classroom": "1A",
+    "student": "Matheus",
+    "school_subjec": "React"
+  },
+  {
+    "absence_id": "9cf30ce0-6925-4ff1-9bbf-f27bd7916782",
+    "date": "15/02/2020",
+    "justify": true,
+    "classroom": "1A",
+    "student": "Matheus",
+    "school_subjec": "React"
+  },
+  {
+    "absence_id": "494925c7-7399-44e2-a00e-653581145979",
+    "date": "15/02/2020",
+    "justify": false,
+    "classroom": "1A",
+    "student": "Felipe",
+    "school_subjec": "React"
+  },
+  {
+    "absence_id": "d98c6e17-d6ce-4432-bc31-b10418a7cf44",
+    "date": "15/02/2020",
+    "justify": false,
+    "classroom": "2A",
+    "student": "Renato",
+    "school_subjec": "Node"
+  }
+]
+```
+
+### Get only absence
+
+`GET /absences/:absence_id`
+
+```json
+[
+  {
+    "absence_id": "494925c7-7399-44e2-a00e-653581145979",
+    "date": "15/02/2020",
+    "justify": false,
+    "classroom": "1A",
+    "student": "Felipe",
+    "school_subject": "React"
+  }
+]
+```
+
+### Update absence
+
+`PATCH /absences/:absence_id`
+
+header {
+    Authorization: Bearer token
+}
+
+body
+```json
+
+```
+```json
+{
+  {
+    "absence_id": "b20dfcbb-f121-41ef-bf96-cb988d68a35a",
+    "date": "15/02/2020",
+    "justify": true,
+    "classroom": "1A",
+    "student": "Matheus",
+    "school_subject": "React"
+  }  
+}
+```
+
+### Delete absence
+
+`DELETE /absences/:id`
 
 header {
     Authorization: Bearer token
