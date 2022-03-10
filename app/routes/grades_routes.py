@@ -9,3 +9,5 @@ bp.post("")(grades_controllers.create_grade)
 bp.get("/<student_id>")(grades_controllers.get_student_grades)
 bp.delete("/<grade_id>")(grades_controllers.delete_grade)
 bp.patch("/<id>")(grades_controllers.update_grade)
+
+bp.get("/student")(grades_controllers.get_student_grades_by_api_key)
