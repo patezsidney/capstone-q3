@@ -270,13 +270,17 @@ header {
 
 ```json
 [
- {
-    "id": 1,
-    "name": "Hamburguer",
-    "category": "Sanduíches",
-    "price": 7.99,
-    "userId": 2,
-    "quantity": 1
+  {
+    "ativity": "codar",
+    "grade": 9.0,
+    "student": {
+      "student_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
+      "name": "felipe"
+    },
+    "classrom": {
+      "classroom_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
+      "name": "1A"
+    }
   }
 ]
 ```
