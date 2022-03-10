@@ -79,7 +79,7 @@ def register_book_rental_return_by_id(library_id:str):
         data = dict()
         data["date_return"]=datetime.now()
 
-        rental = LibraryModel.query.filter_by(library_id=library_id).first()
+        rental = LibraryModel.query.filter_by(library_id=library_id,date_return=None).first()
 
         if rental == None:
             raise NotFound
@@ -99,10 +99,6 @@ def register_book_rental_return_by_id(library_id:str):
             "data_return":rental.date_return,
             "data_accurrancy":rental.date_accurancy
             },HTTPStatus.ACCEPTED
-    except IncorrectKeyError:
-        return {"msg":"Incorrect key use"},HTTPStatus.BAD_REQUEST
-    except TypeValueError:
-        return {"msg":"request with incorrect value type!"},HTTPStatus.BAD_REQUEST
     except NotFound:
         return {"msg":"rental not found"},HTTPStatus.NOT_FOUND
 
