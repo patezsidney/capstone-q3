@@ -732,12 +732,18 @@ header {
 
 ```json
 {
-
+    "book_id": "081c575b-a38f-4f41-bf15-2593cd58ab93"
 }
 ```
 ```json
 {
-
+  "library_id": "3554e9f0-8208-4e99-81c1-d79f3caf891c",
+  "librarian": "matheus",
+  "book": "Excel Nunca Mais",
+  "student": "felipe",
+  "data_withdraw": "Sat, 01 Feb 2020 00:00:00 GMT",
+  "data_return": "Sat, 15 Feb 2020 00:00:00 GMT",
+  "data_accurrancy": "Sat, 15 Feb 2020 00:00:00 GMT"
 }
 ```
 ### Update library return
@@ -750,12 +756,13 @@ header {
 
 ```json
 {
-
-}
-```
-```json
-{
-
+  "library_id": "c2c414b7-f972-424b-8243-246b7c942e28",
+  "librarian": "paulo",
+  "book": "Harry Potter - E a pedra filosofal",
+  "student": "felipe",
+  "data_withdraw": "Thu, 10 Mar 2022 00:00:00 GMT",
+  "data_return": "Thu, 10 Mar 2022 00:00:00 GMT",
+  "data_accurrancy": "Fri, 25 Mar 2022 00:00:00 GMT"
 }
 ```
 
