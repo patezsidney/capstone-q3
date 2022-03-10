@@ -73,7 +73,7 @@ def edit_book_or_student_in_book_rental_by_id(id: str):
     except NotFound:
         return {"msg":"rental not found"},HTTPStatus.NOT_FOUND
 
-# @auth_employee.login_required(["admin","librarian"])
+@auth_employee.login_required(["admin","librarian"])
 def register_book_rental_return_by_id(id:str):
     try:
         data = request.get_json()
@@ -109,6 +109,7 @@ def register_book_rental_return_by_id(id:str):
     except NotFound:
         return {"msg":"rental not found"},HTTPStatus.NOT_FOUND
 
+@auth_employee.login_required(role='admin')
 def delete_library(library_id: str):
     
     try:
@@ -122,6 +123,7 @@ def delete_library(library_id: str):
     except DataError:
         return {"mgs": "library_id not found"}, HTTPStatus.NOT_FOUND
 
+@auth_employee.login_required(role=['admin','librarian'])
 def get_library_list():
     session: Session = db.session
     data = session.query(LibraryModel).paginate(page=None,per_page=20)
@@ -138,6 +140,7 @@ def get_library_list():
 
     return jsonify(lista), HTTPStatus.OK
 
+@auth_employee.login_required(role=['admin','librarian'])
 def get_library(library_id: str):
 
     try:
@@ -159,6 +162,7 @@ def get_library(library_id: str):
         return {"msg": "library_id not found"}, HTTPStatus.NOT_FOUND
 
 #lista de locações não devolvidas
+@auth_employee.login_required(role=['admin','librarian'])
 def get_unreturned_book_rental():
     unreturned_rental = LibraryModel.query.filter_by(date_return=None).paginate(page=None,per_page=20)
 
@@ -173,6 +177,7 @@ def get_unreturned_book_rental():
         } 
         for rental in unreturned_rental.items],HTTPStatus.OK
     )
+
 #lista de livros que o aluno alugou e ainda não devolveu
 def student_books_not_yet_returned(student_id):
 
