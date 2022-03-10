@@ -3,7 +3,7 @@ from flask.testing import FlaskClient
 
 def test_get_unreturned_book_rental(client: FlaskClient):
 
-    response = client.get("/api/library/unreturned_rental")
+    response = client.get("/api/library/unreturned_rental",headers={"Authorization": 'Bearer 1236'})
 
     response_json = response.get_json()
     

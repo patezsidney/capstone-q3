@@ -3,7 +3,7 @@ from flask.testing import FlaskClient
 
 def test_get_all_library(client :FlaskClient):
 
-    response = client.get("/api/library")
+    response = client.get("/api/library",headers={"Authorization": 'Bearer 1236'})
 
     response_json: list = response.get_json()
     
