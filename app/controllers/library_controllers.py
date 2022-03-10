@@ -72,16 +72,14 @@ def edit_book_or_student_in_book_rental_by_id(id: str):
     except NotFound:
         return {"msg":"rental not found"},HTTPStatus.NOT_FOUND
 
-@auth_employee.login_required(role=["admin","librarian"])
-def register_book_rental_return_by_id(id:str):
-    try:
-        data = request.get_json()
-        LibraryModel.check_incorrect_keys(data)
-        LibraryModel.check_type_value(data)
 
+@auth_employee.login_required(role=["admin","librarian"])
+def register_book_rental_return_by_id(library_id:str):
+    try:
+        data = dict()
         data["date_return"]=datetime.now()
 
-        rental = LibraryModel.query.filter_by(library_id=id).first()
+        rental = LibraryModel.query.filter_by(library_id=library_id).first()
 
         if rental == None:
             raise NotFound
