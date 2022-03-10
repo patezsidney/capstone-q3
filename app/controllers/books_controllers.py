@@ -25,6 +25,7 @@ def patch_book_by_id(book_id):
             setattr(book,key,value.title())
 
         response = {
+            "book_id": book.book_id,
             "title": book.title.title(),
             "author": book.author.title(),
             "quantity": book.quantity
@@ -50,6 +51,7 @@ def register_books():
         book = BooksModel(**data)
 
         response = {
+            "book_id": book.book_id,
             "title": book.title.title(),
             "author": book.author.title(),
             "quantity": book.quantity
@@ -93,6 +95,7 @@ def get_all_books():
 
     for book in books.items:
         response = {
+            "book_id": book.book_id,
             "title": book.title.title(),
             "author": book.author.title(),
             "quantity": book.quantity
@@ -112,6 +115,7 @@ def get_book_by_id(book_id: str):
             raise NotFound
         
         response = {
+            "book_id": book.book_id,
             "title": book.title.title(),
             "author": book.author.title(),
             "quantity": book.quantity

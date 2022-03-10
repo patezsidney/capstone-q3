@@ -1,17 +1,14 @@
 from http import HTTPStatus
 from secrets import token_urlsafe
-
 from flask import current_app, jsonify, request
 from sqlalchemy import exc
 from sqlalchemy.exc import DataError, IntegrityError
 from werkzeug.exceptions import NotFound
-
 from app.configs.auth import auth_employee
 from app.models.exc import IncorrectKeyError, MissingKeyError, TypeValueError
 from app.models.students_model import StudentsModel
 
-
-@auth_employee.login_required(role='admin')
+@auth_employee.login_required(role=['admin'])
 def register():
     try:
         data = request.get_json()
@@ -27,11 +24,7 @@ def register():
         current_app.db.session.add(student)
         current_app.db.session.commit()
 
-        return {"id":student.registration_student_id,
-                "name":student.name,
-                "contact_name":student.contact_name,
-                "contact_email":student.contact_email
-                },HTTPStatus.CREATED
+        return StudentsModel.serialize(student),HTTPStatus.CREATED
     except MissingKeyError:
         return {"msg":"Missing key(s)"},HTTPStatus.BAD_REQUEST
     except IncorrectKeyError:
@@ -48,15 +41,9 @@ def signin():
         student: StudentsModel = StudentsModel.query.filter_by(cpf=data['cpf']).one()
     
         if student.check_password(data['password']):
-            return {
-                        "registration_student_id": student.registration_student_id,
-                        "name": student.name,
-                        "contact_name": student.contact_name,
-                        "contact_email": student.contact_email,
-                        "cpf": student.cpf,
-                        "birth_date": student.birth_date,
-                        "api_key": student.api_key
-                    }, HTTPStatus.OK
+            data = StudentsModel.serialize(student)
+            data['api_key'] = student.api_key
+            return data, HTTPStatus.OK
     
         else:
             return {'msg': 'Wrong password'}, HTTPStatus.UNAUTHORIZED
@@ -68,7 +55,7 @@ def signin():
         return {"msg": "Invalid employee id"}, HTTPStatus.UNAUTHORIZED
 
 
-@auth_employee.login_required(role='admin')
+@auth_employee.login_required(role=['admin'])
 def update_student(student_id:str):
     try:
         data = request.get_json()
@@ -87,7 +74,7 @@ def update_student(student_id:str):
         current_app.db.session.add(student)
         current_app.db.session.commit()
 
-        return jsonify(student),HTTPStatus.ACCEPTED
+        return jsonify(StudentsModel.serialize(student)),HTTPStatus.ACCEPTED
     except IncorrectKeyError:
         return {"msg": "Use of invalid key"},HTTPStatus.BAD_REQUEST
     except NotFound:
@@ -97,7 +84,7 @@ def update_student(student_id:str):
     except IntegrityError:
         return {"msg":"CPF already registered"},HTTPStatus.CONFLICT
 
-@auth_employee.login_required(role='admin')
+@auth_employee.login_required(role=['admin'])
 def delete_student(student_id):
     try:
         student:StudentsModel = StudentsModel.query.filter_by(registration_student_id=student_id).first()
@@ -117,10 +104,11 @@ def delete_student(student_id):
 def get_all_students():
     data = current_app.db.session.query(StudentsModel).paginate(page=None,per_page=20)
 
-    return jsonify(data.items), HTTPStatus.OK
+    return jsonify(StudentsModel.serialize(data.items)), HTTPStatus.OK
 
 
 
+#@auth_employee.login_required(role=['admin'])
 def get_student_by_api_key():
     bearer_token = request.headers.get('Authorization').split(' ')[1]
 
@@ -138,12 +126,11 @@ def get_student_by_api_key():
 
 @auth_employee.login_required(role="admin")
 def get_student_by_id(student_id: str):
-
     try:
         student: StudentsModel = StudentsModel.query.filter_by(
         registration_student_id = student_id).first()
     
-        return jsonify(student), HTTPStatus.OK
+        return jsonify(StudentsModel.serialize(student)), HTTPStatus.OK
     
     except DataError:
         return {"msg": "Student not found"}, HTTPStatus.NOT_FOUND

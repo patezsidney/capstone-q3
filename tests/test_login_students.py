@@ -9,7 +9,7 @@ def test_login_students_success(client: FlaskClient):
 
     request_login_response = client.post("/api/students/login", json=request_login_data, follow_redirects=True )
 
-    assert( request_login_response.get_json().get("api_key")), "Verificar se retornou a api_key"
+    assert( request_login_response.get_json().get('api_key')), "Verificar se retornou a api_key"
     assert (request_login_response.status_code == 200), "Verificar se o status code é OK"
 
 
