@@ -124,8 +124,8 @@ def get_library(library_id: str):
     except DataError:
         return {"msg": "library_id not found"}, HTTPStatus.NOT_FOUND
 
-#lista de livros de o aluno alugou e ainda não devolveu
-def get_books_of_student(student_id):
+#lista de livros que o aluno alugou e ainda não devolveu
+def student_books_not_yet_returned(student_id):
 
     rented_books = LibraryModel.query.filter_by(student_id=student_id,date_return=None).paginate(page=None,per_page=20)
 
