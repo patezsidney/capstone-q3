@@ -2,7 +2,6 @@ from datetime import datetime
 from http import HTTPStatus
 
 from flask import current_app, jsonify, request
-from sqlalchemy import null
 from sqlalchemy.exc import DataError
 from sqlalchemy.orm.session import Session
 from werkzeug.exceptions import NotFound
@@ -11,10 +10,9 @@ from app.configs.auth import auth_employee
 from app.configs.database import db
 from app.models.exc import IncorrectKeyError, MissingKeyError, TypeValueError
 from app.models.library_model import LibraryModel
-from app.models.students_model import StudentsModel
 
 
-# @auth_employee.login_required(role=['admin','librarian'])
+@auth_employee.login_required(role=['admin','librarian'])
 def library_register():
     try:
         data = request.get_json()
@@ -40,6 +38,7 @@ def library_register():
     except MissingKeyError:
         return {"msg":"Missing key"},HTTPStatus.BAD_REQUEST
 
+@auth_employee.login_required(role=['admin','librarian'])
 def edit_book_or_student_in_book_rental_by_id(id: str):
     try:
         data = request.get_json()
@@ -73,7 +72,8 @@ def edit_book_or_student_in_book_rental_by_id(id: str):
     except NotFound:
         return {"msg":"rental not found"},HTTPStatus.NOT_FOUND
 
-# @auth_employee.login_required(["admin","librarian"])
+
+@auth_employee.login_required(role=["admin","librarian"])
 def register_book_rental_return_by_id(library_id:str):
     try:
         data = dict()
@@ -106,6 +106,7 @@ def register_book_rental_return_by_id(library_id:str):
     except NotFound:
         return {"msg":"rental not found"},HTTPStatus.NOT_FOUND
 
+@auth_employee.login_required(role='admin')
 def delete_library(library_id: str):
     
     try:
@@ -119,6 +120,7 @@ def delete_library(library_id: str):
     except DataError:
         return {"mgs": "library_id not found"}, HTTPStatus.NOT_FOUND
 
+@auth_employee.login_required(role=['admin','librarian'])
 def get_library_list():
     session: Session = db.session
     data = session.query(LibraryModel).paginate(page=None,per_page=20)
@@ -135,6 +137,7 @@ def get_library_list():
 
     return jsonify(lista), HTTPStatus.OK
 
+@auth_employee.login_required(role=['admin','librarian'])
 def get_library(library_id: str):
 
     try:
@@ -156,8 +159,11 @@ def get_library(library_id: str):
         return {"msg": "library_id not found"}, HTTPStatus.NOT_FOUND
 
 #lista de locações não devolvidas
+@auth_employee.login_required(role=['admin','librarian'])
 def get_unreturned_book_rental():
     unreturned_rental = LibraryModel.query.filter_by(date_return=None).paginate(page=None,per_page=20)
+    if not len(unreturned_rental.items):
+        return {"msg":"There are no books to return"},HTTPStatus.OK
 
     return jsonify(
         [{
@@ -170,10 +176,14 @@ def get_unreturned_book_rental():
         } 
         for rental in unreturned_rental.items],HTTPStatus.OK
     )
+
 #lista de livros que o aluno alugou e ainda não devolveu
 def student_books_not_yet_returned(student_id):
 
     rented_books = LibraryModel.query.filter_by(student_id=student_id,date_return=None).paginate(page=None,per_page=20)
+
+    if not len(rented_books.items) or rented_books==None:
+        return {"msg":"There are no books to return"},HTTPStatus.OK
 
     return jsonify([{"student":rented.student.name,
              "book":rented.book.title,
@@ -184,6 +194,9 @@ def student_books_not_yet_returned(student_id):
 def get_books_rented(student_id):
 
     rented_books = LibraryModel.query.filter_by(student_id=student_id).paginate(page=None,per_page=20)
+
+    if not len(rented_books.items) or rented_books==None:
+        return {"msg":"No books have been rented so far"},HTTPStatus.OK
 
     return jsonify([{"student":rented.student.name,
                     "book":rented.book.title,

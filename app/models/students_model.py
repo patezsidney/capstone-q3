@@ -37,6 +37,7 @@ class StudentsModel(db.Model):
     grades = relationship("GradesModel",backref=backref("student",uselist=False))
     absences = relationship("AbsenceModel",backref=backref("student",uselist=False))
     classroom = relationship("ClassroomModel",backref="students",uselist=False)
+
     @property
     def password(self):
         raise AttributeError("Password is not accessible")
@@ -59,9 +60,37 @@ class StudentsModel(db.Model):
         if len([key for key in ["name","contact_name","contact_email","cpf","birth_date","gender","photo","password","classroom_id"] if key not in data.keys()]):
             raise MissingKeyError        
         return True
-    
+
     @classmethod
     def check_type_value(cls,data):
         if len([value for value in data.values() if type(value)!= str]):
             raise TypeValueError
         return True
+
+    @staticmethod
+    def serialize(data):
+        output = []
+        if type(data) == list:
+            for student in data:
+                output.append({
+                    "id":student.registration_student_id,
+                    "name":student.name,
+                    "cpf": student.cpf,
+                    "birth_date": student.birth_date,
+                    "contact_name":student.contact_name,
+                    "contact_email":student.contact_email,
+                    "gender": student.gender
+                    })
+        else:
+            output = {
+                    "id":data.registration_student_id,
+                    "name":data.name,
+                    "cpf": data.cpf,
+                    "birth_date": data.birth_date,
+                    "contact_name":data.contact_name,
+                    "contact_email":data.contact_email,
+                    "gender": data.gender
+
+                }
+
+        return output
