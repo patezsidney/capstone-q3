@@ -987,6 +987,19 @@ RESPONSE FORMAT STATUS 200
 ]
 ```
 
+### Get absence student
+
+`GET /absences/student`
+
+RESPONSE FORMAT STATUS 200
+```json
+{
+    "absence_class": "1A",
+    "school_subject": "React",
+    "absence_date": "10/03/2020"
+}
+```
+
 ### Update absence
 
 `PATCH /absences/:absence_id`
