@@ -23,5 +23,5 @@ def register_teacher_in_school_subject():
             "school_subject_id":school_subject.school_subject_id,
             "school_subject":school_subject.school_subject,
             "classroom":school_subject.classroom.name,
-            "teacher":school_subject.employee.name
+            "teacher":school_subject.teacher.name
             },HTTPStatus.CREATED
