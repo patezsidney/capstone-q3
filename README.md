@@ -45,6 +45,17 @@ https://piaget-system.herokuapp.com/api
     "password": "1234"
 }
 ```
+```json
+{
+  "registration_student_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
+  "name": "felipe",
+  "contact_name": "Rosita",
+  "contact_email": "rosita@email.com",
+  "cpf": "11111111111",
+  "birth_date": "Sun, 20 Feb 2000 00:00:00 GMT",
+  "api_key": "1230"
+}
+```
 
 
 ### Create new student
