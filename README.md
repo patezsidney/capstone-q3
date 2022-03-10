@@ -976,3 +976,91 @@ header {
 }
 
 ---
+
+## School_subject
+
+### Create new school_subject
+
+`Post /school_subjects/register`
+
+header {
+    Authorization: Bearer token
+}
+body
+```json
+{
+    
+}
+```
+```json
+{
+    
+}
+```
+
+### Get all school_subjects
+
+`GET /school_subjects`
+
+```json
+[
+  {
+    "school_subject_id": "62921285-ac00-4f38-ab44-356cdea16631",
+    "school_subject": "React",
+    "classroom": "1A",
+    "teacher": "Paulo"
+  },
+  {
+    "school_subject_id": "19c9807c-d818-4bc5-8d80-c66ad5ff253f",
+    "school_subject": "Python",
+    "classroom": "1B",
+    "teacher": "Chrystian"
+  },
+  {
+    "school_subject_id": "c3280110-1a25-40cb-8573-b20f9f14b200",
+    "school_subject": "Node",
+    "classroom": "2A",
+    "teacher": "Paulo"
+  },
+  {
+    "school_subject_id": "73e8e3e6-db7a-4cae-9ae6-74f4d0e87d66",
+    "school_subject": "Python",
+    "classroom": "2B",
+    "teacher": "Chrystian"
+  },
+  {
+    "school_subject_id": "73e8e3e6-db7a-4cae-9ae6-74f4d0e87d67",
+    "school_subject": "Javascript",
+    "classroom": "1A",
+    "teacher": "Chrystian"
+  }
+]
+```
+
+### Update school_subject
+
+`PATCH /school_subjects/:school_subject_id`
+
+header {
+    Authorization: Bearer token
+}
+
+body
+```json
+
+```
+```json
+{
+    
+}
+```
+
+### Delete school_subject
+
+`DELETE /school_subjects/:id`
+
+header {
+    Authorization: Bearer token
+}
+
+---
