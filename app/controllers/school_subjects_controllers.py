@@ -26,7 +26,7 @@ def register_teacher_in_school_subject():
             "teacher":school_subject.teacher.name
             },HTTPStatus.CREATED
 
-def edit_school_subject(school_subject_id:str):
+def edit_school_subject_by_id(school_subject_id:str):
     data = request.get_json()
     new_school_subject = SchoolSubjectsModel.query.filter_by(school_subject_id=school_subject_id).first()
 
