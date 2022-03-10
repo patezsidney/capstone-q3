@@ -14,7 +14,7 @@ from app.models.library_model import LibraryModel
 from app.models.students_model import StudentsModel
 
 
-# @auth_employee.login_required(role=['admin','librarian'])
+@auth_employee.login_required(role=['admin','librarian'])
 def library_register():
     try:
         data = request.get_json()
@@ -40,6 +40,7 @@ def library_register():
     except MissingKeyError:
         return {"msg":"Missing key"},HTTPStatus.BAD_REQUEST
 
+@auth_employee.login_required(role=['admin','librarian'])
 def edit_book_or_student_in_book_rental_by_id(id: str):
     try:
         data = request.get_json()
@@ -73,7 +74,7 @@ def edit_book_or_student_in_book_rental_by_id(id: str):
     except NotFound:
         return {"msg":"rental not found"},HTTPStatus.NOT_FOUND
 
-@auth_employee.login_required(["admin","librarian"])
+@auth_employee.login_required(role=["admin","librarian"])
 def register_book_rental_return_by_id(id:str):
     try:
         data = request.get_json()
