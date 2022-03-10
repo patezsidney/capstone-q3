@@ -76,21 +76,16 @@ def get_all_classroom():
     per_page = 20
     session: Session = db.session
     data = session.query(ClassroomModel).paginate(page, per_page=per_page, error_out=False)
-    
-    response = []
 
+    response = []
+    
     for classroom in data.items:
 
-        school_subject = classroom.school_subjects[0].school_subject if len(classroom.school_subjects) != 0 else ''
-        employee_id = classroom.school_subjects[0].employee_id if len(classroom.school_subjects) != 0 else ''
-        teacher: EmployeeModel = EmployeeModel.query.filter_by(employee_id=employee_id).one()
-        
         response.append({
             "classroom_id": classroom.classroom_id,
-            "name": classroom.name,
-            "teacher": teacher.name.title(),
-            "school_subject": school_subject.title()
+            f"{classroom.name}": [{"materia":materia.school_subject,"teacher":materia.teacher.name} for materia in classroom.school_subjects]
         })
+
 
     result = {"result": response}
     result['page'] = data.page
@@ -107,7 +102,7 @@ def get_employee_classroom(classroom_id: str):
         teacher: EmployeeModel = EmployeeModel.query.filter_by(employee_id=classroom.school_subjects[0].employee_id).one()
         response = []
         students = []
-
+        
         for student in classroom.students:
             students.append({
                 "name": student.name.title()
