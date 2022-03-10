@@ -43,7 +43,7 @@ def sigin():
                 "received": list(data.keys())
                 }, HTTPStatus.BAD_REQUEST
 
-@auth_employee.login_required(role='admin')
+# @auth_employee.login_required(role='admin')
 def create_employee():
     try:
         session: Session = db.session
