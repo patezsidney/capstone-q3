@@ -22,14 +22,23 @@ def patch_book_by_id(book_id):
             raise NotFound
 
         for key, value in data.items():
-            setattr(book,key,value)
-            
-        return data, HTTPStatus.OK
+            setattr(book,key,value.title())
+
+        response = {
+            "book_id": book.book_id,
+            "title": book.title.title(),
+            "author": book.author.title(),
+            "quantity": book.quantity
+        }
+        
+        db.session.add(book)
+        db.session.commit()
+
+        return jsonify(response), HTTPStatus.OK
 
     except NotFound:
         return {"msg":"book not found"},HTTPStatus.NOT_FOUND
 
-        
 
 @auth_employee.login_required(role=['librarian','admin'])
 def register_books():
@@ -41,16 +50,24 @@ def register_books():
 
         book = BooksModel(**data)
 
+        response = {
+            "book_id": book.book_id,
+            "title": book.title.title(),
+            "author": book.author.title(),
+            "quantity": book.quantity
+        }
+
         current_app.db.session.add(book)
         current_app.db.session.commit()
 
-        return jsonify(book),HTTPStatus.CREATED
+        return jsonify(response),HTTPStatus.CREATED
 
     except IncorrectKeyError:
         return {"msg":"Incorrect key use"},HTTPStatus.BAD_REQUEST
 
     except MissingKeyError:
         return {"msg":"Missing key in request"},HTTPStatus.BAD_REQUEST
+
 
 @auth_employee.login_required(role=["admin", "librarian"])
 def delete_book_by_id(book_id):
@@ -68,12 +85,26 @@ def delete_book_by_id(book_id):
     except NotFound:
         return {"msg":"Book not found!"},HTTPStatus.NOT_FOUND
 
+
 @auth_employee.login_required(role=["admin", "librarian"])
 def get_all_books():
     
-    books: BooksModel = db.session.query(BooksModel).all()
+    books: BooksModel = db.session.query(BooksModel).paginate(page=None, per_page=20)
 
-    return jsonify(books), HTTPStatus.OK
+    output = []
+
+    for book in books.items:
+        response = {
+            "book_id": book.book_id,
+            "title": book.title.title(),
+            "author": book.author.title(),
+            "quantity": book.quantity
+        }
+
+        output.append(response)
+
+    return jsonify(output), HTTPStatus.OK
+
 
 @auth_employee.login_required(role=["admin", "librarian"])
 def get_book_by_id(book_id: str):
@@ -82,8 +113,15 @@ def get_book_by_id(book_id: str):
 
         if book == None:
             raise NotFound
+        
+        response = {
+            "book_id": book.book_id,
+            "title": book.title.title(),
+            "author": book.author.title(),
+            "quantity": book.quantity
+        }
 
-        return jsonify(book), HTTPStatus.OK
+        return jsonify(response), HTTPStatus.OK
 
     except NotFound:
         return {"msg":"Book not found!"},HTTPStatus.NOT_FOUND

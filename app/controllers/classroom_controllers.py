@@ -1,10 +1,13 @@
 from http import HTTPStatus
+
 from flask import jsonify, request
 from sqlalchemy import exc
 from sqlalchemy.orm.session import Session
-from app.configs.database import db
+
 from app.configs.auth import auth_employee
+from app.configs.database import db
 from app.models.classroom_model import ClassroomModel
+from app.models.employee_model import EmployeeModel
 
 
 @auth_employee.login_required(role='admin')
@@ -70,35 +73,51 @@ def delete_classroom(classroom_id: str):
 
 @auth_employee.login_required(role='admin')
 def get_all_classroom():
+    page = request.args.get('page', 1, type=int)
+    per_page = 20
     session: Session = db.session
-    data = session.query(ClassroomModel).all()
+    data = session.query(ClassroomModel).paginate(page, per_page=per_page, error_out=False)
 
-    return jsonify(data), HTTPStatus.OK
+    response = []
+    
+    for classroom in data.items:
+
+        response.append({
+            "classroom_id": classroom.classroom_id,
+            f"{classroom.name}": [{"materia":materia.school_subject,"teacher":materia.teacher.name} for materia in classroom.school_subjects]
+        })
+
+
+    result = {"result": response}
+    result['page'] = data.page
+    result['total_number_of_pages'] = data.pages
+        
+
+    return jsonify(result), HTTPStatus.OK
 
 
 @auth_employee.login_required(role=['admin', 'teacher'])
 def get_employee_classroom(classroom_id: str):
     try:
         classroom: ClassroomModel = ClassroomModel.query.filter_by(classroom_id=classroom_id).one()
-        subjects = []
-
-        for subject in classroom.school_subjects:
-            subjects.append({
-                "school_subject_id": subject.school_subject_id,
-                "school_subject": subject.school_subject,
-                "employee_id": subject.employee_id,
-                "classroom_id": subject.teacher
+        teacher: EmployeeModel = EmployeeModel.query.filter_by(employee_id=classroom.school_subjects[0].employee_id).one()
+        response = []
+        students = []
+        
+        for student in classroom.students:
+            students.append({
+                "name": student.name.title()
             })
 
-        return {
+        response.append({
                 "classroom_id": classroom.classroom_id,
                 "name": classroom.name,
-                "absences": classroom.absences,
-                "school_subjects": subjects,
-                "grades": classroom.grades,
-                "students": classroom.students
+                "teacher": teacher.name.title(),
+                "school_subjects": classroom.school_subjects[0].school_subject.title(),
+                "students": students
+            })
 
-            }, HTTPStatus.OK
+        return jsonify(response), HTTPStatus.OK
 
     except exc.NoResultFound:
         return {'msg': 'Classroom not found'}, HTTPStatus.NOT_FOUND

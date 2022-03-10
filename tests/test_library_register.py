@@ -9,7 +9,7 @@ def test_register_rental(client: FlaskClient):
         "student_id":"51df51e0-00a7-49e3-9f2e-0405574f5c20"
     }    
     
-    request_response = client.post("/api/library/rental",json=request_data)
+    request_response = client.post("/api/library/rental",json=request_data,headers={"Authorization": 'Bearer 1236'})
     
     assert (request_response.status_code == 201), "Verificar se o status code é CREATED"
 
@@ -21,7 +21,7 @@ def test_rental_books_with_incorrect_key(client: FlaskClient):
         "student_id":"51df51e0-00a7-49e3-9f2e-0405574f5c20"
     }     
     
-    request_response = client.post("/api/library/rental",json=request_data)
+    request_response = client.post("/api/library/rental",json=request_data,headers={"Authorization": 'Bearer 1236'})
     
     assert (request_response.status_code == 400), "Verificar se o status code é BAD REQUEST"
 
@@ -32,6 +32,6 @@ def test_rental_books_with_incorrect_key_two(client: FlaskClient):
         "student_id":"51df51e0-00a7-49e3-9f2e-0405574f5c20"
     }     
     
-    request_response = client.post("/api/library/rental",json=request_data)
+    request_response = client.post("/api/library/rental",json=request_data,headers={"Authorization": 'Bearer 1236'})
     
     assert (request_response.status_code == 400), "Verificar se o status code é BAD REQUEST"

@@ -2,7 +2,7 @@ from flask.testing import FlaskClient
 
 
 def test_patch_absense_by_id(client: FlaskClient):
-    response = client.patch("/api/absences/b20dfcbb-f121-41ef-bf96-cb988d68a35a")
+    response = client.patch("/api/absences/b20dfcbb-f121-41ef-bf96-cb988d68a35a", headers={"Authorization": "Bearer 1234"})
     mock_reponse = {
                     "absence_id": "b20dfcbb-f121-41ef-bf96-cb988d68a35a",
                     "date": "15/02/2020",

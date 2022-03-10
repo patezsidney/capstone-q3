@@ -2,10 +2,10 @@ from flask.testing import FlaskClient
 
 
 def test_get_book_by_id(client: FlaskClient):
-    response = client.get("/api/books/081c575b-a38f-4f41-bf15-2593cd58ab93", headers={"Authorization": 'Bearer 1234'})
+    response = client.get("/api/books/081c575b-a38f-4f41-bf15-2593cd58ab93", headers={"Authorization": 'Bearer 1236'})
     mock_response = {
                     "book_id": "081c575b-a38f-4f41-bf15-2593cd58ab93",
-                    "title": "Harry Potter e a Câmara dos Segredos",
+                    "title": "Harry Potter E A Câmara Dos Segredos",
                     "author": "J.K. Rowling",
                     "quantity": 3
                     }
