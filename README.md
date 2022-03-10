@@ -37,7 +37,7 @@ https://piaget-system.herokuapp.com/api
 
 ### Login
 
-`POST /login`
+`POST /students/login`
 
 REQUEST FORMAT
 ```json
@@ -59,6 +59,23 @@ RESPONSE FORMAT STATUS 200
 }
 ```
 
+`GET /students/profile`
+>header {
+    Authorization: Bearer token
+}
+
+RESPONSE FORMAT STATUS 200
+```json
+{
+  "registration_student_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
+  "name": "felipe",
+  "contact_name": "Rosita",
+  "contact_email": "rosita@email.com",
+  "cpf": "11111111111",
+  "birth_date": "Sun, 20 Feb 2000 00:00:00 GMT",
+  "api_key": "1230"
+}
+```
 
 ### Create new student
 
@@ -416,6 +433,9 @@ RESPONSE FORMAT STATUS 200
 ### Get grade student
 
 `GET /grades/student`
+>header {
+    Authorization: Bearer token
+}
 
 RESPONSE FORMAT STATUS 200
 ```json
@@ -990,6 +1010,9 @@ RESPONSE FORMAT STATUS 200
 ### Get absence student
 
 `GET /absences/student`
+>header {
+    Authorization: Bearer token
+}
 
 RESPONSE FORMAT STATUS 200
 ```json
