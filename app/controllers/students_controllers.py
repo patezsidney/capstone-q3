@@ -3,7 +3,7 @@ from secrets import token_urlsafe
 
 from flask import current_app, jsonify, request
 from sqlalchemy import exc
-from sqlalchemy.exc import DataError
+from sqlalchemy.exc import DataError, IntegrityError
 from werkzeug.exceptions import NotFound
 
 from app.configs.auth import auth_employee
@@ -42,6 +42,8 @@ def register():
         return {"msg": "Use of invalid key"},HTTPStatus.BAD_REQUEST
     except TypeValueError:
         return {"msg":"request with incorrect value type!"},HTTPStatus.BAD_REQUEST
+    except IntegrityError:
+        return {"msg":"CPF already registered"},HTTPStatus.CONFLICT
         
 def signin():
     data = request.get_json()
@@ -96,6 +98,8 @@ def update_student(student_id:str):
         return {"msg":"Student not found"},HTTPStatus.NOT_FOUND
     except TypeValueError:
         return {"msg":"request with incorrect value type!"},HTTPStatus.BAD_REQUEST
+    except IntegrityError:
+        return {"msg":"CPF already registered"},HTTPStatus.CONFLICT
 
 # @auth_employee.login_required(role='admin')
 def delete_student(student_id):
