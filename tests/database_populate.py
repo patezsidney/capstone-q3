@@ -24,22 +24,22 @@ def populate_database(app:Flask):
                 StudentsModel (registration_student_id='51df51e0-00a7-49e3-9f2e-0405574f5c20', name='felipe', contact_name='Rosita',
                     contact_email='rosita@email.com', cpf='11111111111', birth_date='2000-02-20', gender='Feminino', 
                     password_hash='pbkdf2:sha256:260000$Qm0vHzt1WUw2GEE3$0133835de0c8006712fdad354ead0112aee9c77984e6c19ee24d3805d8c05614',
-                    api_key='1234', classroom_id='51df51e0-00a7-49e3-9f2e-0405574f5c20', photo=None
+                    api_key='1230', classroom_id='51df51e0-00a7-49e3-9f2e-0405574f5c20', photo=None
                 ),
                 StudentsModel (registration_student_id='1d5225ef-5638-4397-9989-e604a2cceca0', name='matheus', contact_name='Sirlei', 
                     contact_email='sirlei@email.com', cpf='11111111112', birth_date='2000-02-20', gender='Feminino', 
                     password_hash='pbkdf2:sha256:260000$Qm0vHzt1WUw2GEE3$0133835de0c8006712fdad354ead0112aee9c77984e6c19ee24d3805d8c05614',
-                    api_key='1234',  classroom_id='51df51e0-00a7-49e3-9f2e-0405574f5c20', photo=None
+                    api_key='1231',  classroom_id='51df51e0-00a7-49e3-9f2e-0405574f5c20', photo=None
                 ),
                 StudentsModel (registration_student_id='7dc82c28-4766-4bff-829b-2198a2e1ef98', name='rafael', contact_name='Maria',
                     contact_email='maria@email.com', cpf='11111111113', birth_date='2000-02-20', gender='Feminino',
                     password_hash='pbkdf2:sha256:260000$Qm0vHzt1WUw2GEE3$0133835de0c8006712fdad354ead0112aee9c77984e6c19ee24d3805d8c05614',
-                    api_key='1234',  classroom_id='1446d11e-6985-4979-8e7f-15d5ddf0a81f', photo=None
+                    api_key='1232',  classroom_id='1446d11e-6985-4979-8e7f-15d5ddf0a81f', photo=None
                 ),
                 StudentsModel (registration_student_id='2a465bd0-22cd-45e7-9fd1-142dee2cca78', name='renato', contact_name='Maria',
                     contact_email='mariaa@email.com', cpf='11111111114', birth_date='2000-02-20', gender='Feminino', 
                     password_hash='pbkdf2:sha256:260000$Qm0vHzt1WUw2GEE3$0133835de0c8006712fdad354ead0112aee9c77984e6c19ee24d3805d8c05614',
-                    api_key='1234',classroom_id='cf43d8ca-37a8-4140-bc97-32192e151a27', photo=None
+                    api_key='1233',classroom_id='cf43d8ca-37a8-4140-bc97-32192e151a27', photo=None
                 ),
 
                 # Populate grades
