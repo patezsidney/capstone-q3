@@ -8,34 +8,32 @@
 
 Um sistema para auxilio na administração de uma escola, com funcionalidades para controle de faltas, notas, biblioteca entre outos. Essa aplicação tem como foco escolas de ensino fundamental e médio.
 
+<hr />
+<h2>Desenvolvedores</h2>
+
+<div style="display: flex">
+<img src="https://avatars.githubusercontent.com/u/48024940?s=400&u=917f38c9afb6526bbda4135d749a22d1c5dfd580&v=4" style="width: 100px; border-radius: 50%;"/>
+
+<img src="https://avatars.githubusercontent.com/u/85950646?v=4" style="width: 100px; border-radius: 50%;margin-left:10px;"/>
+
+<img src="https://avatars.githubusercontent.com/u/71736180?v=4" style="width: 100px; border-radius: 50%;margin-left:10px;"/>
+
+<img src="https://avatars.githubusercontent.com/u/4825970?v=4" style="width: 100px; border-radius: 50%;margin-left:10px;"/>
+
+<img src="https://avatars.githubusercontent.com/u/65559844?v=4" style="width: 100px; border-radius: 50%;margin-left:10px;"/>
+
+<img src="https://avatars.githubusercontent.com/u/85639170?v=4" style="width: 100px; border-radius: 50%;margin-left:10px;"/>
+</div>
+
+<hr />
+
 ## Base_URL
 
 https://piaget-system.herokuapp.com/api
 
-## Users
+---
+## Students
 
-### Cadastro
-
-POST /register
-
-```json
-{
-    "email": "felipelarson@gmail.com",
-    "password": "123456",
-    "name": "felipe",
-    "age": 41
-}
-```
-
-```json
-{
-    "id": "1232334789445432",
-    "email": "felipelarson@gmail.com",
-    "password": "123456",
-    "name": "felipe",
-    "age": 41
-}
-```
 
 ### Login
 
@@ -43,16 +41,15 @@ POST /register
 
 ```json
 {
-    "email": "felipelarson@gmail.com",
-    "password": "123456"
+    "cpf": "11111111111",
+    "password": "1234"
 }
 ```
 
-## Products
 
-### create new products
+### Create new student
 
-`Post /products`
+`POST /students`
 
 header {
     Authorization: Bearer token
@@ -67,25 +64,13 @@ header {
 }
 ```
 
-### get products
+### Get all students
 
-`GET /products`
+`GET /students`
 
-```json
-[
- {
-    "id": 1,
-    "name": "Hamburguer",
-    "category": "Sanduíches",
-    "price": 7.99,
-    "userId": 2
-  }
-]
-```
-
-### get only products
-
-`GET /products/:id`
+header {
+    Authorization: Bearer token
+}
 
 ```json
 [
@@ -99,9 +84,29 @@ header {
 ]
 ```
 
-### update products
+### Get only student
 
-`PATCH /products/:id`
+`GET /students/:id`
+
+header {
+    Authorization: Bearer token
+}
+
+```json
+[
+ {
+    "id": 1,
+    "name": "Hamburguer",
+    "category": "Sanduíches",
+    "price": 7.99,
+    "userId": 2
+  }
+]
+```
+
+### Update student
+
+`PATCH /students/:id`
 
 header {
     Authorization: Bearer token
@@ -116,19 +121,20 @@ header {
 }
 ```
 
-### delete products
+### Delete student
 
-`DELETE /products/:id`
+`DELETE /students/:id`
 
 header {
     Authorization: Bearer token
 }
 
-## Cart
+---
+## Employee
 
-### create new cart
+### Create new employee
 
-`Post /cart`
+`Post /employees`
 
 header {
     Authorization: Bearer token
@@ -144,26 +150,9 @@ header {
 }
 ```
 
-### get cart
+### Get all employees
 
-`GET /cart`
-
-```json
-[
- {
-    "id": 1,
-    "name": "Hamburguer",
-    "category": "Sanduíches",
-    "price": 7.99,
-    "userId": 2,
-    "quantity": 1
-  }
-]
-```
-
-### get only cart
-
-`GET /cart/:id`
+`GET /employees`
 
 ```json
 [
@@ -178,9 +167,26 @@ header {
 ]
 ```
 
-### update cart
+### Get only employee
 
-`PATCH /cart/:id`
+`GET /employees/:id`
+
+```json
+[
+ {
+    "id": 1,
+    "name": "Hamburguer",
+    "category": "Sanduíches",
+    "price": 7.99,
+    "userId": 2,
+    "quantity": 1
+  }
+]
+```
+
+### Update employee
+
+`PATCH /employees/:id`
 
 header {
     Authorization: Bearer token
@@ -196,11 +202,258 @@ header {
 }
 ```
 
-### delete cart
+### Delete employee
 
-`DELETE /cart/:id`
+`DELETE /employees/:id`
 
 header {
     Authorization: Bearer token
 }
 
+---
+
+## Grades
+
+### Create new grade
+
+`Post /grades`
+
+header {
+    Authorization: Bearer token
+}
+
+```json
+{
+    "name": "Hamburguer",
+    "category": "Sanduíches",
+    "price": 7.99,
+    "userId": 2,
+    "quantity": 1
+}
+```
+
+### Get all grades
+
+`GET /grades`
+
+```json
+[
+ {
+    "id": 1,
+    "name": "Hamburguer",
+    "category": "Sanduíches",
+    "price": 7.99,
+    "userId": 2,
+    "quantity": 1
+  }
+]
+```
+
+### Get only grade
+
+`GET /grades/:id`
+
+```json
+[
+ {
+    "id": 1,
+    "name": "Hamburguer",
+    "category": "Sanduíches",
+    "price": 7.99,
+    "userId": 2,
+    "quantity": 1
+  }
+]
+```
+
+### Update grade
+
+`PATCH /grades/:id`
+
+header {
+    Authorization: Bearer token
+}
+
+```json
+{
+    "name": "Hamburguer upgrade",
+    "category": "Sanduíches",
+    "price": 7.99,
+    "userId": 2,
+    "quantity": 2
+}
+```
+
+### Delete grade
+
+`DELETE /grades/:id`
+
+header {
+    Authorization: Bearer token
+}
+
+---
+
+## Books
+
+### Create new book
+
+`Post /books`
+
+header {
+    Authorization: Bearer token
+}
+
+```json
+{
+    "name": "Hamburguer",
+    "category": "Sanduíches",
+    "price": 7.99,
+    "userId": 2,
+    "quantity": 1
+}
+```
+
+### Get all books
+
+`GET /books`
+
+```json
+[
+ {
+    "id": 1,
+    "name": "Hamburguer",
+    "category": "Sanduíches",
+    "price": 7.99,
+    "userId": 2,
+    "quantity": 1
+  }
+]
+```
+
+### Get only book
+
+`GET /books/:id`
+
+```json
+[
+ {
+    "id": 1,
+    "name": "Hamburguer",
+    "category": "Sanduíches",
+    "price": 7.99,
+    "userId": 2,
+    "quantity": 1
+  }
+]
+```
+
+### Update book
+
+`PATCH /books/:id`
+
+header {
+    Authorization: Bearer token
+}
+
+```json
+{
+    "name": "Hamburguer upgrade",
+    "category": "Sanduíches",
+    "price": 7.99,
+    "userId": 2,
+    "quantity": 2
+}
+```
+
+### Delete book
+
+`DELETE /books/:id`
+
+header {
+    Authorization: Bearer token
+}
+
+---
+
+## Classroom
+
+### Create new classroom
+
+`Post /classrooms`
+
+header {
+    Authorization: Bearer token
+}
+
+```json
+{
+    "name": "Hamburguer",
+    "category": "Sanduíches",
+    "price": 7.99,
+    "userId": 2,
+    "quantity": 1
+}
+```
+
+### Get all classrooms
+
+`GET /classrooms`
+
+```json
+[
+ {
+    "id": 1,
+    "name": "Hamburguer",
+    "category": "Sanduíches",
+    "price": 7.99,
+    "userId": 2,
+    "quantity": 1
+  }
+]
+```
+
+### Get only classroom
+
+`GET /classrooms/:id`
+
+```json
+[
+ {
+    "id": 1,
+    "name": "Hamburguer",
+    "category": "Sanduíches",
+    "price": 7.99,
+    "userId": 2,
+    "quantity": 1
+  }
+]
+```
+
+### Update classroom
+
+`PATCH /classrooms/:id`
+
+header {
+    Authorization: Bearer token
+}
+
+```json
+{
+    "name": "Hamburguer upgrade",
+    "category": "Sanduíches",
+    "price": 7.99,
+    "userId": 2,
+    "quantity": 2
+}
+```
+
+### Delete classroom
+
+`DELETE /classrooms/:id`
+
+header {
+    Authorization: Bearer token
+}
+
+---
