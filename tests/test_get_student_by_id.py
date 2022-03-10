@@ -3,11 +3,7 @@ headers = {"Authorization": "Bearer 1234"}
 
 
 def test_get_student_by_id(client: FlaskClient):
-<<<<<<< HEAD
     response = client.get("/api/students/51df51e0-00a7-49e3-9f2e-0405574f5c20", headers=headers)
-=======
-    response = client.get("/api/students/51df51e0-00a7-49e3-9f2e-0405574f5c20", headers={"Authorization": "Bearer 1234"})
->>>>>>> 8c7397b0eb32238b6a39d94288e968c2425440c5
     mock_reponse = {
                     "registration_student_id": "51df51e0-00a7-49e3-9f2e-0405574f5c20",
                     "name": "felipe",
