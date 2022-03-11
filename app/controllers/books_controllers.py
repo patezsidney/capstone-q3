@@ -50,16 +50,16 @@ def register_books():
 
         book = BooksModel(**data)
 
+        current_app.db.session.add(book)
+        current_app.db.session.commit()
+        
         response = {
             "book_id": book.book_id,
             "title": book.title.title(),
             "author": book.author.title(),
             "quantity": book.quantity
         }
-
-        current_app.db.session.add(book)
-        current_app.db.session.commit()
-
+        
         return jsonify(response),HTTPStatus.CREATED
 
     except IncorrectKeyError:

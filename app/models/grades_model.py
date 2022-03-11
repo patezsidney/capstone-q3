@@ -23,6 +23,7 @@ class GradesModel(db.Model):
         if type(data) == list:
             for one in data:
                 output.append({
+                    "grade_id": one.grade_id,
                     "ativity": one.ativity,
                     "grade": one.grade,
                     "student": {"student_id" : one.student.registration_student_id, "name": one.student.name},
@@ -30,6 +31,7 @@ class GradesModel(db.Model):
                     })
         else:
             output = {
+                    "grade_id": data.grade_id,
                     "ativity": data.ativity,
                     "grade": data.grade,
                     "student": {"student_id" : data.student.registration_student_id, "name": data.student.name},
